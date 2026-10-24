@@ -1,0 +1,118 @@
+# boot: press A (GameCube pad and Wii Remote) every 2 seconds, screenshot before each press
+298 shot boot_00
+300 press A
+300 mouse left down
+306 release A
+306 mouse left up
+418 shot boot_01
+420 press A
+420 mouse left down
+426 release A
+426 mouse left up
+538 shot boot_02
+540 press A
+540 mouse left down
+546 release A
+546 mouse left up
+658 shot boot_03
+660 press A
+660 mouse left down
+666 release A
+666 mouse left up
+778 shot boot_04
+780 press A
+780 mouse left down
+786 release A
+786 mouse left up
+898 shot boot_05
+900 press A
+900 mouse left down
+906 release A
+906 mouse left up
+1018 shot boot_06
+1020 press A
+1020 mouse left down
+1026 release A
+1026 mouse left up
+1138 shot boot_07
+1140 press A
+1140 mouse left down
+1146 release A
+1146 mouse left up
+1258 shot boot_08
+1260 press A
+1260 mouse left down
+1266 release A
+1266 mouse left up
+1378 shot boot_09
+1380 press A
+1380 mouse left down
+1386 release A
+1386 mouse left up
+1498 shot boot_10
+1500 press A
+1500 mouse left down
+1506 release A
+1506 mouse left up
+1618 shot boot_11
+1620 press A
+1620 mouse left down
+1626 release A
+1626 mouse left up
+1738 shot boot_12
+1740 press A
+1740 mouse left down
+1746 release A
+1746 mouse left up
+1858 shot boot_13
+1860 press A
+1860 mouse left down
+1866 release A
+1866 mouse left up
+1978 shot boot_14
+1980 press A
+1980 mouse left down
+1986 release A
+1986 mouse left up
+2098 shot boot_15
+2100 press A
+2100 mouse left down
+2106 release A
+2106 mouse left up
+2218 shot boot_16
+2220 press A
+2220 mouse left down
+2226 release A
+2226 mouse left up
+2338 shot boot_17
+2340 press A
+2340 mouse left down
+2346 release A
+2346 mouse left up
+2458 shot boot_18
+2460 press A
+2460 mouse left down
+2466 release A
+2466 mouse left up
+2578 shot boot_19
+2580 press A
+2580 mouse left down
+2586 release A
+2586 mouse left up
+2698 shot boot_20
+2700 press A
+2700 mouse left down
+2706 release A
+2706 mouse left up
+2818 shot boot_21
+2820 press A
+2820 mouse left down
+2826 release A
+2826 mouse left up
+2938 shot boot_22
+2940 press A
+2940 mouse left down
+2946 release A
+2946 mouse left up
+3000 shot boot_end
+3002 quit

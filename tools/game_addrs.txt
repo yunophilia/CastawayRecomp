@@ -1,0 +1,69 @@
+# Game addresses the runtime and the recompiler use. tools/game_addrs.py looks each one up
+# in the game's ELF symbol table (files/tsc_wii_release_dvd.elf) and writes
+# runtime/game_addrs.inc; refer to them by name, never by number.
+#
+#   NAME  KIND  SYMBOL-OR-ADDRESS  [description]
+#
+# KIND: func  function start, overridden in the runtime (PPC_OVERRIDE(NAME)) or called
+#       code  instruction (recompiler patches and probes)
+#       data  variable in main.dol's data or bss
+# SYMBOL-OR-ADDRESS: the ELF symbol name, or a hex address (code inside a function)
+
+# ---------------------------------------------------------------- OS (runtime/kernel)
+OSSaveContext            func OSSaveContext
+OSLoadContext            func OSLoadContext
+OSInitContext            func OSInitContext
+OSEnableInterrupts       func OSEnableInterrupts
+OSReport                 func OSReport
+OSPanic                  func OSPanic
+OSFatal                  func OSFatal
+VIGetRetraceCount        func VIGetRetraceCount
+OSExceptionTable         data OSExceptionTable   pointer to the exception handler table
+
+# ---------------------------------------------------------------- GameCube controller (runtime/input/pad_hle.cpp)
+PADInit                  func PADInit
+PADRead                  func PADRead
+PADReset                 func PADReset
+PADRecalibrate           func PADRecalibrate
+PADControlMotor          func PADControlMotor
+
+# ---------------------------------------------------------------- Wii Remote (runtime/input/wpad_hle.cpp)
+WPADInit                 func WPADInit
+WPADGetStatus            func WPADGetStatus
+WPADProbe                func WPADProbe
+WPADSetSamplingCallback  func WPADSetSamplingCallback
+WPADSetConnectCallback   func WPADSetConnectCallback
+WPADSetExtensionCallback func WPADSetExtensionCallback
+WPADRead                 func WPADRead
+WPADSetDataFormat        func WPADSetDataFormat
+WPADGetDataFormat        func WPADGetDataFormat
+WPADControlDpd           func WPADControlDpd
+WPADIsDpdEnabled         func WPADIsDpdEnabled
+WPADGetSensorBarPosition func WPADGetSensorBarPosition
+WPADGetDpdSensitivity    func WPADGetDpdSensitivity
+WPADGetAccGravityUnit    func WPADGetAccGravityUnit
+WPADControlMotor         func WPADControlMotor
+WPADEnableMotor          func WPADEnableMotor
+WPADIsMotorEnabled       func WPADIsMotorEnabled
+WPADGetInfoAsync         func WPADGetInfoAsync
+WPADDisconnect           func WPADDisconnect
+WPADGetRadioSensitivity  func WPADGetRadioSensitivity
+WPADSaveConfig           func WPADSaveConfig
+WPADControlLed           func WPADControlLed
+WPADCanSendStreamData    func WPADCanSendStreamData
+WPADSendStreamData       func WPADSendStreamData
+WPADIsSpeakerEnabled     func WPADIsSpeakerEnabled
+WPADControlSpeaker       func WPADControlSpeaker
+WPADGetSpeakerVolume     func WPADGetSpeakerVolume
+WPADSetSpeakerVolume     func WPADSetSpeakerVolume
+WPADSetSimpleSyncCallback func WPADSetSimpleSyncCallback
+WPADStartFastSimpleSync  func WPADStartFastSimpleSync
+WPADStopSimpleSync       func WPADStopSimpleSync
+KPADRead                 func KPADRead
+WiiCursorPosition        func GetControllerCursorPosition__14EWiiControllerFRC10KPADStatusPfPf   EWiiController::GetControllerCursorPosition(const KPADStatus&, float* x, float* y)
+
+# ---------------------------------------------------------------- diagnostics (runtime/kernel/crash.cpp)
+OSRescheduleCount        data Reschedule      scheduler disable count (OSDisableScheduler)
+OSRunQueueHint           data RunQueueHint
+OSRunQueueBits           data RunQueueBits
+SetNextState             func SetNextState__12StateMachineFif   StateMachine::SetNextState(int, float) (debug log)
