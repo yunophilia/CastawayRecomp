@@ -150,6 +150,33 @@ def beach_move():
     s.save('beach_move', f + 102)
 
 
+@script
+def soak():
+    """Ten minutes of random play on the island (seeded, so a crash can be replayed)."""
+    import random
+    rnd = random.Random(1234)
+    s = Script('to the beach, then 10 minutes of random input (seed 1234)')
+    f = to_beach(s)
+    end = f + 10 * 60 * 60
+    buttons = ['A', 'A', 'A', 'B', 'B', 'C', 'Z', '1', '2', 'PLUS', 'MINUS', 'UP', 'DOWN', 'LEFT', 'RIGHT']
+    while f < end:
+        r = rnd.random()
+        if r < 0.35:
+            s.at(f, f'stick {rnd.randint(-100, 100)} {rnd.randint(-100, 100)}')
+            s.at(f + rnd.randint(30, 180), 'stick 0 0')
+        elif r < 0.45:
+            s.at(f, f'cstick {rnd.randint(-100, 100)} {rnd.randint(-100, 100)}')
+            s.at(f + rnd.randint(20, 90), 'cstick 0 0')
+        elif r < 0.65:
+            x, y = game(rnd.uniform(0.05, 0.95), rnd.uniform(0.05, 0.95))
+            s.at(f, f'point {x:.3f} {y:.3f}')
+        else:
+            s.tap(f, rnd.choice(buttons), hold=rnd.randint(4, 20))
+        f += rnd.randint(20, 120)
+    s.shots(end - 10 * 60 * 60, end, 1200, 'sk')
+    s.save('soak', end + 2)
+
+
 if __name__ == '__main__':
     for name in sys.argv[1:]:
         SCRIPTS[name]()
