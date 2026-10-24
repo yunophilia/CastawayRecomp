@@ -53,3 +53,9 @@ GAME_ADDR(OSRescheduleCount,         DATA, 0x805D8E50)   // scheduler disable co
 GAME_ADDR(OSRunQueueHint,            DATA, 0x805D8E54)
 GAME_ADDR(OSRunQueueBits,            DATA, 0x805D8E58)
 GAME_ADDR(SetNextState,              FUNC, 0x8016A3E4)   // StateMachine::SetNextState(int, float) (debug log)
+GAME_ADDR(MapPlayerToController,     FUNC, 0x802A6A00)   // EControllerManager::MapPlayerToController(u32 index)
+GAME_ADDR(NgcControllerUpdate,       FUNC, 0x802B1870)   // ENgcControllerManager::Update(): reads the GameCube controller
+GAME_ADDR(CtrlPads,                  DATA, 0x80513758)   // EController* EControllerManager::_ctrlPads[4]
+GAME_ADDR(CtrlMan,                   DATA, 0x805D82E4)   // EControllerManager*: +4 player controller index, +8 player mapped
+GAME_ADDR(MapControllerCommands,     FUNC, 0x802A6C20)   // installs a button -> command map (on _ctrlPads[0] only)
+GAME_ADDR(NgcGetButtons,             FUNC, 0x802B1B88)   // u32 ENgcController::GetButtons(const PADStatus&): button and stick-direction bits

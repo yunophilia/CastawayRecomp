@@ -46,6 +46,23 @@ void GuestCall(PPCContext& ctx, uint8_t* base, uint32_t fn, uint32_t a0, uint32_
     ctx = saved;
 }
 
+// The remote carries the same buttons as the GameCube port: the safety, splash and system
+// screens (and the HOME menu) only read Wii Remotes. The game itself plays on the GameCube
+// port (pad_hle.cpp maps the player there), so nothing is pressed twice.
+uint16_t RemoteButtons()
+{
+    static const struct { uint32_t btn; uint16_t wii; } kMap[] = {
+        { BTN_A, 0x0800 }, { BTN_B, 0x0400 }, { BTN_1, 0x0200 }, { BTN_2, 0x0100 }, { BTN_PLUS, 0x0010 },
+        { BTN_MINUS, 0x1000 }, { BTN_HOME, 0x8000 }, { BTN_Z, 0x2000 }, { BTN_C, 0x4000 },
+        { BTN_LEFT, 0x0001 }, { BTN_RIGHT, 0x0002 }, { BTN_DOWN, 0x0004 }, { BTN_UP, 0x0008 },
+    };
+    uint32_t pad = Input_Pad().buttons;
+    uint16_t wii = 0;
+    for (auto& m : kMap)
+        if (pad & m.btn) wii |= m.wii;
+    return wii;
+}
+
 uint32_t SetCallback(uint32_t& slot, uint32_t cb)
 {
     uint32_t old = slot;
@@ -100,9 +117,7 @@ PPC_OVERRIDE(WPADRead)
         Write8(s + 41, (uint8_t)WPAD_ERR_NO_CONTROLLER);
         return;
     }
-    PointerState p = Input_Pointer();
-    uint16_t buttons = (p.buttonA ? WPAD_BUTTON_A : 0) | (p.buttonB ? WPAD_BUTTON_B : 0);
-    Write16(s + 0, buttons);
+    Write16(s + 0, RemoteButtons());
     // lying flat, face up: 1 g on +Z (KPAD's gravity unit is 100 counts)
     Write16(s + 6, 100);
     for (int i = 0; i < 4; i++)

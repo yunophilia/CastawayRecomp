@@ -1,0 +1,56 @@
+# pointer calibration on the main menu (tap A until the menu; A does nothing there without a pointed sign)
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1140 press A
+1145 release A
+1190 press A
+1195 release A
+1240 press A
+1245 release A
+1400 point 0 0
+1430 shot c_0
+1460 point 0.5 0.5
+1490 shot c_1
+1520 point -0.5 -0.5
+1550 shot c_2
+1580 point 0.5 -0.5
+1610 shot c_3
+1640 point 0.9 0.9
+1670 shot c_4
+1700 point 0.3 0.8
+1730 shot c_5
+1760 quit

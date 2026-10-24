@@ -67,3 +67,11 @@ OSRescheduleCount        data Reschedule      scheduler disable count (OSDisable
 OSRunQueueHint           data RunQueueHint
 OSRunQueueBits           data RunQueueBits
 SetNextState             func SetNextState__12StateMachineFif   StateMachine::SetNextState(int, float) (debug log)
+
+# ---------------------------------------------------------------- the game's controller layer (runtime/input/pad_hle.cpp)
+MapPlayerToController    func MapPlayerToController__18EControllerManagerFUi   EControllerManager::MapPlayerToController(u32 index)
+NgcControllerUpdate      func Update__21ENgcControllerManagerFv               ENgcControllerManager::Update(): reads the GameCube controller
+CtrlPads                 data _ctrlPads__18EControllerManager                 EController* EControllerManager::_ctrlPads[4]
+CtrlMan                  data _pCtrlMan                                       EControllerManager*: +4 player controller index, +8 player mapped
+MapControllerCommands    func MapControllerCommands__18EControllerManagerFP14EBtnToCmdAssoci   installs a button -> command map (on _ctrlPads[0] only)
+NgcGetButtons            func GetButtons__14ENgcControllerFRC9PADStatus      u32 ENgcController::GetButtons(const PADStatus&): button and stick-direction bits

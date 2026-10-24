@@ -2,9 +2,10 @@
 // for automated test runs.
 //
 // Keyboard (only while the game window has focus):
-//   WASD main stick, IJKL C-stick (camera), arrow keys D-pad,
-//   Space A, Backspace B, F X, G Y, Enter START, Q L, E R, Z Z.
-// Mouse: Wii Remote pointer; left button Wii A, right button Wii B.
+//   WASD movement stick, IJKL C-stick, arrow keys D-pad,
+//   Space A, Backspace B, C C, Z Z, 1 1, 2 2, Enter +, Tab -, H HOME,
+//   Q / E the GameCube L / R triggers.
+// Mouse: the pointer; left button A, right button B, middle button C.
 #include "input.h"
 #include "gamepad.h"
 #include "../config.h"
@@ -22,9 +23,6 @@
 
 namespace
 {
-constexpr uint16_t PAD_LEFT = 0x0001, PAD_RIGHT = 0x0002, PAD_DOWN = 0x0004, PAD_UP = 0x0008, PAD_Z = 0x0010,
-                   PAD_R = 0x0020, PAD_L = 0x0040, PAD_A = 0x0100, PAD_B = 0x0200, PAD_X = 0x0400, PAD_Y = 0x0800,
-                   PAD_START = 0x1000;
 constexpr int8_t kStickMax = 100;   // a real GameCube stick reaches about +-100 at its gate
 
 std::mutex s_lock;
@@ -48,11 +46,12 @@ PadState s_scriptPad{};
 PointerState s_scriptPointer{};
 std::string s_shotDir = ".";   // the working directory (out/ for tools/run_test.ps1)
 
-uint16_t ButtonBit(const std::string& n)
+uint32_t ButtonBit(const std::string& n)
 {
-    static const struct { const char* name; uint16_t bit; } kNames[] = {
-        { "A", PAD_A }, { "B", PAD_B }, { "X", PAD_X }, { "Y", PAD_Y }, { "START", PAD_START }, { "Z", PAD_Z },
-        { "L", PAD_L }, { "R", PAD_R }, { "UP", PAD_UP }, { "DOWN", PAD_DOWN }, { "LEFT", PAD_LEFT }, { "RIGHT", PAD_RIGHT },
+    static const struct { const char* name; uint32_t bit; } kNames[] = {
+        { "A", BTN_A }, { "B", BTN_B }, { "C", BTN_C }, { "Z", BTN_Z }, { "1", BTN_1 }, { "2", BTN_2 },
+        { "PLUS", BTN_PLUS }, { "START", BTN_PLUS }, { "MINUS", BTN_MINUS }, { "HOME", BTN_HOME },
+        { "UP", BTN_UP }, { "DOWN", BTN_DOWN }, { "LEFT", BTN_LEFT }, { "RIGHT", BTN_RIGHT },
     };
     for (auto& k : kNames)
         if (_stricmp(n.c_str(), k.name) == 0) return k.bit;
@@ -84,8 +83,6 @@ void RunScript(void (*save)(const char*))
             s_scriptPointer.x = (float)atof(a[0].c_str()), s_scriptPointer.y = (float)atof(a[1].c_str()), s_scriptPointer.valid = true;
         else if (e.action == "nopoint")
             s_scriptPointer.valid = false;
-        else if (e.action == "mouse" && a.size() == 2)
-            (_stricmp(a[0].c_str(), "left") == 0 ? s_scriptPointer.buttonA : s_scriptPointer.buttonB) = _stricmp(a[1].c_str(), "down") == 0;
         else if (e.action == "shot" && save)
         {
             std::string path = s_shotDir + "/" + (a.empty() ? "shot_" + std::to_string(frame) : a[0]) + ".bmp";
@@ -119,10 +116,10 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
     ptr = {};
     if (!focused) return;
 
-    static const struct { int vk; uint16_t bit; } kButtons[] = {
-        { VK_SPACE, PAD_A }, { VK_BACK, PAD_B }, { 'F', PAD_X }, { 'G', PAD_Y }, { VK_RETURN, PAD_START },
-        { 'Q', PAD_L }, { 'E', PAD_R }, { 'Z', PAD_Z }, { VK_UP, PAD_UP }, { VK_DOWN, PAD_DOWN },
-        { VK_LEFT, PAD_LEFT }, { VK_RIGHT, PAD_RIGHT },
+    static const struct { int vk; uint32_t bit; } kButtons[] = {
+        { VK_SPACE, BTN_A }, { VK_BACK, BTN_B }, { 'C', BTN_C }, { 'Z', BTN_Z }, { '1', BTN_1 }, { '2', BTN_2 },
+        { VK_RETURN, BTN_PLUS }, { VK_TAB, BTN_MINUS }, { 'H', BTN_HOME }, { VK_UP, BTN_UP }, { VK_DOWN, BTN_DOWN },
+        { VK_LEFT, BTN_LEFT }, { VK_RIGHT, BTN_RIGHT },
     };
     for (auto& b : kButtons)
         if (Key(b.vk)) pad.buttons |= b.bit;
@@ -138,11 +135,18 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
     RECT rc;
     if (GetCursorPos(&pt) && ScreenToClient(hwnd, &pt) && GetClientRect(hwnd, &rc) && rc.right > 0 && rc.bottom > 0)
     {
+        // The game's pointer coordinates reach past the screen edges: measured on the main
+        // menu, the cursor lands at screen fraction u = 0.488 + 0.360 x, v = 0.462 + 0.462 y.
         ptr.valid = pt.x >= 0 && pt.y >= 0 && pt.x < rc.right && pt.y < rc.bottom;
-        ptr.x = std::clamp(2.0f * pt.x / rc.right - 1.0f, -1.0f, 1.0f);
-        ptr.y = std::clamp(2.0f * pt.y / rc.bottom - 1.0f, -1.0f, 1.0f);
-        ptr.buttonA = ptr.valid && Key(VK_LBUTTON);
-        ptr.buttonB = ptr.valid && Key(VK_RBUTTON);
+        float u = (float)pt.x / rc.right, v = (float)pt.y / rc.bottom;
+        ptr.x = (u - 0.488f) / 0.360f;
+        ptr.y = (v - 0.462f) / 0.462f;
+        if (ptr.valid)
+        {
+            if (Key(VK_LBUTTON)) pad.buttons |= BTN_A;
+            if (Key(VK_RBUTTON)) pad.buttons |= BTN_B;
+            if (Key(VK_MBUTTON)) pad.buttons |= BTN_C;
+        }
     }
 }
 

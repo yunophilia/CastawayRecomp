@@ -1,8 +1,8 @@
 #pragma once
-// Gamepads of any brand through SDL3 (Xbox, PlayStation, Switch Pro, generic), mapped
-// onto the GameCube controller by position:
-//   south/east/west/north face buttons -> A/B/X/Y, Start -> START, LB/RB -> Z,
-//   LT/RT -> L/R (analog), D-pad -> D-pad, left stick -> main stick, right stick -> C-stick.
+// Gamepads of any brand through SDL3 (Xbox, PlayStation, Switch Pro, generic), by position:
+//   south/east face buttons -> A/B, west/north -> 1/2, LB/RB -> Nunchuk Z/C,
+//   Back/Start -> -/+, Guide (or Back + Start) -> HOME, D-pad -> D-pad,
+//   left stick -> movement, right stick -> C-stick, LT/RT -> GameCube L/R (analog).
 // The first connected gamepad that is pressed becomes the active one.
 #include "input.h"
 

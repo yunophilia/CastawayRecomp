@@ -1,0 +1,91 @@
+# create a Sim and accept it
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1140 press A
+1145 release A
+1190 press A
+1195 release A
+1240 press A
+1245 release A
+1350 point 0.308 0.804
+1390 press A
+1396 release A
+1486 point 0.033 0.545
+1506 press A
+1512 release A
+1586 point 0.033 0.545
+1606 press A
+1612 release A
+1686 point 0.033 0.545
+1706 press A
+1712 release A
+1786 point 0.033 0.545
+1806 press A
+1812 release A
+2546 point -0.050 0.840
+2586 press A
+2592 release A
+2742 point -0.506 0.861
+2782 press A
+2788 release A
+2898 point -0.747 -0.452
+2938 press A
+2944 release A
+3044 point -0.506 0.861
+3084 press A
+3090 release A
+3120 shot ca_00
+3240 shot ca_01
+3360 shot ca_02
+3480 shot ca_03
+3600 shot ca_04
+3720 shot ca_05
+3840 shot ca_06
+3960 shot ca_07
+4080 shot ca_08
+4200 shot ca_09
+4320 shot ca_10
+4440 shot ca_11
+4560 shot ca_12
+4680 shot ca_13
+4800 shot ca_14
+4920 shot ca_15
+5040 shot ca_16
+5160 shot ca_17
+5280 shot ca_18
+5400 shot ca_19
+5492 quit

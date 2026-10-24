@@ -11,12 +11,8 @@
 
 namespace
 {
-constexpr uint16_t PAD_LEFT = 0x0001, PAD_RIGHT = 0x0002, PAD_DOWN = 0x0004, PAD_UP = 0x0008, PAD_Z = 0x0010,
-                   PAD_R = 0x0020, PAD_L = 0x0040, PAD_A = 0x0100, PAD_B = 0x0200, PAD_X = 0x0400, PAD_Y = 0x0800,
-                   PAD_START = 0x1000;
 constexpr float kDeadzone = 0.15f;
 constexpr int kStickMax = 100;          // GameCube stick gate
-constexpr uint8_t kTriggerClick = 200;  // analog value past which the digital L/R is pressed
 
 bool s_ok = false;
 DWORD s_sdlThread = 0;                 // SDL is only ever called from this thread (the game's CPU thread)
@@ -135,12 +131,13 @@ bool Gamepad_Read(PadState& p)
         s_rumbleSent = GetTickCount();
         SDL_RumbleGamepad(g, 0xC000, 0x8000, kRumbleMs);
     }
-    static const struct { SDL_GamepadButton b; uint16_t bit; } kButtons[] = {
-        { SDL_GAMEPAD_BUTTON_SOUTH, PAD_A }, { SDL_GAMEPAD_BUTTON_EAST, PAD_B }, { SDL_GAMEPAD_BUTTON_WEST, PAD_X },
-        { SDL_GAMEPAD_BUTTON_NORTH, PAD_Y }, { SDL_GAMEPAD_BUTTON_START, PAD_START },
-        { SDL_GAMEPAD_BUTTON_LEFT_SHOULDER, PAD_Z }, { SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER, PAD_Z },
-        { SDL_GAMEPAD_BUTTON_DPAD_UP, PAD_UP }, { SDL_GAMEPAD_BUTTON_DPAD_DOWN, PAD_DOWN },
-        { SDL_GAMEPAD_BUTTON_DPAD_LEFT, PAD_LEFT }, { SDL_GAMEPAD_BUTTON_DPAD_RIGHT, PAD_RIGHT },
+    static const struct { SDL_GamepadButton b; uint32_t bit; } kButtons[] = {
+        { SDL_GAMEPAD_BUTTON_SOUTH, BTN_A }, { SDL_GAMEPAD_BUTTON_EAST, BTN_B }, { SDL_GAMEPAD_BUTTON_WEST, BTN_1 },
+        { SDL_GAMEPAD_BUTTON_NORTH, BTN_2 }, { SDL_GAMEPAD_BUTTON_LEFT_SHOULDER, BTN_Z },
+        { SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER, BTN_C }, { SDL_GAMEPAD_BUTTON_BACK, BTN_MINUS },
+        { SDL_GAMEPAD_BUTTON_START, BTN_PLUS }, { SDL_GAMEPAD_BUTTON_GUIDE, BTN_HOME },
+        { SDL_GAMEPAD_BUTTON_DPAD_UP, BTN_UP }, { SDL_GAMEPAD_BUTTON_DPAD_DOWN, BTN_DOWN },
+        { SDL_GAMEPAD_BUTTON_DPAD_LEFT, BTN_LEFT }, { SDL_GAMEPAD_BUTTON_DPAD_RIGHT, BTN_RIGHT },
     };
     p = {};
     for (auto& b : kButtons)
@@ -149,8 +146,8 @@ bool Gamepad_Read(PadState& p)
     Stick(g, SDL_GAMEPAD_AXIS_RIGHTX, SDL_GAMEPAD_AXIS_RIGHTY, p.substickX, p.substickY);
     p.triggerL = Trigger(g, SDL_GAMEPAD_AXIS_LEFT_TRIGGER);
     p.triggerR = Trigger(g, SDL_GAMEPAD_AXIS_RIGHT_TRIGGER);
-    if (p.triggerL >= kTriggerClick) p.buttons |= PAD_L;
-    if (p.triggerR >= kTriggerClick) p.buttons |= PAD_R;
+    // Back + Start together is HOME too (pads without a usable guide button)
+    if ((p.buttons & (BTN_MINUS | BTN_PLUS)) == (BTN_MINUS | BTN_PLUS)) p.buttons = (p.buttons & ~(BTN_MINUS | BTN_PLUS)) | BTN_HOME;
     return true;
 }
 

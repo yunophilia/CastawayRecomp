@@ -1,0 +1,45 @@
+# Wii Remote A (mouse) through the splash screens, then the GameCube pad only on the menu
+240 mouse left down
+245 mouse left up
+300 mouse left down
+305 mouse left up
+360 mouse left down
+365 mouse left up
+420 mouse left down
+425 mouse left up
+480 mouse left down
+485 mouse left up
+540 mouse left down
+545 mouse left up
+600 mouse left down
+605 mouse left up
+660 mouse left down
+665 mouse left up
+720 mouse left down
+725 mouse left up
+780 mouse left down
+785 mouse left up
+840 mouse left down
+845 mouse left up
+900 mouse left down
+905 mouse left up
+960 mouse left down
+965 mouse left up
+1300 shot m_0
+1310 press DOWN
+1316 release DOWN
+1360 shot m_1
+1370 press DOWN
+1376 release DOWN
+1420 shot m_2
+1430 press A
+1436 release A
+1500 shot m_3
+1600 shot m_4
+1700 shot m_5
+1900 shot m_6
+1910 press A
+1916 release A
+2100 shot m_7
+2300 shot m_8
+2302 quit

@@ -1,0 +1,71 @@
+# Create a Crew -> Add a Sim -> Customize
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1140 press A
+1145 release A
+1190 press A
+1195 release A
+1240 press A
+1245 release A
+1350 point 0.308 0.804
+1390 press A
+1396 release A
+1486 point 0.033 0.545
+1526 press A
+1532 release A
+2282 point -0.050 0.840
+2322 press A
+2328 release A
+2478 point -0.506 0.861
+2518 press A
+2524 release A
+2584 shot cc_00
+2684 shot cc_01
+2784 shot cc_02
+2884 shot cc_03
+2984 shot cc_04
+3084 shot cc_05
+3184 shot cc_06
+3284 shot cc_07
+3384 shot cc_08
+3484 shot cc_09
+3584 shot cc_10
+3684 shot cc_11
+3784 shot cc_12
+3884 shot cc_13
+3984 shot cc_14
+4026 quit

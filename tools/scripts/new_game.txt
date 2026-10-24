@@ -1,0 +1,33 @@
+# boot to the main menu and start a new game (frames are presented frames, 60 per second)
+300 press A
+306 release A
+420 press A
+426 release A
+# title screen -> menu
+600 press A
+606 release A
+720 press A
+726 release A
+# main menu appears around frame 1150; select Start New Game with the D-pad
+1300 shot menu
+1310 press DOWN
+1316 release DOWN
+1340 shot menu_down1
+1350 press DOWN
+1356 release DOWN
+1380 shot menu_down2
+1400 press A
+1406 release A
+1500 shot after_a_1
+1600 shot after_a_2
+1800 shot after_a_3
+2000 shot after_a_4
+2010 press A
+2016 release A
+2200 shot after_a_5
+2400 shot after_a_6
+2410 press A
+2416 release A
+2700 shot after_a_7
+3000 shot after_a_8
+3002 quit

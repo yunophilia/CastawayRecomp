@@ -1,0 +1,123 @@
+# to the beach, then walk with the stick in four directions
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1140 press A
+1145 release A
+1190 press A
+1195 release A
+1240 press A
+1245 release A
+1350 point 0.308 0.804
+1390 press A
+1396 release A
+1486 point 0.033 0.545
+1506 press A
+1512 release A
+1586 point 0.033 0.545
+1606 press A
+1612 release A
+1686 point 0.033 0.545
+1706 press A
+1712 release A
+1786 point 0.033 0.545
+1806 press A
+1812 release A
+2546 point -0.050 0.840
+2586 press A
+2592 release A
+2742 point -0.506 0.861
+2782 press A
+2788 release A
+2898 point -0.747 -0.452
+2938 press A
+2944 release A
+3044 point -0.506 0.861
+3084 press A
+3090 release A
+3390 point 0.692 0.846
+3430 press A
+3436 release A
+3446 nopoint
+4036 press A
+4042 release A
+4276 press A
+4282 release A
+4516 press A
+4522 release A
+4756 press A
+4762 release A
+4996 press A
+5002 release A
+5236 press A
+5242 release A
+5476 press A
+5482 release A
+5716 press A
+5722 release A
+5956 press A
+5962 release A
+6196 press A
+6202 release A
+6436 press A
+6442 release A
+6676 press A
+6682 release A
+6916 press A
+6922 release A
+7156 press A
+7162 release A
+7396 press A
+7402 release A
+7736 shot bm_00
+7746 stick 0 100
+7836 shot bm_01a
+7936 shot bm_01b
+7946 stick 0 0
+8006 stick 100 0
+8096 shot bm_02a
+8196 shot bm_02b
+8206 stick 0 0
+8266 stick 0 -100
+8356 shot bm_03a
+8456 shot bm_03b
+8466 stick 0 0
+8526 stick -100 0
+8616 shot bm_04a
+8716 shot bm_04b
+8726 stick 0 0
+8876 shot bm_99
+8878 quit
