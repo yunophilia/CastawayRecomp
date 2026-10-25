@@ -49,6 +49,8 @@ void Input_Poll();
 PadState Input_Pad();
 PointerState Input_Pointer();
 void Input_SetRumble(bool on);
+// The bindings in g_config changed.
+void Input_ReloadBindings();
 void Input_StopRumble();
 
 // Scripted input for automated tests: --script <file>. While a script runs, real devices

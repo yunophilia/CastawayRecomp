@@ -1,14 +1,15 @@
 // Player input: keyboard and mouse (Win32), gamepads (gamepad.cpp), and scripted input
 // for automated test runs.
 //
-// Keyboard (only while the game window has focus):
-//   WASD movement stick, IJKL pointer, arrow keys D-pad,
-//   Space A, Backspace B, C C, Z Z, 1 1, 2 2, Enter +, Tab -, H HOME,
-//   Q / E the GameCube L / R triggers.
-// Mouse: the pointer (the right stick and IJKL move it too); left button A, right button B,
-// middle button C.
+// Keyboard (only while the game window has focus): WASD movement stick, IJKL pointer, Q / E
+// the GameCube L / R triggers; the game's buttons as bound in config.ini [Keyboard]
+// (input/bindings.cpp has the defaults: Space A, Backspace B, C, Z, 1, 2, Enter +, Tab -,
+// H HOME, arrow keys D-pad).
+// Mouse: the pointer (the right stick and IJKL move it too); its buttons are bound like keys
+// (default left A, right B, middle C) and count only over the window.
 #include "input.h"
 #include "gamepad.h"
+#include "bindings.h"
 #include "../config.h"
 #include "../gx/video.h"
 #include "../log.h"
@@ -127,6 +128,12 @@ void RunScript(void (*save)(const char*))
 // ---------------------------------------------------------------- keyboard and mouse
 bool Key(int vk) { return (GetAsyncKeyState(vk) & 0x8000) != 0; }
 
+bool IsMouseButton(int vk) { return vk == VK_LBUTTON || vk == VK_RBUTTON || vk == VK_MBUTTON || vk == VK_XBUTTON1 || vk == VK_XBUTTON2; }
+
+// keyboard and mouse bindings: key -> BTN_*, rebuilt when the settings change
+bool s_keysReload = true;
+std::vector<std::pair<int, uint32_t>> s_keys;
+
 void PointerUsed()
 {
     s_ptrUsed = GetTickCount();
@@ -140,13 +147,15 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
     ptr = {};
     if (!focused) return;
 
-    static const struct { int vk; uint32_t bit; } kButtons[] = {
-        { VK_SPACE, BTN_A }, { VK_BACK, BTN_B }, { 'C', BTN_C }, { 'Z', BTN_Z }, { '1', BTN_1 }, { '2', BTN_2 },
-        { VK_RETURN, BTN_PLUS }, { VK_TAB, BTN_MINUS }, { 'H', BTN_HOME }, { VK_UP, BTN_UP }, { VK_DOWN, BTN_DOWN },
-        { VK_LEFT, BTN_LEFT }, { VK_RIGHT, BTN_RIGHT },
-    };
-    for (auto& b : kButtons)
-        if (Key(b.vk)) pad.buttons |= b.bit;
+    if (s_keysReload)
+    {
+        s_keysReload = false;
+        s_keys.clear();
+        for (int i = 0; i < kControlCount; i++)
+            for (int vk : Binding_ParseKeys(Binding_Keys(i))) s_keys.push_back({ vk, kControls[i].bit });
+    }
+    for (auto& [vk, bit] : s_keys)
+        if (!IsMouseButton(vk) && Key(vk)) pad.buttons |= bit;
     if (Key('Q')) pad.triggerL = 255;
     if (Key('E')) pad.triggerR = 255;
     auto axis = [](bool neg, bool pos) { return (int8_t)((pos ? kStickMax : 0) - (neg ? kStickMax : 0)); };
@@ -171,13 +180,12 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
         }
         s_lastMouse = pt;
         if (inside)
-        {
-            bool l = Key(VK_LBUTTON), r = Key(VK_RBUTTON), m = Key(VK_MBUTTON);
-            if (l) pad.buttons |= BTN_A;
-            if (r) pad.buttons |= BTN_B;
-            if (m) pad.buttons |= BTN_C;
-            if (l || r || m) PointerUsed();
-        }
+            for (auto& [vk, bit] : s_keys)
+                if (IsMouseButton(vk) && Key(vk))
+                {
+                    pad.buttons |= bit;
+                    PointerUsed();
+                }
     }
     ptr.valid = true;   // the game window has focus; Input_Poll applies the idle timeout
 }
@@ -321,6 +329,15 @@ void Input_LoadScript(const char* path)
 }
 
 bool Input_ScriptActive() { return s_scripted; }
+
+void Input_ReloadBindings()
+{
+    {
+        std::lock_guard lk(s_lock);
+        s_keysReload = true;
+    }
+    Gamepad_ReloadBindings();
+}
 
 void Input_OnPresent(void (*save)(const char* path))
 {

@@ -2,6 +2,8 @@
 #include "../config.h"
 #include "../gx/video.h"
 #include "../version.h"
+#include "../input/bindings.h"
+#include "../input/input.h"
 
 #include <imgui.h>
 #include <windows.h>
@@ -118,11 +120,115 @@ void VideoTab(SettingsHost host)
           "Dolphin-format packs in textures/<game ID> (e.g. R42E69) next to the game, game/textures or Dolphin's Load/Textures.");
 }
 
+// Keyboard binding capture: the control waiting for a key, whether it adds to the list,
+// and whether every key was released since "Set" was clicked.
+int s_keyCapture = -1;
+bool s_keyCaptureAdd = false;
+bool s_keyCaptureArmed = false;
+
+// The first held key or mouse button that can be bound, or 0.
+int HeldBindableKey()
+{
+    for (int vk = 1; vk < 256; vk++)
+        if ((GetAsyncKeyState(vk) & 0x8000) && !Binding_KeyName(vk).empty()) return vk;
+    return 0;
+}
+
+void BindingsChanged(SettingsHost host)
+{
+    Input_ReloadBindings();
+    Changed(host, false);
+}
+
 void InputTab(SettingsHost host)
 {
     Config& c = g_config;
     ImGui::SeparatorText("Controller");
     Check(host, "Rumble", c.rumble, false, "Vibrate the controller where the Wii Remote would rumble.");
+    ImGui::TextDisabled("Left stick: move the Sim. Right stick: the pointer. Both stick clicks: these settings.");
+
+    if (s_keyCapture >= 0)
+    {
+        int held = HeldBindableKey();
+        if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) s_keyCapture = -1;
+        else if (!s_keyCaptureArmed) s_keyCaptureArmed = held == 0;
+        else if (held)
+        {
+            std::string name = Binding_KeyName(held);
+            std::string cur = Binding_Keys(s_keyCapture);
+            bool none = _stricmp(cur.c_str(), "NONE") == 0 || cur.empty();
+            if (s_keyCaptureAdd && !none)
+            {
+                bool dup = false;
+                for (int vk : Binding_ParseKeys(cur)) dup |= vk == held;
+                if (!dup) cur += ", " + name;
+            }
+            else
+                cur = name;
+            c.keyBind[s_keyCapture] = cur;
+            s_keyCapture = -1;
+            BindingsChanged(host);
+        }
+    }
+
+    ImGui::SeparatorText("Buttons");
+    if (ImGui::BeginTable("bindings", 3, ImGuiTableFlags_SizingStretchProp))
+    {
+        ImGui::TableSetupColumn("Wii", ImGuiTableColumnFlags_WidthFixed, 110);
+        ImGui::TableSetupColumn("Gamepad", ImGuiTableColumnFlags_WidthFixed, 190);
+        ImGui::TableSetupColumn("Keyboard and mouse");
+        ImGui::TableHeadersRow();
+        for (int i = 0; i < kControlCount; i++)
+        {
+            ImGui::PushID(i);
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            ImGui::AlignTextToFramePadding();
+            ImGui::TextUnformatted(kControls[i].label);
+
+            ImGui::TableNextColumn();
+            std::string pad = Binding_Pad(i);
+            int cur = kPadButtonCount - 1;
+            for (int b = 0; b < kPadButtonCount; b++)
+                if (_stricmp(pad.c_str(), kPadButtons[b]) == 0) cur = b;
+            ImGui::SetNextItemWidth(-1);
+            if (ImGui::BeginCombo("##pad", kPadButtonLabels[cur]))
+            {
+                for (int b = 0; b < kPadButtonCount; b++)
+                    if (ImGui::Selectable(kPadButtonLabels[b], b == cur))
+                    {
+                        c.padBind[i] = kPadButtons[b];
+                        BindingsChanged(host);
+                    }
+                ImGui::EndCombo();
+            }
+            Help("Gamepad button for this Wii button, by position (A is the bottom face button).");
+
+            ImGui::TableNextColumn();
+            if (s_keyCapture == i)
+                ImGui::TextColored(ImGui::GetStyle().Colors[ImGuiCol_CheckMark], "Press a key or mouse button (Esc cancels)");
+            else
+            {
+                if (ImGui::Button("Set")) { s_keyCapture = i; s_keyCaptureAdd = false; s_keyCaptureArmed = false; }
+                Help("Replace the keys: click, then press a key or mouse button.");
+                ImGui::SameLine();
+                if (ImGui::Button("+")) { s_keyCapture = i; s_keyCaptureAdd = true; s_keyCaptureArmed = false; }
+                Help("Add another key or mouse button.");
+                ImGui::SameLine();
+                if (ImGui::Button("Clear")) { c.keyBind[i] = "NONE"; BindingsChanged(host); }
+                ImGui::SameLine();
+                ImGui::TextUnformatted(Binding_Keys(i).c_str());
+            }
+            ImGui::PopID();
+        }
+        ImGui::EndTable();
+    }
+    if (ImGui::Button("Restore default buttons"))
+    {
+        for (int i = 0; i < kControlCount; i++) c.padBind[i].clear(), c.keyBind[i].clear();
+        BindingsChanged(host);
+    }
+    ImGui::TextDisabled("Keyboard: WASD move the Sim, IJKL the pointer, Q / E are the GameCube L / R triggers.");
 }
 
 void AudioTab(SettingsHost host)

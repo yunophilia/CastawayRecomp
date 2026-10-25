@@ -2,12 +2,15 @@
 #include "../gx/video.h"
 #include "../log.h"
 #include "../ui/overlay.h"
+#include "bindings.h"
 
 #include <SDL3/SDL.h>
 
 #include <algorithm>
 #include <atomic>
 #include <cmath>
+#include <utility>
+#include <vector>
 #include <windows.h>
 
 namespace
@@ -20,6 +23,8 @@ DWORD s_sdlThread = 0;                 // SDL is only ever called from this thre
 std::atomic<bool> s_stopRequested{ false };
 SDL_Gamepad* s_active = nullptr;
 bool s_rumbling = false;
+std::atomic<bool> s_reload{ true };                               // rebuild s_buttons from the bindings
+std::vector<std::pair<SDL_GamepadButton, uint32_t>> s_buttons;   // button -> BTN_*
 DWORD s_rumbleSent = 0;
 constexpr Uint32 kRumbleMs = 2000;   // the game switches the motor off itself; renewed while it stays on
 
@@ -132,17 +137,18 @@ bool Gamepad_Read(PadState& p)
         s_rumbleSent = GetTickCount();
         SDL_RumbleGamepad(g, 0xC000, 0x8000, kRumbleMs);
     }
-    static const struct { SDL_GamepadButton b; uint32_t bit; } kButtons[] = {
-        { SDL_GAMEPAD_BUTTON_SOUTH, BTN_A }, { SDL_GAMEPAD_BUTTON_EAST, BTN_B }, { SDL_GAMEPAD_BUTTON_WEST, BTN_1 },
-        { SDL_GAMEPAD_BUTTON_NORTH, BTN_2 }, { SDL_GAMEPAD_BUTTON_LEFT_SHOULDER, BTN_Z },
-        { SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER, BTN_C }, { SDL_GAMEPAD_BUTTON_BACK, BTN_MINUS },
-        { SDL_GAMEPAD_BUTTON_START, BTN_PLUS }, { SDL_GAMEPAD_BUTTON_GUIDE, BTN_HOME },
-        { SDL_GAMEPAD_BUTTON_DPAD_UP, BTN_UP }, { SDL_GAMEPAD_BUTTON_DPAD_DOWN, BTN_DOWN },
-        { SDL_GAMEPAD_BUTTON_DPAD_LEFT, BTN_LEFT }, { SDL_GAMEPAD_BUTTON_DPAD_RIGHT, BTN_RIGHT },
-    };
+    if (s_reload.exchange(false))
+    {
+        s_buttons.clear();
+        for (int i = 0; i < kControlCount; i++)
+        {
+            SDL_GamepadButton b = SDL_GetGamepadButtonFromString(Binding_Pad(i).c_str());
+            if (b != SDL_GAMEPAD_BUTTON_INVALID) s_buttons.push_back({ b, kControls[i].bit });
+        }
+    }
     p = {};
-    for (auto& b : kButtons)
-        if (SDL_GetGamepadButton(g, b.b)) p.buttons |= b.bit;
+    for (auto& [b, bit] : s_buttons)
+        if (SDL_GetGamepadButton(g, b)) p.buttons |= bit;
     Stick(g, SDL_GAMEPAD_AXIS_LEFTX, SDL_GAMEPAD_AXIS_LEFTY, p.stickX, p.stickY);
     Stick(g, SDL_GAMEPAD_AXIS_RIGHTX, SDL_GAMEPAD_AXIS_RIGHTY, p.substickX, p.substickY);
     p.triggerL = Trigger(g, SDL_GAMEPAD_AXIS_LEFT_TRIGGER);
@@ -156,6 +162,8 @@ bool Gamepad_Read(PadState& p)
     if ((p.buttons & (BTN_MINUS | BTN_PLUS)) == (BTN_MINUS | BTN_PLUS)) p.buttons = (p.buttons & ~(BTN_MINUS | BTN_PLUS)) | BTN_HOME;
     return true;
 }
+
+void Gamepad_ReloadBindings() { s_reload = true; }
 
 void Gamepad_Rumble(bool on)
 {

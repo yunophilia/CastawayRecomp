@@ -1,5 +1,6 @@
 #include "config.h"
 #include "log.h"
+#include "input/bindings.h"
 
 #include <algorithm>
 #include <cstdio>
@@ -43,6 +44,18 @@ std::string Config_Text(const Config& c)
     s += std::format("pause_on_focus_loss = {}\n\n", Bool(c.pauseOnFocusLoss));
     s += "[Input]\n";
     s += std::format("rumble = {}\n", Bool(c.rumble));
+    s += "\n[Gamepad]\n";
+    s += "; the gamepad button for each Wii button: a b x y back guide start leftstick rightstick\n";
+    s += "; leftshoulder rightshoulder dpup dpdown dpleft dpright none (by position: a is the bottom\n";
+    s += "; face button). The left stick moves the Sim, the right stick the pointer; both stick\n";
+    s += "; clicks together open the settings.\n";
+    for (int i = 0; i < kControlCount; i++) s += std::format("{} = {}\n", kControls[i].key, Binding_Pad(i));
+    s += "\n[Keyboard]\n";
+    s += "; keys and mouse buttons, comma-separated: A-Z 0-9 F2-F10 F12 SPACE ENTER BACKSPACE TAB\n";
+    s += "; LSHIFT RSHIFT LCTRL RCTRL LALT RALT UP DOWN LEFT RIGHT INSERT DELETE HOME_KEY END PAGEUP\n";
+    s += "; PAGEDOWN NUMPAD0-NUMPAD9 MOUSE1 (left) MOUSE2 (right) MOUSE3 (middle) MOUSE4 MOUSE5 NONE.\n";
+    s += "; WASD move the Sim, IJKL the pointer, Q / E are the GameCube L / R triggers.\n";
+    for (int i = 0; i < kControlCount; i++) s += std::format("{} = {}\n", kControls[i].key, Binding_Keys(i));
     s += "\n[Paths]\n";
     s += "; leave empty to search next to the executable (game/extracted/DATA, game/*.iso)\n";
     s += std::format("data = {}\niso = {}\n", c.dataDir, c.isoPath);
@@ -143,6 +156,11 @@ void Config_Load(const std::string& path)
         else if (section == "input")
         {
             if (key == "rumble") c.rumble = ParseBool(val);
+        }
+        else if (section == "gamepad" || section == "keyboard")
+        {
+            for (int i = 0; i < kControlCount; i++)
+                if (key == kControls[i].key) (section == "gamepad" ? c.padBind[i] : c.keyBind[i]) = val;
         }
         else if (section == "paths")
         {

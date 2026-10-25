@@ -18,7 +18,8 @@
       checks for its save that way)
 - [x] Gamepad-only play: the right stick moves a virtual pointer (the mouse takes over when it
       moves); main menu verified (tools/scripts/gen.py menu_stick)
-- [ ] Settings for the input layout; launcher text for this game
+- [x] Remappable buttons: config.ini [Gamepad] / [Keyboard] and the Input settings tab;
+      launcher text and controls for this game
 - [ ] Linux build
 
 ## Porting notes (R42E69)

@@ -22,6 +22,10 @@ struct Config
     bool pauseOnFocusLoss = false;   // freeze the game while the window is in the background
     // [Input]
     bool rumble = true;
+    // [Gamepad] / [Keyboard]: per game button (input/bindings.cpp kControls), a gamepad button
+    // name and a comma-separated key list; empty means the default
+    std::string padBind[13];
+    std::string keyBind[13];
     // [Paths]
     std::string dataDir;
     std::string isoPath;
