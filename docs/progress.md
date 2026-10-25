@@ -14,8 +14,8 @@
 - [ ] Interactions with objects, the action menu, the HUD buttons
 - [x] Continue Game from a save (/dev/fs ReadDir of a file is EINVAL, not ENOENT: the game
       checks for its save that way)
-- [ ] Gamepad-only play in screens that need the pointer (the in-world cursor can follow the
-      stick: InteractorModule::CursorMovementTracker::UpdateCursorPositionFromJoystick)
+- [x] Gamepad-only play: the right stick moves a virtual pointer (the mouse takes over when it
+      moves); main menu verified (tools/scripts/gen.py menu_stick)
 - [ ] Settings for the input layout; launcher text for this game
 - [ ] Linux build
 

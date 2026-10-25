@@ -43,11 +43,10 @@ Remote with a Nunchuk is always connected, so the game never asks for one.
 
 | Game (Wii) | Gamepad | Keyboard / mouse |
 |---|---|---|
-| Pointer | (the game moves the cursor itself in some screens) | mouse |
+| Pointer | right stick | mouse, or I J K L |
 | A | A (south) | Space, left mouse button |
 | B | B (east) | Backspace, right mouse button |
 | Nunchuk stick | left stick | W A S D |
-| C-stick | right stick | I J K L |
 | Nunchuk C / Z | RB / LB | C / Z, middle mouse button = C |
 | 1 / 2 | X (west) / Y (north) | 1 / 2 |
 | + / - | Start / Back | Enter / Tab |
@@ -55,7 +54,8 @@ Remote with a Nunchuk is always connected, so the game never asks for one.
 | D-pad | D-pad | arrow keys |
 | GameCube L / R | LT / RT | Q / E |
 
-Gamepads are read through SDL3 (Xbox, PlayStation, Switch Pro and generic pads). Rumble goes
+The Wii version has no C-stick, so the right stick (and IJKL) moves a virtual pointer; the
+mouse takes over as soon as it moves. Gamepads are read through SDL3 (Xbox, PlayStation, Switch Pro and generic pads). Rumble goes
 to the gamepad.
 
 ## Building

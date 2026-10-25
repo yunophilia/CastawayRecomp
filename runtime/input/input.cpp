@@ -2,10 +2,11 @@
 // for automated test runs.
 //
 // Keyboard (only while the game window has focus):
-//   WASD movement stick, IJKL C-stick, arrow keys D-pad,
+//   WASD movement stick, IJKL pointer, arrow keys D-pad,
 //   Space A, Backspace B, C C, Z Z, 1 1, 2 2, Enter +, Tab -, H HOME,
 //   Q / E the GameCube L / R triggers.
-// Mouse: the pointer; left button A, right button B, middle button C.
+// Mouse: the pointer (the right stick and IJKL move it too); left button A, right button B,
+// middle button C.
 #include "input.h"
 #include "gamepad.h"
 #include "../config.h"
