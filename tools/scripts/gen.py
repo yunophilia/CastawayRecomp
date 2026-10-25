@@ -177,6 +177,18 @@ def soak():
     s.save('soak', end + 2)
 
 
+@script
+def continue_game():
+    s = Script('main menu -> Continue Game (needs a save from an earlier run)')
+    f = boot_to_menu(s)
+    f = s.click(f + 50, 0.578, 0.632)    # Continue Game
+    s.at(f + 10, 'nopoint')
+    for d in range(200, 2400, 200):      # confirm dialogs, if any
+        s.tap(f + d)
+    s.shots(f + 60, f + 3000, 150, 'cg')
+    s.save('continue_game', f + 3002)
+
+
 if __name__ == '__main__':
     for name in sys.argv[1:]:
         SCRIPTS[name]()

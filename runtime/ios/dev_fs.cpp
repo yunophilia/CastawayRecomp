@@ -138,6 +138,7 @@ public:
     {
         uint32_t in = 0x80000000 | r.inAddr;
         uint32_t out = 0x80000000 | r.outAddr;
+        LOG_DEBUG("FS ioctl {:x} in {:x}+{:x} out {:x}+{:x}", r.ioctl, r.inAddr, r.inSize, r.outAddr, r.outSize);
         switch (r.ioctl)
         {
         case 0x02:   // GetStats
@@ -227,6 +228,8 @@ public:
 
     IOSReply Ioctlv(const IOSRequest& r) override
     {
+        LOG_DEBUG("FS ioctlv {:x} ({} in, {} io){}", r.ioctl, r.in.size(), r.io.size(),
+                  r.in.empty() ? "" : " " + ReadGuestString(r.in[0].addr));
         switch (r.ioctl)
         {
         case 0x04:   // ReadDir
@@ -236,7 +239,9 @@ public:
             if (!ValidPath(path)) return { FS_EINVAL };
             fs::path hp = HostPath(path);
             std::error_code ec;
-            if (!fs::is_directory(hp, ec)) return { FS_ENOENT };
+            // a file is not a directory, but it exists: games (Castaway) read the directory of
+            // a save file to see whether it is there
+            if (!fs::is_directory(hp, ec)) return { fs::exists(hp, ec) ? FS_EINVAL : FS_ENOENT };
             std::vector<std::string> names;
             for (auto& e : fs::directory_iterator(hp, ec))
                 names.push_back(e.path().filename().string());

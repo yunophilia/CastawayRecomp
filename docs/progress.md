@@ -12,7 +12,8 @@
 - [x] Random-input soak, 12 minutes from the beach (tools/scripts/gen.py soak): no crash;
       harvesting bamboo, the pause menu, Plans & Ideas, the island map dialog, tutorial tips
 - [ ] Interactions with objects, the action menu, the HUD buttons
-- [ ] Continue Game from a save
+- [x] Continue Game from a save (/dev/fs ReadDir of a file is EINVAL, not ENOENT: the game
+      checks for its save that way)
 - [ ] Gamepad-only play in screens that need the pointer (the in-world cursor can follow the
       stick: InteractorModule::CursorMovementTracker::UpdateCursorPositionFromJoystick)
 - [ ] Settings for the input layout; launcher text for this game
