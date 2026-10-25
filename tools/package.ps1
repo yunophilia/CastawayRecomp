@@ -8,6 +8,7 @@ if (-not (Test-Path $exe)) { throw "build first (cmake --build --preset windows-
 New-Item -ItemType Directory -Force $dist | Out-Null
 New-Item -ItemType Directory -Force (Join-Path $dist "game") | Out-Null
 Copy-Item $exe $dist -Force
+Copy-Item (Join-Path $root "out\SDL3.dll") $dist -Force   # gamepads (zlib licence)
 Copy-Item (Join-Path $root "README.md") $dist -Force
 Copy-Item (Join-Path $root "LICENSE") $dist -Force   # GPL-2.0: the licence travels with the binary
 # Ship a precompiled shader cache: the GX states recorded in data/shadercache (plus any the
@@ -24,15 +25,17 @@ foreach ($k in "vs_keys.bin", "ps_keys.bin") {
     }
     [IO.File]::WriteAllBytes((Join-Path $dstCache $k), $bytes)   # de-duplicated by the precompile step
 }
-& $exe --precompile-shaders $dstCache
-if ($LASTEXITCODE -ne 0) { throw "shader precompilation failed" }
+if ((Get-Item (Join-Path $dstCache "vs_keys.bin")).Length -gt 0) {
+    & $exe --precompile-shaders $dstCache
+    if ($LASTEXITCODE -ne 0) { throw "shader precompilation failed" }
+} else { "no recorded shaders yet (play a while in the development build first)" }
 @"
 You don't need to put anything here. Start CastawayRecomp.exe and select your own disc
 image (USA; ISO, RVZ, WIA or WBFS) in the file dialog, wherever it is on your PC.
 The launcher installs the game data into this folder; the image is not needed afterwards.
 
 Optional, if you have one:
-  textures\RENE8P\...                       (Dolphin-format HD texture pack; the folder is
-                                            named by the game ID: RENE8P, RENP8P or RENJ8P)
+  textures\R42E69\...                       (Dolphin-format HD texture pack; the folder is
+                                            named by the game ID)
 "@ | Set-Content (Join-Path $dist "game\ABOUT_THIS_FOLDER.txt")
 "packaged to $dist"

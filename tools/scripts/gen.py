@@ -159,13 +159,13 @@ def beach_move():
 
 
 @script
-def soak():
-    """Ten minutes of random play on the island (seeded, so a crash can be replayed)."""
+def soak(minutes=10, seed=1234, name='soak'):
+    """Random play on the island (seeded, so a crash can be replayed)."""
     import random
-    rnd = random.Random(1234)
-    s = Script('to the beach, then 10 minutes of random input (seed 1234)')
+    rnd = random.Random(seed)
+    s = Script(f'to the beach, then {minutes} minutes of random input (seed {seed})')
     f = to_beach(s)
-    end = f + 10 * 60 * 60
+    end = f + minutes * 60 * 60
     buttons = ['A', 'A', 'A', 'B', 'B', 'C', 'Z', '1', '2', 'PLUS', 'MINUS', 'UP', 'DOWN', 'LEFT', 'RIGHT']
     while f < end:
         r = rnd.random()
@@ -181,8 +181,13 @@ def soak():
         else:
             s.tap(f, rnd.choice(buttons), hold=rnd.randint(4, 20))
         f += rnd.randint(20, 120)
-    s.shots(end - 10 * 60 * 60, end, 1200, 'sk')
-    s.save('soak', end + 2)
+    s.shots(end - minutes * 60 * 60, end, 1200 * max(1, minutes // 10), 'sk')
+    s.save(name, end + 2)
+
+
+@script
+def soak30():
+    soak(30, 777, 'soak30')
 
 
 @script
