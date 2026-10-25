@@ -59,3 +59,6 @@ void Input_LoadScript(const char* path);
 bool Input_ScriptActive();
 // Called once per presented frame with a function that saves the frame as a BMP.
 void Input_OnPresent(void (*save)(const char* path));
+// Each video field (60 per second of game time): scripts step by fields, so a run reaches
+// the same screens on a fast or a slow renderer
+void Input_OnField();

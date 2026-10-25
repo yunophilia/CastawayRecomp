@@ -1,12 +1,16 @@
 #include "settings_ui.h"
+#include "../kernel/host.h"
 #include "../config.h"
 #include "../gx/video.h"
 #include "../version.h"
 #include "../input/bindings.h"
 #include "../input/input.h"
 
+#include <SDL3/SDL.h>
 #include <imgui.h>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #include <algorithm>
 #include <format>
@@ -126,14 +130,6 @@ int s_keyCapture = -1;
 bool s_keyCaptureAdd = false;
 bool s_keyCaptureArmed = false;
 
-// The first held key or mouse button that can be bound, or 0.
-int HeldBindableKey()
-{
-    for (int vk = 1; vk < 256; vk++)
-        if ((GetAsyncKeyState(vk) & 0x8000) && !Binding_KeyName(vk).empty()) return vk;
-    return 0;
-}
-
 void BindingsChanged(SettingsHost host)
 {
     Input_ReloadBindings();
@@ -149,14 +145,14 @@ void InputTab(SettingsHost host)
 
     if (s_keyCapture >= 0)
     {
-        int held = HeldBindableKey();
-        if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) s_keyCapture = -1;
+        int held = Binding_HeldAny();
+        if (Binding_Held(SDL_SCANCODE_ESCAPE)) s_keyCapture = -1;
         else if (!s_keyCaptureArmed) s_keyCaptureArmed = held == 0;
         else if (held)
         {
             std::string name = Binding_KeyName(held);
             std::string cur = Binding_Keys(s_keyCapture);
-            bool none = _stricmp(cur.c_str(), "NONE") == 0 || cur.empty();
+            bool none = Host_StrICmp(cur.c_str(), "NONE") == 0 || cur.empty();
             if (s_keyCaptureAdd && !none)
             {
                 bool dup = false;
@@ -190,7 +186,7 @@ void InputTab(SettingsHost host)
             std::string pad = Binding_Pad(i);
             int cur = kPadButtonCount - 1;
             for (int b = 0; b < kPadButtonCount; b++)
-                if (_stricmp(pad.c_str(), kPadButtons[b]) == 0) cur = b;
+                if (Host_StrICmp(pad.c_str(), kPadButtons[b]) == 0) cur = b;
             ImGui::SetNextItemWidth(-1);
             if (ImGui::BeginCombo("##pad", kPadButtonLabels[cur]))
             {
@@ -265,7 +261,7 @@ void SettingsUI_Draw(SettingsHost host)
         static int shotFrames = 0;
         bool pick = shotTab && shotFrames++ < 2;
         for (auto& t : tabs)
-            if (ImGui::BeginTabItem(t.name, nullptr, pick && !_stricmp(shotTab, t.name) ? ImGuiTabItemFlags_SetSelected : 0))
+            if (ImGui::BeginTabItem(t.name, nullptr, pick && !Host_StrICmp(shotTab, t.name) ? ImGuiTabItemFlags_SetSelected : 0))
             {
                 ImGui::BeginChild("page", ImVec2(0, -helpH), ImGuiChildFlags_None);
                 t.draw(host);

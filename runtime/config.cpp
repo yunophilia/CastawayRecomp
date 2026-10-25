@@ -4,10 +4,13 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <filesystem>
 #include <format>
 #include <fstream>
 #include <sstream>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 Config g_config;
 static std::string s_path;
@@ -74,7 +77,9 @@ bool Config_Save()
     std::string text = Config_Text(g_config);
     bool ok = fwrite(text.data(), 1, text.size(), f) == text.size();
     ok = fclose(f) == 0 && ok;
-    if (ok) ok = MoveFileExA(tmp.c_str(), s_path.c_str(), MOVEFILE_REPLACE_EXISTING) != 0;
+    std::error_code ec;
+    if (ok) std::filesystem::rename(tmp, s_path, ec);   // replaces config.ini in one step
+    ok = ok && !ec;
     if (!ok) LOG_WARN("config: cannot save {}", s_path);
     return ok;
 }

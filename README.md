@@ -1,6 +1,6 @@
 # CastawayRecomp
 
-A static recompilation of **The Sims 2: Castaway** (Wii) to native Windows x64. The game's
+A static recompilation of **The Sims 2: Castaway** (Wii) to native Windows x64 and Linux x64. The game's
 PowerPC code is translated to C++ ahead of time and runs on a runtime that stands in for the
 Wii hardware and system software. It plays with a gamepad of any brand, or with mouse and
 keyboard.
@@ -75,6 +75,9 @@ images), [Dear ImGui](https://github.com/ocornut/imgui) and [SDL3](https://githu
 2. Install the game data from your disc image: `out\bkr_install <image.iso|.rvz|.wbfs> game\R42E69`
 3. Generate the recompiled sources: `python tools/build_generated.py`
 4. Build everything: `tools\dev_build.bat`; the game is `out\CastawayRecomp.exe`.
+
+On Linux, see [docs/linux.md](docs/linux.md): DXVK-native and vkd3d provide Direct3D 11 and
+the shader compiler, and the build is `cmake --preset linux-clang && ninja -C build/linux-clang`.
 
 ## Testing
 

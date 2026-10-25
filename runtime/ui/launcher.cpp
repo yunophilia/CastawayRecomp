@@ -21,7 +21,9 @@
 #include <filesystem>
 #include <thread>
 #ifdef _WIN32
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #endif
 
 namespace fs = std::filesystem;

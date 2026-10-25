@@ -95,7 +95,11 @@ static void OnEvent(uint64_t absHl, int64_t)
     uint32_t total = TotalHalfLines();
     uint32_t hl = (uint32_t)(absHl % total);
     if (hl == 0 || hl == total / 2)
+    {
         g_viFieldCount++;
+        void Input_OnField();
+        Input_OnField();
+    }
     for (int i = 0; i < 4; i++)
     {
         if (TargetHalfLine(i) == hl)

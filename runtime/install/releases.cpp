@@ -1,4 +1,5 @@
 #include "releases.h"
+#include "../kernel/host.h"
 
 #include <cstdio>
 #include <iterator>
@@ -33,7 +34,7 @@ const GameRelease* Release_Find(const std::string& gameId)
 std::string Release_InstalledId(const std::filesystem::path& data)
 {
     char id[6] = {};
-    FILE* f = _wfopen((data / "sys" / "boot.bin").c_str(), L"rb");
+    FILE* f = Host_Open((data / "sys" / "boot.bin").c_str(), "rb");
     if (!f) return {};
     size_t n = fread(id, 1, 6, f);
     fclose(f);

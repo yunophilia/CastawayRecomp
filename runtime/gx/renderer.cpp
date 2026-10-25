@@ -79,9 +79,7 @@ static std::filesystem::path ShaderCacheDir()
         if (!s_shaderCacheDir.empty()) dir = s_shaderCacheDir;
         else
         {
-            wchar_t buf[MAX_PATH];
-            GetModuleFileNameW(nullptr, buf, MAX_PATH);
-            dir = std::filesystem::path(buf).parent_path() / "shadercache";
+            dir = Host_ExePath().parent_path() / "shadercache";
         }
         std::error_code ec;
         std::filesystem::create_directories(dir, ec);
@@ -116,7 +114,7 @@ static ID3DBlob* CompileHLSL(const std::string& src, const char* target)
     ID3DBlob* blob = nullptr;
     ID3DBlob* err = nullptr;
     std::filesystem::path cachePath = ShaderCachePath(src, target);
-    if (FILE* f = _wfopen(cachePath.c_str(), L"rb"))
+    if (FILE* f = Host_Open(cachePath.c_str(), "rb"))
     {
         fseek(f, 0, SEEK_END);
         long n = ftell(f);
@@ -138,7 +136,7 @@ static ID3DBlob* CompileHLSL(const std::string& src, const char* target)
         return nullptr;
     }
     if (err) err->Release();
-    if (FILE* f = _wfopen(cachePath.c_str(), L"wb"))
+    if (FILE* f = Host_Open(cachePath.c_str(), "wb"))
     {
         fwrite(blob->GetBufferPointer(), 1, blob->GetBufferSize(), f);
         fclose(f);
@@ -548,7 +546,7 @@ static ID3DBlob* LoadCachedBlob(const std::string& src, const char* target)
 {
     std::filesystem::path cachePath = ShaderCachePath(src, target);
     ID3DBlob* blob = nullptr;
-    if (FILE* f = _wfopen(cachePath.c_str(), L"rb"))
+    if (FILE* f = Host_Open(cachePath.c_str(), "rb"))
     {
         fseek(f, 0, SEEK_END);
         long n = ftell(f);
@@ -567,7 +565,7 @@ template <typename K>
 static void RememberKey(const char* file, const K& k)
 {
     std::filesystem::path p = ShaderCacheDir() / file;
-    if (FILE* f = _wfopen(p.c_str(), L"ab")) { fwrite(&k, sizeof(K), 1, f); fclose(f); }
+    if (FILE* f = Host_Open(p.c_str(), "ab")) { fwrite(&k, sizeof(K), 1, f); fclose(f); }
 }
 
 template <typename S>
@@ -661,7 +659,7 @@ template <typename K, typename S>
 static int PreloadKind(const char* file, std::unordered_map<K, S*, KeyHash<K>>& cache, std::string (*gen)(const K&), const char* target)
 {
     std::filesystem::path p = ShaderCacheDir() / file;
-    FILE* f = _wfopen(p.c_str(), L"rb");
+    FILE* f = Host_Open(p.c_str(), "rb");
     if (!f) return 0;
     std::vector<K> keys;
     K k;
@@ -684,7 +682,7 @@ static int PreloadKind(const char* file, std::unordered_map<K, S*, KeyHash<K>>& 
         n++;
     }
     if (queued) LOG_INFO("shader cache: compiling {} {} shaders without a cached blob in the background", queued, target);
-    if (FILE* o = _wfopen(p.c_str(), L"wb"))   // rewrite without duplicates
+    if (FILE* o = Host_Open(p.c_str(), "wb"))   // rewrite without duplicates
     {
         for (auto& kv : cache) fwrite(&kv.first, sizeof(K), 1, o);
         fclose(o);
@@ -707,7 +705,7 @@ static int PrecompileKind(const char* file, std::string (*gen)(const K&), const 
 {
     std::filesystem::path p = ShaderCacheDir() / file;
     std::vector<K> keys;
-    if (FILE* f = _wfopen(p.c_str(), L"rb"))
+    if (FILE* f = Host_Open(p.c_str(), "rb"))
     {
         std::unordered_map<K, int, KeyHash<K>> seen;
         K k;
@@ -736,7 +734,7 @@ static int PrecompileKind(const char* file, std::string (*gen)(const K&), const 
     for (unsigned t = 0; t < std::max(1u, std::thread::hardware_concurrency()); t++) pool.emplace_back(work);
     for (auto& t : pool) t.join();
     LOG_INFO("{}: {} keys, {} shaders, {} compiled, {} failed", file, keys.size(), sources.size(), done.load(), failed.load());
-    if (FILE* o = _wfopen(p.c_str(), L"wb"))   // rewrite without duplicates
+    if (FILE* o = Host_Open(p.c_str(), "wb"))   // rewrite without duplicates
     {
         fwrite(keys.data(), sizeof(K), keys.size(), o);
         fclose(o);

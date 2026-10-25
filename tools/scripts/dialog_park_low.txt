@@ -35,18 +35,9 @@
 1045 release A
 1090 press A
 1095 release A
-1140 press A
-1145 release A
-1190 press A
-1195 release A
-1240 press A
-1245 release A
-1350 point 0.308 0.804
-1390 press A
-1396 release A
-1486 point 0.033 0.545
-1506 press A
-1512 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
 1586 point 0.033 0.545
 1606 press A
 1612 release A
@@ -56,84 +47,87 @@
 1786 point 0.033 0.545
 1806 press A
 1812 release A
-2546 point -0.050 0.840
-2586 press A
-2592 release A
-2742 point -0.506 0.861
-2782 press A
-2788 release A
-2898 point -0.747 -0.452
-2938 press A
-2944 release A
-3044 point -0.506 0.861
-3084 press A
-3090 release A
-3390 point 0.692 0.846
-3430 press A
-3436 release A
-3556 point 0.033 0.039
-3576 press A
-3582 release A
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3490 point 0.692 0.846
+3530 press A
+3536 release A
 3656 point 0.033 0.039
 3676 press A
 3682 release A
 3756 point 0.033 0.039
 3776 press A
 3782 release A
-3856 point 0.033 0.218
+3856 point 0.033 0.039
 3876 press A
 3882 release A
 3956 point 0.033 0.218
 3976 press A
 3982 release A
-4036 point 0.033 0.948
-4336 press A
-4342 release A
-4576 press A
-4582 release A
-4816 press A
-4822 release A
-5056 press A
-5062 release A
-5296 press A
-5302 release A
-5536 press A
-5542 release A
-5776 press A
-5782 release A
-6016 press A
-6022 release A
-6256 press A
-6262 release A
-6496 press A
-6502 release A
-6736 press A
-6742 release A
-6976 press A
-6982 release A
-7216 press A
-7222 release A
-7456 press A
-7462 release A
-7696 press A
-7702 release A
-7936 press A
-7942 release A
-8176 press A
-8182 release A
-8416 press A
-8422 release A
-8656 press A
-8662 release A
-6936 shot dp_00
-7136 shot dp_01
-7336 shot dp_02
-7536 shot dp_03
-7736 shot dp_04
-7936 shot dp_05
-8136 shot dp_06
-8336 shot dp_07
-8536 shot dp_08
-8736 shot dp_09
-8936 shot dp_10
-9138 quit
+4056 point 0.033 0.218
+4076 press A
+4082 release A
+4136 point 0.033 0.948
+4436 press A
+4442 release A
+4676 press A
+4682 release A
+4916 press A
+4922 release A
+5156 press A
+5162 release A
+5396 press A
+5402 release A
+5636 press A
+5642 release A
+5876 press A
+5882 release A
+6116 press A
+6122 release A
+6356 press A
+6362 release A
+6596 press A
+6602 release A
+6836 press A
+6842 release A
+7076 press A
+7082 release A
+7316 press A
+7322 release A
+7556 press A
+7562 release A
+7796 press A
+7802 release A
+8036 press A
+8042 release A
+8276 press A
+8282 release A
+8516 press A
+8522 release A
+8756 press A
+8762 release A
+7036 shot dp_00
+7236 shot dp_01
+7436 shot dp_02
+7636 shot dp_03
+7836 shot dp_04
+8036 shot dp_05
+8236 shot dp_06
+8436 shot dp_07
+8636 shot dp_08
+8836 shot dp_09
+9036 shot dp_10
+9238 quit

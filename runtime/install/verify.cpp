@@ -5,8 +5,8 @@
 #include <cstring>
 #include <span>
 #include <vector>
-#include <windows.h>
-#include <bcrypt.h>
+#include "../kernel/host.h"
+#include "../kernel/sha1.h"
 
 namespace fs = std::filesystem;
 
@@ -23,17 +23,16 @@ std::string Hex(const uint8_t* d, size_t n)
 // SHA-1 of a file; false if it cannot be read (or the check was canceled)
 bool HashFile(const fs::path& p, std::string& hex, VerifyProgress* progress)
 {
-    FILE* f = _wfopen(p.c_str(), L"rb");
+    FILE* f = Host_Open(p, "rb");
     if (!f) return false;
-    BCRYPT_HASH_HANDLE h = nullptr;
-    if (BCryptCreateHash(BCRYPT_SHA1_ALG_HANDLE, &h, nullptr, 0, nullptr, 0, 0) != 0) { fclose(f); return false; }
+    Sha1 h;
     std::vector<uint8_t> buf(1 << 20);
     bool ok = true;
     for (;;)
     {
         size_t n = fread(buf.data(), 1, buf.size(), f);
         if (n == 0) break;
-        BCryptHashData(h, buf.data(), (ULONG)n, 0);
+        h.Update(buf.data(), n);
         if (progress)
         {
             progress->done += n;
@@ -41,8 +40,7 @@ bool HashFile(const fs::path& p, std::string& hex, VerifyProgress* progress)
         }
     }
     uint8_t out[20];
-    BCryptFinishHash(h, out, 20, 0);
-    BCryptDestroyHash(h);
+    h.Final(out);
     fclose(f);
     hex = Hex(out, 20);
     return ok;

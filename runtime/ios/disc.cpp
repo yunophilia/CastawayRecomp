@@ -1,4 +1,5 @@
 #include "disc.h"
+#include "../kernel/host.h"
 #include "../log.h"
 
 #include <algorithm>
@@ -129,12 +130,12 @@ bool Disc_Open(const std::string& dataDir, const std::string& isoPath)
     if (!fopen_s(&iso, s_rawPath.c_str(), "rb") && iso)
     {
         uint8_t pt[0x20];
-        _fseeki64(iso, 0x40000, SEEK_SET);
+        Host_Seek64(iso, 0x40000, SEEK_SET);
         fread(pt, 1, sizeof(pt), iso);
         uint32_t count = BE32(pt);
         uint64_t tableOff = (uint64_t)BE32(pt + 4) << 2;
         std::vector<uint8_t> tab(count * 8);
-        _fseeki64(iso, tableOff, SEEK_SET);
+        Host_Seek64(iso, tableOff, SEEK_SET);
         fread(tab.data(), 1, tab.size(), iso);
         for (uint32_t i = 0; i < count; i++)
         {
@@ -167,7 +168,7 @@ bool Disc_ReadPartition(uint64_t offset, uint32_t length, uint8_t* out)
         if (s >= e) continue;
         FILE* f = GetFile(it->path);
         if (!f) continue;
-        _fseeki64(f, (int64_t)(s - it->offset), SEEK_SET);
+        Host_Seek64(f, (int64_t)(s - it->offset), SEEK_SET);
         fread(out + (s - offset), 1, (size_t)(e - s), f);
         any = true;
     }
@@ -182,7 +183,7 @@ bool Disc_ReadRaw(uint64_t offset, uint32_t length, uint8_t* out)
     memset(out, 0, length);
     FILE* f = GetFile(s_rawPath);
     if (!f) return false;
-    _fseeki64(f, (int64_t)offset, SEEK_SET);
+    Host_Seek64(f, (int64_t)offset, SEEK_SET);
     fread(out, 1, length, f);
     return true;
 }

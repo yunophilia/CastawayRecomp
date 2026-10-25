@@ -2,7 +2,8 @@
 
   python tools/scripts/gen.py <name>      writes tools/scripts/<name>.txt
 
-Frames are presented frames (60 per second). Pointer coordinates are given as screen
+Frames are video fields (60 per second of game time; runtime/input Input_OnField), so a
+script reaches the same screens however fast the machine renders. Pointer coordinates are given as screen
 fractions (u, v) and converted to the game's pointer coordinates like the mouse is.
 """
 import os
@@ -45,10 +46,12 @@ class Script:
 
 
 def boot_to_menu(s):
-    """Tap A through the safety screens and the title (A does nothing on the menu itself)."""
-    for f in range(240, 1250, 50):
+    """Tap A through the safety screens and the title (up by field ~850), then wait for the
+    menu (~1250-1300). With the pointer away, A on the menu would pick Continue Game (and,
+    with no save, its "no saved game data" notice), so the taps stop well before it."""
+    for f in range(240, 1100, 50):
         s.tap(f, hold=5)
-    return 1300
+    return 1400
 
 
 def new_crew(s, f):

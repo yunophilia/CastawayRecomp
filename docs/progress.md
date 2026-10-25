@@ -20,7 +20,11 @@
       moves); main menu verified (tools/scripts/gen.py menu_stick)
 - [x] Remappable buttons: config.ini [Gamepad] / [Keyboard] and the Input settings tab;
       launcher text and controls for this game
-- [ ] Linux build
+- [x] Linux build (docs/linux.md): DXVK-native + vkd3d, SDL3. Verified headless (Xvfb,
+      lavapipe): beach_move and actions play out like on Windows
+- [x] Input scripts step by video fields instead of presented frames, so a run reaches the
+      same screens on a slow renderer (lavapipe presents ~35 fps while the game keeps 60 Hz)
+- [ ] HD texture packs and dumps on Linux (no WIC there)
 
 ## Porting notes (R42E69)
 

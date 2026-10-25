@@ -1,5 +1,6 @@
 // CastawayRecomp: statically recompiled The Sims 2: Castaway (USA R42E69)
 #include "log.h"
+#include "kernel/host.h"
 #include "config.h"
 #include "gx/video.h"
 #include "cpu/cpu.h"
@@ -16,7 +17,9 @@
 #include <algorithm>
 #include <filesystem>
 #include <string>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 void Log_Open(const char* path);
 void NAND_InitSystemFiles();
@@ -28,36 +31,22 @@ extern bool g_noMessageBox;
 extern int g_logLevel;
 extern "C" uint32_t g_cfgFrameRate;
 
-static std::string ExeDir()
-{
-    wchar_t buf[MAX_PATH];
-    GetModuleFileNameW(nullptr, buf, MAX_PATH);
-    return std::filesystem::path(buf).parent_path().string();
-}
+static std::string ExeDir() { return Host_ExePath().parent_path().string(); }
 
 // Restarts the game (settings that need a restart): same command line, no launcher.
 void App_Restart()
 {
-    std::wstring cmd = GetCommandLineW();
-    if (cmd.find(L"--skip-launcher") == std::wstring::npos) cmd += L" --skip-launcher";
-    wchar_t exe[MAX_PATH];
-    GetModuleFileNameW(nullptr, exe, MAX_PATH);
-    STARTUPINFOW si{ sizeof(si) };
-    PROCESS_INFORMATION pi{};
     LOG_INFO("restarting");
-    if (CreateProcessW(exe, cmd.data(), nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi))
-    {
-        CloseHandle(pi.hThread);
-        CloseHandle(pi.hProcess);
-    }
-    else
-        LOG_WARN("restart failed ({})", GetLastError());
+    if (!Host_Restart("--skip-launcher")) LOG_WARN("restart failed");
     { void Input_StopRumble(); Input_StopRumble(); }
-    TerminateProcess(GetCurrentProcess(), 0);
+    fflush(nullptr);
+    _Exit(0);
 }
 
 int main(int argc, char** argv)
 {
+    Host_SetArgs(argc, argv);
+#ifdef _WIN32
     // Keep full timer resolution and CPU speed even when the window is minimized or in
     // the background (Windows 11 power throttling would coarsen all waits to ~15.6 ms).
     {
@@ -67,6 +56,7 @@ int main(int argc, char** argv)
         pt.StateMask = 0;
         SetProcessInformation(GetCurrentProcess(), ProcessPowerThrottling, &pt, sizeof(pt));
     }
+#endif
     // packaging: fill the shader cache that ships with the exe (no window, no game data)
     if (argc == 3 && std::string(argv[1]) == "--precompile-shaders")
     {
@@ -121,7 +111,7 @@ int main(int argc, char** argv)
     if (isoPath.empty())
     {
         // any disc image in game/ next to the exe or the repo root
-        for (std::string b : { root, root + "/.." })
+        for (std::string b : { root, root + "/..", root + "/../.." })
         {
             std::error_code ec;
             for (auto& e : std::filesystem::directory_iterator(std::filesystem::path(b) / "game", ec))
@@ -133,10 +123,11 @@ int main(int argc, char** argv)
         }
     }
 
-    // installs go to game/ next to the exe (or the repo's game/ when running from out/)
+    // installs go to game/ next to the exe (or the repo's game/ when running from out/ or out/<system>)
     std::filesystem::path gameDir = std::filesystem::path(root) / "game";
-    if (!std::filesystem::exists(gameDir) && std::filesystem::exists(std::filesystem::path(root) / ".." / "game"))
-        gameDir = std::filesystem::weakly_canonical(std::filesystem::path(root) / ".." / "game");
+    for (const char* up : { "..", "../.." })
+        if (!std::filesystem::exists(gameDir) && std::filesystem::exists(std::filesystem::path(root) / up / "game"))
+            gameDir = std::filesystem::weakly_canonical(std::filesystem::path(root) / up / "game");
     std::filesystem::path installDest = gameDir / "extracted" / "DATA";
 
     // Launcher on every start (settings, install / repair the game data); TAS runs,

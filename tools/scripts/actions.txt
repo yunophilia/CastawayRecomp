@@ -35,18 +35,9 @@
 1045 release A
 1090 press A
 1095 release A
-1140 press A
-1145 release A
-1190 press A
-1195 release A
-1240 press A
-1245 release A
-1350 point 0.308 0.804
-1390 press A
-1396 release A
-1486 point 0.033 0.545
-1506 press A
-1512 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
 1586 point 0.033 0.545
 1606 press A
 1612 release A
@@ -56,99 +47,102 @@
 1786 point 0.033 0.545
 1806 press A
 1812 release A
-2546 point -0.050 0.840
-2586 press A
-2592 release A
-2742 point -0.506 0.861
-2782 press A
-2788 release A
-2898 point -0.747 -0.452
-2938 press A
-2944 release A
-3044 point -0.506 0.861
-3084 press A
-3090 release A
-3390 point 0.692 0.846
-3430 press A
-3436 release A
-3556 point 0.033 0.039
-3576 press A
-3582 release A
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3490 point 0.692 0.846
+3530 press A
+3536 release A
 3656 point 0.033 0.039
 3676 press A
 3682 release A
 3756 point 0.033 0.039
 3776 press A
 3782 release A
-3856 point 0.033 0.218
+3856 point 0.033 0.039
 3876 press A
 3882 release A
 3956 point 0.033 0.218
 3976 press A
 3982 release A
-4036 nopoint
-4336 press A
-4342 release A
-4576 press A
-4582 release A
-4816 press A
-4822 release A
-5056 press A
-5062 release A
-5296 press A
-5302 release A
-5536 press A
-5542 release A
-5776 press A
-5782 release A
-6016 press A
-6022 release A
-6256 press A
-6262 release A
-6496 press A
-6502 release A
-6736 press A
-6742 release A
-6976 press A
-6982 release A
-7216 press A
-7222 release A
-7456 press A
-7462 release A
-7696 press A
-7702 release A
-7936 press A
-7942 release A
-8176 press A
-8182 release A
-8416 press A
-8422 release A
-8656 press A
-8662 release A
-8936 stick -70 70
-9036 stick 0 0
-9066 shot ac_00_bamboo
-9076 press Z
-9082 release Z
-9136 shot ac_1_00
-9236 shot ac_1_01
-9336 shot ac_1_02
-9436 shot ac_1_03
-9536 shot ac_1_04
-9636 shot ac_1_05
-9736 stick -70 70
-10116 stick 0 0
-10156 shot ac_20_coconut
-10166 press DOWN
-10172 release DOWN
-10206 shot ac_21_down
-10216 press Z
-10222 release Z
-10276 shot ac_3_00
-10376 shot ac_3_01
-10476 shot ac_3_02
-10576 shot ac_3_03
-10676 shot ac_3_04
-10776 shot ac_3_05
-10876 shot ac_3_06
-10938 quit
+4056 point 0.033 0.218
+4076 press A
+4082 release A
+4136 nopoint
+4436 press A
+4442 release A
+4676 press A
+4682 release A
+4916 press A
+4922 release A
+5156 press A
+5162 release A
+5396 press A
+5402 release A
+5636 press A
+5642 release A
+5876 press A
+5882 release A
+6116 press A
+6122 release A
+6356 press A
+6362 release A
+6596 press A
+6602 release A
+6836 press A
+6842 release A
+7076 press A
+7082 release A
+7316 press A
+7322 release A
+7556 press A
+7562 release A
+7796 press A
+7802 release A
+8036 press A
+8042 release A
+8276 press A
+8282 release A
+8516 press A
+8522 release A
+8756 press A
+8762 release A
+9036 stick -70 70
+9136 stick 0 0
+9166 shot ac_00_bamboo
+9176 press Z
+9182 release Z
+9236 shot ac_1_00
+9336 shot ac_1_01
+9436 shot ac_1_02
+9536 shot ac_1_03
+9636 shot ac_1_04
+9736 shot ac_1_05
+9836 stick -70 70
+10216 stick 0 0
+10256 shot ac_20_coconut
+10266 press DOWN
+10272 release DOWN
+10306 shot ac_21_down
+10316 press Z
+10322 release Z
+10376 shot ac_3_00
+10476 shot ac_3_01
+10576 shot ac_3_02
+10676 shot ac_3_03
+10776 shot ac_3_04
+10876 shot ac_3_05
+10976 shot ac_3_06
+11038 quit

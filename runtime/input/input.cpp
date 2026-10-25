@@ -8,6 +8,7 @@
 // Mouse: the pointer (the right stick and IJKL move it too); its buttons are bound like keys
 // (default left A, right B, middle C) and count only over the window.
 #include "input.h"
+#include "../kernel/host.h"
 #include "gamepad.h"
 #include "bindings.h"
 #include "../config.h"
@@ -61,7 +62,10 @@ struct ScriptEvent
 std::vector<ScriptEvent> s_script;
 size_t s_scriptPos = 0;
 bool s_scripted = false;
-std::atomic<uint32_t> s_frame{ 0 };
+std::atomic<uint32_t> s_frame{ 0 };            // video fields (script frames)
+std::vector<std::string> s_pendingShots;       // saved at the next present
+bool s_quitPending = false;
+uint32_t s_quitField = 0;
 PadState s_scriptPad{};
 PointerState s_scriptPointer{};
 std::string s_shotDir = ".";   // the working directory (out/ for tools/run_test.ps1)
@@ -74,15 +78,16 @@ uint32_t ButtonBit(const std::string& n)
         { "UP", BTN_UP }, { "DOWN", BTN_DOWN }, { "LEFT", BTN_LEFT }, { "RIGHT", BTN_RIGHT },
     };
     for (auto& k : kNames)
-        if (_stricmp(n.c_str(), k.name) == 0) return k.bit;
+        if (Host_StrICmp(n.c_str(), k.name) == 0) return k.bit;
     LOG_WARN("script: unknown button {}", n);
     return 0;
 }
 
 int8_t StickArg(const std::string& s) { return (int8_t)std::clamp(atoi(s.c_str()), -127, 127); }
 
-// Applies the events up to the current frame (called with s_lock held).
-void RunScript(void (*save)(const char*))
+// Applies the events up to the current field (called with s_lock held). Screenshots and
+// quitting wait for the next presented frame.
+void RunScript()
 {
     uint32_t frame = s_frame.load();
     while (s_scriptPos < s_script.size() && s_script[s_scriptPos].frame <= frame)
@@ -103,23 +108,18 @@ void RunScript(void (*save)(const char*))
             s_scriptPointer.x = (float)atof(a[0].c_str()), s_scriptPointer.y = (float)atof(a[1].c_str()), s_scriptPointer.valid = true;
         else if (e.action == "nopoint")
             s_scriptPointer.valid = false;
-        else if (e.action == "shot" && save)
-        {
-            std::string path = s_shotDir + "/" + (a.empty() ? "shot_" + std::to_string(frame) : a[0]) + ".bmp";
-            save(path.c_str());
-            LOG_INFO("script: frame {} saved {}", frame, path);
-        }
+        else if (e.action == "shot")
+            s_pendingShots.push_back(s_shotDir + "/" + (a.empty() ? "shot_" + std::to_string(frame) : a[0]) + ".bmp");
         else if (e.action == "log")
         {
             std::string msg;
             for (auto& w : a) msg += w + " ";
             LOG_INFO("script: frame {}: {}", frame, msg);
         }
-        else if (e.action == "quit")
+        else if (e.action == "quit" && !s_quitPending)
         {
-            LOG_INFO("script: quit at frame {}", frame);
-            fflush(nullptr);
-            _Exit(0);
+            s_quitPending = true;
+            s_quitField = frame;
         }
         else
             LOG_WARN("script: unknown action {} at frame {}", e.action, e.frame);
@@ -341,10 +341,32 @@ void Input_ReloadBindings()
     Gamepad_ReloadBindings();
 }
 
-void Input_OnPresent(void (*save)(const char* path))
+static void Quit()
 {
-    s_frame++;
+    LOG_INFO("script: quit at frame {}", s_frame.load());
+    fflush(nullptr);
+    _Exit(0);
+}
+
+void Input_OnField()
+{
+    uint32_t frame = ++s_frame;
     if (!s_scripted) return;
     std::lock_guard lk(s_lock);
-    RunScript(save);
+    RunScript();
+    // nothing presented for two seconds: do not wait for a frame to quit on
+    if (s_quitPending && frame - s_quitField > 120) Quit();
+}
+
+void Input_OnPresent(void (*save)(const char* path))
+{
+    if (!s_scripted) return;
+    std::lock_guard lk(s_lock);
+    for (auto& path : s_pendingShots)
+    {
+        save(path.c_str());
+        LOG_INFO("script: frame {} saved {}", s_frame.load(), path);
+    }
+    s_pendingShots.clear();
+    if (s_quitPending) Quit();
 }

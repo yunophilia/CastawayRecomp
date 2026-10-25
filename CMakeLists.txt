@@ -5,6 +5,14 @@ cmake_minimum_required(VERSION 3.21)
 # so other platforms only build the recompiled game code for now.
 project(CastawayRecomp LANGUAGES CXX)
 
+# Windows builds go to out/, others to out/<system> (their own shader cache, config and saves)
+if(WIN32)
+    set(CASTAWAY_OUT ${CMAKE_SOURCE_DIR}/out)
+else()
+    string(TOLOWER ${CMAKE_SYSTEM_NAME} _system)
+    set(CASTAWAY_OUT ${CMAKE_SOURCE_DIR}/out/${_system})
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
@@ -59,10 +67,15 @@ FetchContent_MakeAvailable(nod_prebuilt)
 block()
     find_package(nod REQUIRED CONFIG PATHS ${nod_prebuilt_SOURCE_DIR} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
 
-    add_library(bkr_installer STATIC runtime/install/install.cpp runtime/install/verify.cpp runtime/install/releases.cpp)
+    # with the host helpers and SHA-1, which the runtime gets through this library too
+    add_library(bkr_installer STATIC runtime/install/install.cpp runtime/install/verify.cpp runtime/install/releases.cpp
+                                     runtime/kernel/host.cpp runtime/kernel/sha1.cpp)
     target_include_directories(bkr_installer PUBLIC runtime)
     if(WIN32)
         target_compile_definitions(bkr_installer PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+        target_link_libraries(bkr_installer PUBLIC winmm)   # kernel/host.cpp: timeBeginPeriod
+    else()
+        target_compile_options(bkr_installer PRIVATE -include ${CMAKE_SOURCE_DIR}/runtime/compat.h)
     endif()
     target_link_libraries(bkr_installer PUBLIC nod::nod_static)
     if(MSVC_FRONTEND)
@@ -77,9 +90,9 @@ block()
     if(MSVC_FRONTEND)
         target_compile_options(bkr_install PRIVATE /EHsc /utf-8)
     endif()
-    set_target_properties(bkr_install PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out
-                                                 RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_SOURCE_DIR}/out
-                                                 RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/out)
+    set_target_properties(bkr_install PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CASTAWAY_OUT}
+                                                 RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CASTAWAY_OUT}
+                                                 RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CASTAWAY_OUT})
 endblock()
 
 # ---------------------------------------------------------------- Dear ImGui (launcher, settings overlay)
@@ -123,6 +136,8 @@ if(NOT WIN32)
     find_library(VKD3D_UTILS vkd3d-utils PATHS ${CASTAWAY_DEPS}/lib REQUIRED NO_DEFAULT_PATH)
     add_library(d3d11_native INTERFACE)
     target_include_directories(d3d11_native INTERFACE ${CASTAWAY_DEPS}/include/dxvk)
+    # vkd3d's compiler uses the ms_abi convention: callers go through runtime/gx/d3dcompiler_posix.cpp
+    target_compile_definitions(d3d11_native INTERFACE D3DCompile=Host_D3DCompile D3DCreateBlob=Host_D3DCreateBlob)
     target_link_libraries(d3d11_native INTERFACE ${DXVK_D3D11} ${DXVK_DXGI} ${VKD3D_UTILS})
     target_link_libraries(imgui PUBLIC d3d11_native)
 endif()
@@ -155,6 +170,7 @@ endif()
 # ---------------------------------------------------------------- runtime
 file(GLOB_RECURSE RUNTIME_SOURCES CONFIGURE_DEPENDS runtime/*.cpp)
 list(FILTER RUNTIME_SOURCES EXCLUDE REGEX "/runtime/install/")
+list(FILTER RUNTIME_SOURCES EXCLUDE REGEX "/runtime/kernel/(host|sha1)\.cpp$")   # in bkr_installer
 if(WIN32)
     list(FILTER RUNTIME_SOURCES EXCLUDE REGEX "_posix\\.cpp$")
 else()
@@ -183,16 +199,17 @@ else()
                                                     INSTALL_RPATH "$ORIGIN/lib")
 endif()
 # the scripts in tools/ and the shader cache expect the game in out/
-set_target_properties(CastawayRecomp PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out
-                                                   RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_SOURCE_DIR}/out
-                                                   RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/out)
+set_target_properties(CastawayRecomp PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CASTAWAY_OUT}
+                                                   RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CASTAWAY_OUT}
+                                                   RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CASTAWAY_OUT})
 if(BKR_CALL_COUNTS)
     set_target_properties(CastawayRecomp PROPERTIES OUTPUT_NAME CastawayRecomp_counts)
 endif()
 if(WIN32)
     target_compile_definitions(CastawayRecomp PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
 else()
-    target_compile_options(CastawayRecomp PRIVATE -Wno-unused-function -Wno-unused-variable -fno-strict-aliasing)
+    target_compile_options(CastawayRecomp PRIVATE -Wno-unused-function -Wno-unused-variable -fno-strict-aliasing
+                                                  -include ${CMAKE_SOURCE_DIR}/runtime/compat.h)
 endif()
 if(MSVC_FRONTEND)
     target_compile_options(CastawayRecomp PRIVATE /EHsc /std:c++latest /utf-8 $<$<CONFIG:RelWithDebInfo>:/Ob2>)

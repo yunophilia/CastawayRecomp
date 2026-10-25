@@ -35,18 +35,9 @@
 1045 release A
 1090 press A
 1095 release A
-1140 press A
-1145 release A
-1190 press A
-1195 release A
-1240 press A
-1245 release A
-1350 point 0.308 0.804
-1390 press A
-1396 release A
-1486 point 0.033 0.545
-1506 press A
-1512 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
 1586 point 0.033 0.545
 1606 press A
 1612 release A
@@ -56,36 +47,39 @@
 1786 point 0.033 0.545
 1806 press A
 1812 release A
-2546 point -0.050 0.840
-2586 press A
-2592 release A
-2742 point -0.506 0.861
-2782 press A
-2788 release A
-2898 point -0.747 -0.452
-2938 press A
-2944 release A
-3044 point -0.506 0.861
-3084 press A
-3090 release A
-3120 shot ca_00
-3240 shot ca_01
-3360 shot ca_02
-3480 shot ca_03
-3600 shot ca_04
-3720 shot ca_05
-3840 shot ca_06
-3960 shot ca_07
-4080 shot ca_08
-4200 shot ca_09
-4320 shot ca_10
-4440 shot ca_11
-4560 shot ca_12
-4680 shot ca_13
-4800 shot ca_14
-4920 shot ca_15
-5040 shot ca_16
-5160 shot ca_17
-5280 shot ca_18
-5400 shot ca_19
-5492 quit
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3220 shot ca_00
+3340 shot ca_01
+3460 shot ca_02
+3580 shot ca_03
+3700 shot ca_04
+3820 shot ca_05
+3940 shot ca_06
+4060 shot ca_07
+4180 shot ca_08
+4300 shot ca_09
+4420 shot ca_10
+4540 shot ca_11
+4660 shot ca_12
+4780 shot ca_13
+4900 shot ca_14
+5020 shot ca_15
+5140 shot ca_16
+5260 shot ca_17
+5380 shot ca_18
+5500 shot ca_19
+5592 quit

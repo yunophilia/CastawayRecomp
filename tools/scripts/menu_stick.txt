@@ -35,18 +35,12 @@
 1045 release A
 1090 press A
 1095 release A
-1140 press A
-1145 release A
-1190 press A
-1195 release A
-1240 press A
-1245 release A
-1500 shot ms_00
-1510 cstick 100 0
-1518 cstick 0 -100
-1538 cstick 0 0
-1560 shot ms_01_pointed
-1570 press A
-1576 release A
-1700 shot ms_02_after_a
-1710 quit
+1600 shot ms_00
+1610 cstick 100 0
+1618 cstick 0 -100
+1638 cstick 0 0
+1660 shot ms_01_pointed
+1670 press A
+1676 release A
+1800 shot ms_02_after_a
+1810 quit

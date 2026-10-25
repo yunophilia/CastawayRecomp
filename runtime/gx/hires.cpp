@@ -1,4 +1,5 @@
 // Custom texture packs in Dolphin's format (see hires.h).
+#ifdef _WIN32
 #include "hires.h"
 #include "video.h"
 #include "texture_decode.h"
@@ -326,3 +327,17 @@ void HiRes_Dump(const uint8_t* data, uint32_t dataSize, const uint8_t* tlut, uin
     if (enc) enc->Release();
     if (stream) stream->Release();
 }
+
+#else
+// Texture packs and dumps need an image codec (WIC on Windows); not available here yet.
+#include "hires.h"
+#include "../log.h"
+bool g_dumpTextures = false;
+void HiRes_Init(const std::string& configuredDir)
+{
+    if (!configuredDir.empty()) LOG_WARN("HD texture packs are only supported on Windows for now");
+}
+bool HiRes_Enabled() { return false; }
+ID3D11ShaderResourceView* HiRes_Find(const uint8_t*, uint32_t, const uint8_t*, uint32_t, uint32_t, uint32_t, uint32_t, bool) { return nullptr; }
+void HiRes_Dump(const uint8_t*, uint32_t, const uint8_t*, uint32_t, uint32_t, uint32_t, uint32_t, bool, const uint32_t*) {}
+#endif

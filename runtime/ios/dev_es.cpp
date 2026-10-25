@@ -1,32 +1,22 @@
 // /dev/es : ticket/title services (only what a disc title needs)
 #include "ios.h"
+#include "../kernel/host.h"
 #include "disc.h"
 #include "../kernel/memory.h"
 #include "../log.h"
 #include "../region.h"
 
 #include <vector>
-#include <windows.h>
 
 // The console is leaving the game: "Wii Menu" from the HOME menu (ES_LaunchTitle)
 // or power off simply quit; "Reset" (STM hot reset) restarts the executable.
 [[noreturn]] static void LeaveGame(bool restart)
 {
     LOG_INFO("{}", restart ? "game requested reset: restarting" : "game requested exit");
-    if (restart)
-    {
-        STARTUPINFOW si{ sizeof(si) };
-        PROCESS_INFORMATION pi{};
-        wchar_t exe[MAX_PATH];
-        GetModuleFileNameW(nullptr, exe, MAX_PATH);
-        if (CreateProcessW(exe, GetCommandLineW(), nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi))
-        {
-            CloseHandle(pi.hThread);
-            CloseHandle(pi.hProcess);
-        }
-    }
+    if (restart) Host_Restart(nullptr);
     { void Input_StopRumble(); Input_StopRumble(); }
-    ExitProcess(0);
+    fflush(nullptr);
+    _Exit(0);
 }
 
 

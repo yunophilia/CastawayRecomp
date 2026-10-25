@@ -1,6 +1,8 @@
 #pragma once
 // Small host OS services shared by the runtime (Win32 on Windows, POSIX elsewhere).
 #include <cstdint>
+#include <cstdio>
+#include <filesystem>
 
 // Auto-reset event: Set wakes one waiter (or the next Wait).
 class HostEvent
@@ -31,3 +33,15 @@ uint64_t Host_CounterFreq();
 void Host_SleepMs(uint32_t ms);
 // Raises the system timer resolution where that matters (Windows' timeBeginPeriod(1)).
 void Host_PreciseTimers();
+
+// Files by path (UTF-8 safe on Windows); 64-bit seek
+FILE* Host_Open(const std::filesystem::path& p, const char* mode);
+int Host_Seek64(FILE* f, int64_t offset, int whence);
+// The running executable
+std::filesystem::path Host_ExePath();
+// Case-insensitive ASCII compare (like strcmp)
+int Host_StrICmp(const char* a, const char* b);
+// Remembers the command line (Host_Restart starts the game again with it)
+void Host_SetArgs(int argc, char** argv);
+// Starts a new instance with the remembered command line plus extraArg; true if it started
+bool Host_Restart(const char* extraArg);

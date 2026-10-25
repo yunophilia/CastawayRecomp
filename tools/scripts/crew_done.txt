@@ -35,18 +35,9 @@
 1045 release A
 1090 press A
 1095 release A
-1140 press A
-1145 release A
-1190 press A
-1195 release A
-1240 press A
-1245 release A
-1350 point 0.308 0.804
-1390 press A
-1396 release A
-1486 point 0.033 0.545
-1506 press A
-1512 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
 1586 point 0.033 0.545
 1606 press A
 1612 release A
@@ -56,96 +47,99 @@
 1786 point 0.033 0.545
 1806 press A
 1812 release A
-2546 point -0.050 0.840
-2586 press A
-2592 release A
-2742 point -0.506 0.861
-2782 press A
-2788 release A
-2898 point -0.747 -0.452
-2938 press A
-2944 release A
-3044 point -0.506 0.861
-3084 press A
-3090 release A
-3390 point 0.692 0.846
-3430 press A
-3436 release A
-3446 nopoint
-4036 press A
-4042 release A
-4276 press A
-4282 release A
-4516 press A
-4522 release A
-4756 press A
-4762 release A
-4996 press A
-5002 release A
-5236 press A
-5242 release A
-5476 press A
-5482 release A
-5716 press A
-5722 release A
-5956 press A
-5962 release A
-6196 press A
-6202 release A
-6436 press A
-6442 release A
-6676 press A
-6682 release A
-6916 press A
-6922 release A
-7156 press A
-7162 release A
-7396 press A
-7402 release A
-7636 press A
-7642 release A
-7876 press A
-7882 release A
-8116 press A
-8122 release A
-8356 press A
-8362 release A
-8596 press A
-8602 release A
-8836 press A
-8842 release A
-9076 press A
-9082 release A
-9316 press A
-9322 release A
-3496 shot cd_00
-3696 shot cd_01
-3896 shot cd_02
-4096 shot cd_03
-4296 shot cd_04
-4496 shot cd_05
-4696 shot cd_06
-4896 shot cd_07
-5096 shot cd_08
-5296 shot cd_09
-5496 shot cd_10
-5696 shot cd_11
-5896 shot cd_12
-6096 shot cd_13
-6296 shot cd_14
-6496 shot cd_15
-6696 shot cd_16
-6896 shot cd_17
-7096 shot cd_18
-7296 shot cd_19
-7496 shot cd_20
-7696 shot cd_21
-7896 shot cd_22
-8096 shot cd_23
-8296 shot cd_24
-8496 shot cd_25
-8696 shot cd_26
-8896 shot cd_27
-9096 shot cd_28
-9296 shot cd_29
-9438 quit
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3490 point 0.692 0.846
+3530 press A
+3536 release A
+3546 nopoint
+4136 press A
+4142 release A
+4376 press A
+4382 release A
+4616 press A
+4622 release A
+4856 press A
+4862 release A
+5096 press A
+5102 release A
+5336 press A
+5342 release A
+5576 press A
+5582 release A
+5816 press A
+5822 release A
+6056 press A
+6062 release A
+6296 press A
+6302 release A
+6536 press A
+6542 release A
+6776 press A
+6782 release A
+7016 press A
+7022 release A
+7256 press A
+7262 release A
+7496 press A
+7502 release A
+7736 press A
+7742 release A
+7976 press A
+7982 release A
+8216 press A
+8222 release A
+8456 press A
+8462 release A
+8696 press A
+8702 release A
+8936 press A
+8942 release A
+9176 press A
+9182 release A
+9416 press A
+9422 release A
+3596 shot cd_00
+3796 shot cd_01
+3996 shot cd_02
+4196 shot cd_03
+4396 shot cd_04
+4596 shot cd_05
+4796 shot cd_06
+4996 shot cd_07
+5196 shot cd_08
+5396 shot cd_09
+5596 shot cd_10
+5796 shot cd_11
+5996 shot cd_12
+6196 shot cd_13
+6396 shot cd_14
+6596 shot cd_15
+6796 shot cd_16
+6996 shot cd_17
+7196 shot cd_18
+7396 shot cd_19
+7596 shot cd_20
+7796 shot cd_21
+7996 shot cd_22
+8196 shot cd_23
+8396 shot cd_24
+8596 shot cd_25
+8796 shot cd_26
+8996 shot cd_27
+9196 shot cd_28
+9396 shot cd_29
+9538 quit

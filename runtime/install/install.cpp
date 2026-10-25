@@ -1,4 +1,6 @@
 #include "install.h"
+#include "../kernel/host.h"
+#include "../kernel/sha1.h"
 #include "releases.h"
 
 #include <nod.h>
@@ -9,8 +11,6 @@
 #include <memory>
 #include <span>
 #include <vector>
-#include <windows.h>
-#include <bcrypt.h>
 
 namespace fs = std::filesystem;
 
@@ -56,15 +56,10 @@ bool ReadExact(NodHandle* h, uint8_t* out, size_t len)
 
 bool WriteFile(const fs::path& p, const void* data, size_t len)
 {
-    FILE* f = _wfopen(p.c_str(), L"wb");
+    FILE* f = Host_Open(p.c_str(), "wb");
     if (!f) return false;
     bool ok = fwrite(data, 1, len, f) == len;
     return fclose(f) == 0 && ok;
-}
-
-bool Sha1(const void* data, size_t len, uint8_t out[20])
-{
-    return BCryptHash(BCRYPT_SHA1_ALG_HANDLE, nullptr, 0, (PUCHAR)data, (ULONG)len, out, 20) == 0;
 }
 
 struct FstEntry
@@ -135,8 +130,8 @@ InstallResult Install_Run(const fs::path& image, const fs::path& dest, InstallPr
     const KnownFile* dol = nullptr;
     for (auto& k : std::span(rel->files, rel->fileCount))
         if (strcmp(k.path, "sys/main.dol") == 0) dol = &k;
-    if (Sha1(meta.raw_dol.data, meta.raw_dol.size, sha))
-        for (int i = 0; i < 20; i++) snprintf(hex + 2 * i, 3, "%02x", sha[i]);
+    Sha1::Hash(meta.raw_dol.data, meta.raw_dol.size, sha);
+    for (int i = 0; i < 20; i++) snprintf(hex + 2 * i, 3, "%02x", sha[i]);
     if (!dol || strcmp(hex, dol->sha1) != 0)
     {
         error = std::string("this version of the game is not supported (main.dol differs from the ") + rel->name +
@@ -212,7 +207,7 @@ InstallResult Install_Run(const fs::path& image, const fs::path& dest, InstallPr
             return InstallResult::OpenFailed;
         }
         NodPtr file(fileRaw);
-        FILE* out = _wfopen(p.c_str(), L"wb");
+        FILE* out = Host_Open(p.c_str(), "wb");
         if (!out)
         {
             error = "cannot write " + p.string();

@@ -41,7 +41,7 @@
         {
             "name": "linux-clang",
             "displayName": "Linux (clang)",
-            "description": "recompiled code only until the runtime is ported",
+            "description": "clang; needs DXVK-native and vkd3d (docs/linux.md)",
             "inherits": "base",
             "cacheVariables": { "CMAKE_CXX_COMPILER": "clang++" },
             "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
