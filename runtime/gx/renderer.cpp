@@ -1,4 +1,5 @@
 // GX -> Direct3D 11 renderer.
+#include "../kernel/host.h"
 #include "gx_state.h"
 #include "shadergen.h"
 #include "texture_decode.h"
@@ -598,7 +599,7 @@ bool g_asyncShaders = true;
 
 static void CompileWorker()
 {
-    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
+    Host_SetThreadPriority(HostPriority::BelowNormal);
     for (;;)
     {
         CompileJob j;

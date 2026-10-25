@@ -285,10 +285,10 @@ extern "C" void Interp_Run(PPCContext& ctx, uint8_t* base, uint32_t entry)
             case 247: ea = A + B; st8(base, ea, S); ctx.r[ra] = ea; break;
             case 407: st16(base, X(), S); break;
             case 439: ea = A + B; st16(base, ea, S); ctx.r[ra] = ea; break;
-            case 534: ctx.r[rd] = _byteswap_ulong(ld32(base, X())); break;
-            case 790: ctx.r[rd] = _byteswap_ushort((uint16_t)ld16(base, X())); break;
-            case 662: st32(base, X(), _byteswap_ulong(S)); break;
-            case 918: st16(base, X(), _byteswap_ushort((uint16_t)S)); break;
+            case 534: ctx.r[rd] = ppc_bswap32(ld32(base, X())); break;
+            case 790: ctx.r[rd] = ppc_bswap16((uint16_t)ld16(base, X())); break;
+            case 662: st32(base, X(), ppc_bswap32(S)); break;
+            case 918: st16(base, X(), ppc_bswap16((uint16_t)S)); break;
             case 20: ea = X(); ctx.reserve = 1; ctx.reserve_addr = ea; ctx.r[rd] = ld32(base, ea); break;
             case 150: st32(base, X(), S); ctx.cr[0] = 0; ctx.cr[1] = 0; ctx.cr[2] = 1; ctx.cr[3] = ctx.xer_so; break;
             case 535: { double v = ldf32(base, X()); ctx.f[rd].f64 = v; ctx.f[rd].ps1 = v; break; }

@@ -245,7 +245,7 @@ static void MakeNames(const uint8_t* data, uint32_t dataSize, const uint8_t* tlu
         else if (fmt == TF_C8)
             for (uint32_t i = 0; i < dataSize; i++) { mn = std::min(mn, (uint32_t)data[i]); mx = std::max(mx, (uint32_t)data[i]); }
         else
-            for (uint32_t i = 0; i < dataSize; i += 2) { uint32_t v = _byteswap_ushort(data[i]) & 0x3FFF; mn = std::min(mn, v); mx = std::max(mx, v); }
+            for (uint32_t i = 0; i < dataSize; i += 2) { uint32_t v = ppc_bswap16(data[i]) & 0x3FFF; mn = std::min(mn, v); mx = std::max(mx, v); }
         uint32_t used = 2 * (mx + 1 - mn);
         if (2 * mn + used > tlutSize) return;
         tlutHash = XXH64(tlut + 2 * mn, used);

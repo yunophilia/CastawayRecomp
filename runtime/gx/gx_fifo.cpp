@@ -9,7 +9,10 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#include "../kernel/host.h"
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 GXState g_gx;
 
@@ -510,26 +513,26 @@ static std::atomic<size_t> s_ringW{ 0 };        // published to the GPU
 static std::atomic<size_t> s_ringR{ 0 };        // consumed by the GPU
 static std::atomic<bool> s_gpuSleeping{ false };
 static std::atomic<int> s_cpuWaiting{ 0 };      // CPU blocked on s_cpuWake
-static HANDLE s_gpuWake, s_cpuWake;
+static HostEvent *s_gpuWake, *s_cpuWake;
 static std::mutex s_gpuLock;                    // held while the GPU executes commands
 static bool s_threadStarted = false;
 
 static void GpuThread()
 {
-    SetThreadDescription(GetCurrentThread(), L"GX");
+    Host_SetThreadName("GX");
     for (;;)
     {
         size_t r = s_ringR.load(std::memory_order_relaxed);
         size_t w = s_ringW.load(std::memory_order_acquire);
         if (w == r)
         {
-            if (s_cpuWaiting.load()) SetEvent(s_cpuWake);
+            if (s_cpuWaiting.load()) s_cpuWake->Set();
             // brief spin before sleeping: commands usually arrive in quick bursts
             for (int i = 0; i < 2000 && s_ringW.load(std::memory_order_acquire) == r; i++) YieldProcessor();
             if (s_ringW.load(std::memory_order_acquire) == r)
             {
                 s_gpuSleeping.store(true);
-                if (s_ringW.load(std::memory_order_acquire) == r) WaitForSingleObject(s_gpuWake, 2);
+                if (s_ringW.load(std::memory_order_acquire) == r) s_gpuWake->Wait(2);
                 s_gpuSleeping.store(false);
             }
             continue;
@@ -548,7 +551,7 @@ static void GpuThread()
 static inline void Publish()
 {
     s_ringW.store(s_localW, std::memory_order_release);
-    if (s_gpuSleeping.load()) SetEvent(s_gpuWake);
+    if (s_gpuSleeping.load()) s_gpuWake->Set();
 }
 
 // Blocks until the GPU thread has executed everything written so far. The returned
@@ -560,8 +563,8 @@ std::unique_lock<std::mutex> GX_SyncGPU()
     s_cpuWaiting++;
     while (s_ringR.load(std::memory_order_acquire) != s_localW)
     {
-        SetEvent(s_gpuWake);
-        WaitForSingleObject(s_cpuWake, 1);
+        s_gpuWake->Set();
+        s_cpuWake->Wait(1);
     }
     s_cpuWaiting--;
     return std::unique_lock<std::mutex>(s_gpuLock);
@@ -609,9 +612,9 @@ static inline void Gather(const uint8_t* b, int n)
         while (s_localW + n - s_ringR.load(std::memory_order_acquire) > RING_SIZE)
         {
             Publish();
-            SetEvent(s_gpuWake);
+            s_gpuWake->Set();
             s_cpuWaiting++;
-            WaitForSingleObject(s_cpuWake, 1);
+            s_cpuWake->Wait(1);
             s_cpuWaiting--;
         }
         size_t off = s_localW % RING_SIZE;
@@ -661,13 +664,15 @@ void GX_FlushPipe()
 void GX_StartThread()
 {
     if (!g_gpuThread || s_threadStarted) return;
-    s_ring = (uint8_t*)VirtualAlloc(nullptr, RING_SIZE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-    s_gpuWake = CreateEventW(nullptr, FALSE, FALSE, nullptr);
-    s_cpuWake = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+    s_ring = new uint8_t[RING_SIZE];
+    s_gpuWake = new HostEvent();
+    s_cpuWake = new HostEvent();
     s_threadStarted = true;
     std::thread t(GpuThread);
+#ifdef _WIN32
     extern HANDLE g_gxThreadHandle;
     DuplicateHandle(GetCurrentProcess(), (HANDLE)t.native_handle(), GetCurrentProcess(), &g_gxThreadHandle, 0, FALSE, DUPLICATE_SAME_ACCESS);
+#endif
     t.detach();
     LOG_INFO("GX: running on a separate thread");
 }

@@ -42,19 +42,28 @@ endif()
 # ---------------------------------------------------------------- disc image installer
 # nod (https://github.com/encounter/nod, MIT OR Apache-2.0, used under MIT) reads the
 # user's disc image; the prebuilt package is downloaded at configure time.
+include(FetchContent)
+set(NOD_VERSION v2.0.0-alpha.12)
 if(WIN32)
-    include(FetchContent)
-    set(NOD_VERSION v2.0.0-alpha.12)
     FetchContent_Declare(nod_prebuilt
         URL https://github.com/encounter/nod/releases/download/${NOD_VERSION}/libnod-windows-x86_64.tar.gz
         URL_HASH SHA256=c9dfecf8e52066a5222f3cb1cad18d0740c958ce65bf60cb84e780a3856ed881
         DOWNLOAD_EXTRACT_TIMESTAMP FALSE)
-    FetchContent_MakeAvailable(nod_prebuilt)
+else()
+    FetchContent_Declare(nod_prebuilt
+        URL https://github.com/encounter/nod/releases/download/${NOD_VERSION}/libnod-linux-x86_64.tar.gz
+        URL_HASH SHA256=920adb1d2386c8728e0521f8d52809057c04bd46913433a0000ee0931d08d69f
+        DOWNLOAD_EXTRACT_TIMESTAMP FALSE)
+endif()
+FetchContent_MakeAvailable(nod_prebuilt)
+block()
     find_package(nod REQUIRED CONFIG PATHS ${nod_prebuilt_SOURCE_DIR} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
 
     add_library(bkr_installer STATIC runtime/install/install.cpp runtime/install/verify.cpp runtime/install/releases.cpp)
     target_include_directories(bkr_installer PUBLIC runtime)
-    target_compile_definitions(bkr_installer PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+    if(WIN32)
+        target_compile_definitions(bkr_installer PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+    endif()
     target_link_libraries(bkr_installer PUBLIC nod::nod_static)
     if(MSVC_FRONTEND)
         target_compile_options(bkr_installer PRIVATE /EHsc /utf-8)
@@ -71,11 +80,11 @@ if(WIN32)
     set_target_properties(bkr_install PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out
                                                  RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_SOURCE_DIR}/out
                                                  RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/out)
-endif()
+endblock()
 
 # ---------------------------------------------------------------- Dear ImGui (launcher, settings overlay)
 # https://github.com/ocornut/imgui (MIT), downloaded at configure time
-if(WIN32)
+block()
     FetchContent_Declare(imgui
         URL https://github.com/ocornut/imgui/archive/refs/tags/v1.92.9b.tar.gz
         URL_HASH SHA256=21d8a0a565e85dce943e375db00812c2f3f0ab21f3f0f7964e364a63422d7f99
@@ -86,7 +95,7 @@ if(WIN32)
                              ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl3.cpp ${imgui_SOURCE_DIR}/backends/imgui_impl_dx11.cpp)
     target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends)
     target_compile_definitions(imgui PUBLIC IMGUI_DISABLE_OBSOLETE_FUNCTIONS)
-endif()
+endblock()
 
 # ---------------------------------------------------------------- SDL3 (gamepads of any brand)
 # https://github.com/libsdl-org/SDL (zlib), prebuilt Visual C++ package downloaded at configure time
@@ -97,7 +106,25 @@ if(WIN32)
         DOWNLOAD_EXTRACT_TIMESTAMP FALSE)
     FetchContent_MakeAvailable(sdl3_prebuilt)
     find_package(SDL3 REQUIRED CONFIG PATHS ${sdl3_prebuilt_SOURCE_DIR}/cmake NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
-    target_link_libraries(imgui PUBLIC SDL3::SDL3)   # the ImGui SDL3 backend
+else()
+    find_package(SDL3 REQUIRED CONFIG)   # the distribution's (libsdl3-dev)
+endif()
+target_link_libraries(imgui PUBLIC SDL3::SDL3)   # the ImGui SDL3 backend
+
+# ---------------------------------------------------------------- Linux: D3D11 on Vulkan
+# DXVK's native build (https://github.com/doitsujin/dxvk, zlib) implements D3D11/DXGI on
+# Vulkan and presents to SDL windows; vkd3d-utils (https://gitlab.winehq.org/wine/vkd3d,
+# LGPL-2.1+) provides D3DCompile for the generated HLSL. Both are built into
+# CASTAWAY_DEPS (see docs/linux.md).
+if(NOT WIN32)
+    set(CASTAWAY_DEPS "$ENV{HOME}/castaway-deps/prefix" CACHE PATH "prefix with DXVK-native and vkd3d")
+    find_library(DXVK_D3D11 dxvk_d3d11 PATHS ${CASTAWAY_DEPS}/lib/x86_64-linux-gnu ${CASTAWAY_DEPS}/lib REQUIRED NO_DEFAULT_PATH)
+    find_library(DXVK_DXGI dxvk_dxgi PATHS ${CASTAWAY_DEPS}/lib/x86_64-linux-gnu ${CASTAWAY_DEPS}/lib REQUIRED NO_DEFAULT_PATH)
+    find_library(VKD3D_UTILS vkd3d-utils PATHS ${CASTAWAY_DEPS}/lib REQUIRED NO_DEFAULT_PATH)
+    add_library(d3d11_native INTERFACE)
+    target_include_directories(d3d11_native INTERFACE ${CASTAWAY_DEPS}/include/dxvk)
+    target_link_libraries(d3d11_native INTERFACE ${DXVK_D3D11} ${DXVK_DXGI} ${VKD3D_UTILS})
+    target_link_libraries(imgui PUBLIC d3d11_native)
 endif()
 
 if(NOT EXISTS ${CMAKE_SOURCE_DIR}/generated/sources.cmake)
@@ -125,14 +152,14 @@ else()
     target_compile_options(ppcrecomp PRIVATE -O2 -fno-exceptions -fno-strict-aliasing -w)
 endif()
 
-if(NOT WIN32)
-    message(STATUS "The runtime is Windows-only: building the recompiled code (ppcrecomp) only")
-    return()
-endif()
-
 # ---------------------------------------------------------------- runtime
 file(GLOB_RECURSE RUNTIME_SOURCES CONFIGURE_DEPENDS runtime/*.cpp)
 list(FILTER RUNTIME_SOURCES EXCLUDE REGEX "/runtime/install/")
+if(WIN32)
+    list(FILTER RUNTIME_SOURCES EXCLUDE REGEX "_posix\\.cpp$")
+else()
+    list(FILTER RUNTIME_SOURCES EXCLUDE REGEX "_win32\\.cpp$")
+endif()
 add_executable(CastawayRecomp ${RUNTIME_SOURCES})
 target_include_directories(CastawayRecomp PRIVATE runtime runtime/cpu generated)
 target_sources(CastawayRecomp PRIVATE $<TARGET_OBJECTS:ppcrecomp>)
@@ -144,10 +171,17 @@ add_custom_target(bkr_version
     BYPRODUCTS ${BKR_VERSION_CPP} VERBATIM)
 target_sources(CastawayRecomp PRIVATE ${BKR_VERSION_CPP})
 add_dependencies(CastawayRecomp bkr_version)
-target_link_libraries(CastawayRecomp PRIVATE bkr_installer imgui SDL3::SDL3 d3d11 dxgi d3dcompiler winmm ole32 uuid shell32 dbghelp)
-# SDL3.dll next to the exe
-add_custom_command(TARGET CastawayRecomp POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:SDL3::SDL3> $<TARGET_FILE_DIR:CastawayRecomp>)
+if(WIN32)
+    target_link_libraries(CastawayRecomp PRIVATE bkr_installer imgui SDL3::SDL3 d3d11 dxgi d3dcompiler winmm ole32 uuid shell32 dbghelp)
+    # SDL3.dll next to the exe
+    add_custom_command(TARGET CastawayRecomp POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:SDL3::SDL3> $<TARGET_FILE_DIR:CastawayRecomp>)
+else()
+    target_link_libraries(CastawayRecomp PRIVATE bkr_installer imgui SDL3::SDL3 d3d11_native pthread dl)
+    # find DXVK and vkd3d next to the binary (lib/) or in the build prefix
+    set_target_properties(CastawayRecomp PROPERTIES BUILD_RPATH "$ORIGIN/lib;${CASTAWAY_DEPS}/lib;${CASTAWAY_DEPS}/lib/x86_64-linux-gnu"
+                                                    INSTALL_RPATH "$ORIGIN/lib")
+endif()
 # the scripts in tools/ and the shader cache expect the game in out/
 set_target_properties(CastawayRecomp PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out
                                                    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_SOURCE_DIR}/out
@@ -155,7 +189,11 @@ set_target_properties(CastawayRecomp PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE
 if(BKR_CALL_COUNTS)
     set_target_properties(CastawayRecomp PROPERTIES OUTPUT_NAME CastawayRecomp_counts)
 endif()
-target_compile_definitions(CastawayRecomp PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+if(WIN32)
+    target_compile_definitions(CastawayRecomp PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN _CRT_SECURE_NO_WARNINGS)
+else()
+    target_compile_options(CastawayRecomp PRIVATE -Wno-unused-function -Wno-unused-variable -fno-strict-aliasing)
+endif()
 if(MSVC_FRONTEND)
     target_compile_options(CastawayRecomp PRIVATE /EHsc /std:c++latest /utf-8 $<$<CONFIG:RelWithDebInfo>:/Ob2>)
     if(CLANG)

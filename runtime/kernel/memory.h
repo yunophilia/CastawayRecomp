@@ -1,7 +1,16 @@
 #pragma once
 #include <cstdint>
 #include <cstring>
+#ifdef _MSC_VER
 #include <intrin.h>
+#define MEM_BSWAP16 _byteswap_ushort
+#define MEM_BSWAP32 _byteswap_ulong
+#define MEM_BSWAP64 _byteswap_uint64
+#else
+#define MEM_BSWAP16 __builtin_bswap16
+#define MEM_BSWAP32 __builtin_bswap32
+#define MEM_BSWAP64 __builtin_bswap64
+#endif
 
 // Guest physical memory layout (Wii)
 constexpr uint32_t MEM1_SIZE = 0x01800000;   // 24 MiB
@@ -17,13 +26,13 @@ inline uint8_t* GuestPtr(uint32_t addr) { return g_base + addr; }
 template <typename T> inline T* GuestPtrT(uint32_t addr) { return (T*)(g_base + addr); }
 
 inline uint8_t Read8(uint32_t a) { return g_base[a]; }
-inline uint16_t Read16(uint32_t a) { return _byteswap_ushort(*(uint16_t*)(g_base + a)); }
-inline uint32_t Read32(uint32_t a) { return _byteswap_ulong(*(uint32_t*)(g_base + a)); }
-inline uint64_t Read64(uint32_t a) { return _byteswap_uint64(*(uint64_t*)(g_base + a)); }
+inline uint16_t Read16(uint32_t a) { return MEM_BSWAP16(*(uint16_t*)(g_base + a)); }
+inline uint32_t Read32(uint32_t a) { return MEM_BSWAP32(*(uint32_t*)(g_base + a)); }
+inline uint64_t Read64(uint32_t a) { return MEM_BSWAP64(*(uint64_t*)(g_base + a)); }
 inline void Write8(uint32_t a, uint8_t v) { g_base[a] = v; }
-inline void Write16(uint32_t a, uint16_t v) { *(uint16_t*)(g_base + a) = _byteswap_ushort(v); }
-inline void Write32(uint32_t a, uint32_t v) { *(uint32_t*)(g_base + a) = _byteswap_ulong(v); }
-inline void Write64(uint32_t a, uint64_t v) { *(uint64_t*)(g_base + a) = _byteswap_uint64(v); }
+inline void Write16(uint32_t a, uint16_t v) { *(uint16_t*)(g_base + a) = MEM_BSWAP16(v); }
+inline void Write32(uint32_t a, uint32_t v) { *(uint32_t*)(g_base + a) = MEM_BSWAP32(v); }
+inline void Write64(uint32_t a, uint64_t v) { *(uint64_t*)(g_base + a) = MEM_BSWAP64(v); }
 
 // Translate any guest effective address (cached/uncached/physical) to the canonical
 // cached virtual address (0x8xxxxxxx / 0x9xxxxxxx).

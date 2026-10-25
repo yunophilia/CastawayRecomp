@@ -8,8 +8,7 @@
 #include <mutex>
 #include <thread>
 #include <vector>
-#include <windows.h>
-#include <timeapi.h>
+#include "host.h"
 
 struct EventType
 {
@@ -27,8 +26,8 @@ struct Pending
 static std::vector<EventType> s_types;
 static std::vector<Pending> s_pending;      // guest-thread only
 static std::atomic<uint64_t> s_nextDeadline{ ~0ull };
-static HANDLE s_timerWake = nullptr;
-static HANDLE s_idleWake = nullptr;
+static HostEvent* s_timerWake = nullptr;
+static HostEvent* s_idleWake = nullptr;
 
 int Sched_RegisterEvent(const char* name, SchedCallback cb)
 {
@@ -46,7 +45,7 @@ static void Recompute()
     if (armed && dec < next) next = dec;
     uint64_t old = s_nextDeadline.exchange(next);
     if (next < old && s_timerWake)
-        SetEvent(s_timerWake);
+        s_timerWake->Set();
 }
 
 void Sched_ScheduleAt(int event, uint64_t tb, uint64_t userdata)
@@ -103,7 +102,7 @@ void Sched_Kick()
 void Sched_WakeIdle()
 {
     if (s_idleWake)
-        SetEvent(s_idleWake);
+        s_idleWake->Set();
 }
 
 void Sched_IdleWait()
@@ -116,38 +115,23 @@ void Sched_IdleWait()
         Irq_Update();
         if (g_ppcIrqPending)
             return;
-        WaitForSingleObject(s_idleWake, 2);
+        s_idleWake->Wait(2);
     }
 }
 
-// Waits use a high-resolution waitable timer: plain Sleep/WaitForSingleObject follow
-// the system tick, which Windows 11 keeps at ~15.6 ms for minimized or throttled
-// processes regardless of timeBeginPeriod. Late events made the game's audio replay
-// stale buffers (stutter) and could delay VI interrupts.
-static HANDLE s_hrTimer = nullptr;
-
+// Waits are precise (HostEvent::WaitPrecise): plain waits follow the system tick, which
+// Windows 11 keeps at ~15.6 ms for minimized or throttled processes. Late events made the
+// game's audio replay stale buffers (stutter) and could delay VI interrupts.
 static void WaitTicks(uint64_t ticks)
 {
-    if (s_hrTimer)
-    {
-        LARGE_INTEGER due;
-        due.QuadPart = -(LONGLONG)(ticks * 10000000ull / TB_FREQ);   // relative, 100 ns units
-        if (due.QuadPart > -1) due.QuadPart = -1;
-        SetWaitableTimerEx(s_hrTimer, &due, 0, nullptr, nullptr, nullptr, 0);
-        HANDLE hs[2] = { s_timerWake, s_hrTimer };
-        WaitForMultipleObjects(2, hs, FALSE, INFINITE);
-        CancelWaitableTimer(s_hrTimer);
-    }
-    else
-        WaitForSingleObject(s_timerWake, (DWORD)std::max<uint64_t>(1, ticks * 1000 / TB_FREQ));
+    s_timerWake->WaitPrecise(ticks * 1000000000ull / TB_FREQ);
 }
 
 static void TimerThread()
 {
-    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
-    timeBeginPeriod(1);
-    s_hrTimer = CreateWaitableTimerExW(nullptr, nullptr, CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_ALL_ACCESS);
-    if (!s_hrTimer) LOG_WARN("scheduler: no high-resolution timer, timing may be coarse");
+    Host_SetThreadName("scheduler");
+    Host_SetThreadPriority(HostPriority::TimeCritical);
+    Host_PreciseTimers();
     for (;;)
     {
         uint64_t next = s_nextDeadline.load();
@@ -167,7 +151,7 @@ static void TimerThread()
                 }
             }
             g_ppcIrqPending = 1;
-            SetEvent(s_idleWake);
+            s_idleWake->Set();
             // wait for the guest to consume it (or a new earlier deadline)
             WaitTicks(TB_FREQ / 2000);   // 0.5 ms
             continue;
@@ -178,7 +162,7 @@ static void TimerThread()
 
 void Sched_Init()
 {
-    s_timerWake = CreateEventW(nullptr, FALSE, FALSE, nullptr);
-    s_idleWake = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+    s_timerWake = new HostEvent();
+    s_idleWake = new HostEvent();
     std::thread(TimerThread).detach();
 }

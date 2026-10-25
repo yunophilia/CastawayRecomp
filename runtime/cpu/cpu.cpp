@@ -12,7 +12,7 @@
 #include <limits>
 #include <unordered_map>
 #include <vector>
-#include <windows.h>
+#include "../kernel/host.h"
 
 static constexpr uint32_t CODE_BEGIN = 0x80004000;
 static constexpr uint32_t CODE_END = 0x80700000;
@@ -105,7 +105,7 @@ extern "C" void ppc_call_indirect(PPCContext& ctx, uint8_t* base, uint32_t addr)
         // Module import trampoline (stw r12,4(r1); lis/addi r12,target; mtctr r12;
         // lwz r12,4(r1); bctr): jump straight to the (recompiled) target.
         const uint8_t* p = base + addr;
-        auto w = [&](int i) { return _byteswap_ulong(*(const uint32_t*)(p + 4 * i)); };
+        auto w = [&](int i) { return ppc_bswap32(*(const uint32_t*)(p + 4 * i)); };
         if (w(0) == 0x91810004 && (w(1) >> 16) == 0x3D80 && (w(2) >> 16) == 0x398C && w(3) == 0x7D8903A6 && w(4) == 0x81810004 &&
             w(5) == 0x4E800420)
         {
@@ -128,23 +128,21 @@ extern "C" void ppc_call_indirect(PPCContext& ctx, uint8_t* base, uint32_t addr)
 
 // ---------------------------------------------------------------- timebase
 // Wii timebase ticks at bus clock / 4 = 243 MHz / 4.
-static LARGE_INTEGER s_qpcFreq, s_qpcStart;
+static uint64_t s_counterFreq, s_counterStart;
 static uint64_t s_tbOffset = 0;
 
 void Timebase_Init()
 {
-    QueryPerformanceFrequency(&s_qpcFreq);
-    QueryPerformanceCounter(&s_qpcStart);
+    s_counterFreq = Host_CounterFreq();
+    s_counterStart = Host_Counter();
 }
 
 uint64_t Timebase_Now()
 {
-    LARGE_INTEGER now;
-    QueryPerformanceCounter(&now);
-    uint64_t d = (uint64_t)(now.QuadPart - s_qpcStart.QuadPart);
-    uint64_t hi = d / (uint64_t)s_qpcFreq.QuadPart;
-    uint64_t lo = d % (uint64_t)s_qpcFreq.QuadPart;
-    return s_tbOffset + hi * TB_FREQ + lo * TB_FREQ / (uint64_t)s_qpcFreq.QuadPart;
+    uint64_t d = Host_Counter() - s_counterStart;
+    uint64_t hi = d / s_counterFreq;
+    uint64_t lo = d % s_counterFreq;
+    return s_tbOffset + hi * TB_FREQ + lo * TB_FREQ / s_counterFreq;
 }
 
 // Pause (window focus loss): the guest thread parks here; on resume the time base
@@ -155,7 +153,7 @@ void Cpu_PauseIfRequested()
     if (!g_pauseRequested.load(std::memory_order_relaxed)) return;
     uint64_t tb = Timebase_Now();
     LOG_INFO("paused");
-    while (g_pauseRequested.load()) Sleep(20);
+    while (g_pauseRequested.load()) Host_SleepMs(20);
     Timebase_Set(tb);
     LOG_INFO("resumed");
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "../cpu/ppc_context.h"
+#include "fiber.h"
 #include <csetjmp>
 
 // Each guest OS thread runs on its own host fiber with its own PPCContext.
@@ -7,7 +8,7 @@
 // CPU-level context switch (OSSaveContext/OSLoadContext) and exception entry.
 struct GuestThread
 {
-    void* fiber = nullptr;
+    HostFiber* fiber = nullptr;
     PPCContext ctx{};
     uint32_t osContext = 0;      // guest OSContext this fiber is bound to
     uint32_t entry = 0;          // initial pc (for new threads)
