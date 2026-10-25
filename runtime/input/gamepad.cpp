@@ -9,24 +9,26 @@
 #include <algorithm>
 #include <atomic>
 #include <cmath>
+#include <mutex>
 #include <utility>
 #include <vector>
-#include <windows.h>
 
 namespace
 {
 constexpr float kDeadzone = 0.15f;
 constexpr int kStickMax = 100;          // GameCube stick gate
+constexpr Uint32 kRumbleMs = 2000;      // the game switches the motor off itself; renewed while it stays on
 
+// Gamepads are opened and closed on the window thread (SDL's events) and read on the game's
+// CPU thread; SDL's gamepad calls lock internally, this lock guards our own state.
+std::mutex s_lock;
 bool s_ok = false;
-DWORD s_sdlThread = 0;                 // SDL is only ever called from this thread (the game's CPU thread)
-std::atomic<bool> s_stopRequested{ false };
-SDL_Gamepad* s_active = nullptr;
+std::vector<SDL_Gamepad*> s_pads;   // open gamepads
+SDL_Gamepad* s_active = nullptr;    // the one last used
 bool s_rumbling = false;
+Uint64 s_rumbleSent = 0;
 std::atomic<bool> s_reload{ true };                               // rebuild s_buttons from the bindings
 std::vector<std::pair<SDL_GamepadButton, uint32_t>> s_buttons;   // button -> BTN_*
-DWORD s_rumbleSent = 0;
-constexpr Uint32 kRumbleMs = 2000;   // the game switches the motor off itself; renewed while it stays on
 
 // -1..1 stick pair with a radial deadzone, scaled to the GameCube range
 void Stick(SDL_Gamepad* g, SDL_GamepadAxis ax, SDL_GamepadAxis ay, int8_t& ox, int8_t& oy)
@@ -58,83 +60,71 @@ bool AnyInput(SDL_Gamepad* g)
     return false;
 }
 
-// Opens newly connected gamepads, closes removed ones, and picks the active one.
-void Refresh()
+void StopRumbleLocked()
 {
-    SDL_Event ev;
-    while (SDL_PollEvent(&ev))
-    {
-        if (ev.type == SDL_EVENT_GAMEPAD_ADDED)
-        {
-            if (SDL_Gamepad* g = SDL_OpenGamepad(ev.gdevice.which))
-            {
-                LOG_INFO("gamepad connected: {}", SDL_GetGamepadName(g) ? SDL_GetGamepadName(g) : "?");
-                if (!s_active) s_active = g;
-            }
-        }
-        else if (ev.type == SDL_EVENT_GAMEPAD_REMOVED)
-        {
-            SDL_Gamepad* g = SDL_GetGamepadFromID(ev.gdevice.which);
-            if (g == s_active) s_active = nullptr;
-            if (g) SDL_CloseGamepad(g);
-            LOG_INFO("gamepad disconnected");
-        }
-    }
-    // switch to whichever pad was used last
-    int n = 0;
-    if (SDL_JoystickID* ids = SDL_GetGamepads(&n))
-    {
-        for (int i = 0; i < n; i++)
-        {
-            SDL_Gamepad* g = SDL_GetGamepadFromID(ids[i]);
-            if (g && g != s_active && AnyInput(g))
-            {
-                if (s_active && s_rumbling) SDL_RumbleGamepad(s_active, 0, 0, 0);
-                s_active = g;
-                break;
-            }
-        }
-        if (!s_active && n) s_active = SDL_GetGamepadFromID(ids[0]);
-        SDL_free(ids);
-    }
-}
-
-bool Focused()
-{
-    HWND hwnd = (HWND)Video_HWND();
-    return hwnd && GetForegroundWindow() == hwnd;
+    if (s_active && s_rumbling) SDL_RumbleGamepad(s_active, 0, 0, 0);
+    s_rumbling = false;
 }
 }   // namespace
 
 void Gamepad_Init()
 {
-    // input is read on the game's CPU thread; we check the window focus ourselves
-    SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
-    if (!SDL_Init(SDL_INIT_GAMEPAD))
-    {
-        LOG_WARN("SDL gamepad init failed: {}; gamepads are disabled", SDL_GetError());
-        return;
-    }
+    std::lock_guard lk(s_lock);
     s_ok = true;
-    s_sdlThread = GetCurrentThreadId();
     LOG_INFO("SDL {}.{}.{} gamepad support", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
+}
+
+void Gamepad_HandleEvent(const SDL_Event& e)
+{
+    if (e.type == SDL_EVENT_GAMEPAD_ADDED)
+    {
+        if (SDL_Gamepad* g = SDL_OpenGamepad(e.gdevice.which))
+        {
+            LOG_INFO("gamepad connected: {}", SDL_GetGamepadName(g) ? SDL_GetGamepadName(g) : "?");
+            std::lock_guard lk(s_lock);
+            s_pads.push_back(g);
+            if (!s_active) s_active = g;
+        }
+    }
+    else if (e.type == SDL_EVENT_GAMEPAD_REMOVED)
+    {
+        std::lock_guard lk(s_lock);
+        SDL_Gamepad* g = SDL_GetGamepadFromID(e.gdevice.which);
+        if (!g) return;
+        if (g == s_active)
+        {
+            s_active = nullptr;
+            s_rumbling = false;
+        }
+        s_pads.erase(std::remove(s_pads.begin(), s_pads.end(), g), s_pads.end());
+        SDL_CloseGamepad(g);
+        if (!s_active && !s_pads.empty()) s_active = s_pads.front();
+        LOG_INFO("gamepad disconnected");
+    }
 }
 
 bool Gamepad_Read(PadState& p)
 {
-    if (!s_ok || GetCurrentThreadId() != s_sdlThread) return false;
-    if (s_stopRequested.exchange(false) && s_rumbling) Gamepad_Rumble(false);
-    Refresh();
+    std::lock_guard lk(s_lock);
+    if (!s_ok) return false;
+    // switch to whichever pad was used last
+    for (SDL_Gamepad* g : s_pads)
+        if (g != s_active && AnyInput(g))
+        {
+            StopRumbleLocked();
+            s_active = g;
+            break;
+        }
     if (!s_active) return false;
-    if (!Focused())
+    if (!Video_HasFocus())
     {
-        if (s_rumbling) Gamepad_Rumble(false);
+        StopRumbleLocked();
         return false;
     }
     SDL_Gamepad* g = s_active;
-    if (s_rumbling && GetTickCount() - s_rumbleSent > kRumbleMs / 2)
+    if (s_rumbling && SDL_GetTicks() - s_rumbleSent > kRumbleMs / 2)
     {
-        s_rumbleSent = GetTickCount();
+        s_rumbleSent = SDL_GetTicks();
         SDL_RumbleGamepad(g, 0xC000, 0x8000, kRumbleMs);
     }
     if (s_reload.exchange(false))
@@ -167,16 +157,14 @@ void Gamepad_ReloadBindings() { s_reload = true; }
 
 void Gamepad_Rumble(bool on)
 {
-    if (!s_ok) return;
-    if (GetCurrentThreadId() != s_sdlThread)
+    std::lock_guard lk(s_lock);
+    if (!s_ok || !s_active || on == s_rumbling) return;
+    if (!on)
     {
-        // other threads (window focus, crash and exit paths) only ask; the effect also
-        // runs out by itself within kRumbleMs
-        if (!on) s_stopRequested = true;
+        StopRumbleLocked();
         return;
     }
-    if (!s_active || on == s_rumbling) return;
-    s_rumbling = on;
-    s_rumbleSent = GetTickCount();
-    SDL_RumbleGamepad(s_active, on ? 0xC000 : 0, on ? 0x8000 : 0, on ? kRumbleMs : 0);
+    s_rumbling = true;
+    s_rumbleSent = SDL_GetTicks();
+    SDL_RumbleGamepad(s_active, 0xC000, 0x8000, kRumbleMs);
 }

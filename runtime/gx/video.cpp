@@ -1,24 +1,35 @@
-// Window, D3D11 device and presentation.
+// Window (SDL3), D3D11 device and presentation. The window lives on its own thread, which
+// also runs SDL's event loop (window, keyboard, mouse and gamepad events); the D3D11 swap
+// chain presents into it from the render thread.
 #include "video.h"
 #include "../config.h"
 #include "../log.h"
+#include "../input/gamepad.h"
 #include "../ui/overlay.h"
+
+#include <SDL3/SDL.h>
 
 #include <atomic>
 #include <d3dcompiler.h>
 #include <dxgi1_2.h>
 #include <thread>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 VideoConfig g_videoConfig;
 ID3D11Device* g_device = nullptr;
 ID3D11DeviceContext* g_ctx = nullptr;
 
-static HWND s_hwnd = nullptr;
+static SDL_Window* s_window = nullptr;
+static void* s_nativeWindow = nullptr;   // what the swap chain presents to (HWND on Windows)
 static IDXGISwapChain1* s_swapchain = nullptr;
 static ID3D11RenderTargetView* s_backbufferRTV = nullptr;
 static std::atomic<bool> s_closed{ false };
 static std::atomic<bool> s_resized{ false };
+static std::atomic<bool> s_focused{ false };
+static std::atomic<bool> s_minimized{ false };
+static std::atomic<int> s_clientW{ 1 }, s_clientH{ 1 };
 static ID3D11VertexShader* s_blitVS = nullptr;
 static ID3D11PixelShader* s_blitPS = nullptr;
 static ID3D11SamplerState* s_linearSampler = nullptr;
@@ -26,115 +37,119 @@ static ID3D11Buffer* s_blitCB = nullptr;
 static ID3D11RasterizerState* s_blitRS = nullptr;
 static ID3D11BlendState* s_blitBS = nullptr;
 static ID3D11DepthStencilState* s_blitDS = nullptr;
-static bool s_fullscreen = false;   // window thread only
 // UI screenshots of a minimized test window (BKR_UI_SHOT_OVERLAY): drawn off screen
 static ID3D11Texture2D* s_shotTex = nullptr;
 static ID3D11RenderTargetView* s_shotRTV = nullptr;
-constexpr UINT WM_APP_FULLSCREEN = WM_APP + 1;   // wParam: 1 fullscreen, 0 windowed
-constexpr UINT WM_APP_WINDOWSIZE = WM_APP + 2;   // wParam: width, lParam: height
+// requests from other threads, handled on the window thread
+static Uint32 s_evtFullscreen = 0, s_evtWindowSize = 0;
 
-// borderless fullscreen on the window's monitor, or back to the saved window rect
-static void SetFullscreen(HWND hwnd, bool on)
+static void Quit()
 {
-    static RECT saved;
-    if (on == s_fullscreen) return;
-    s_fullscreen = on;
-    if (on)
-    {
-        GetWindowRect(hwnd, &saved);
-        HMONITOR mon = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
-        MONITORINFO mi{ sizeof(mi) };
-        GetMonitorInfoW(mon, &mi);
-        SetWindowLongW(hwnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
-        SetWindowPos(hwnd, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left,
-                     mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_FRAMECHANGED);
-    }
-    else
-    {
-        SetWindowLongW(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
-        SetWindowPos(hwnd, nullptr, saved.left, saved.top, saved.right - saved.left, saved.bottom - saved.top, SWP_FRAMECHANGED);
-    }
+    // Closing the window quits. Saves are written to the host NAND as the game issues
+    // them, so there is nothing to flush; exit directly rather than running teardown while
+    // guest/GX/audio threads are mid-operation.
+    s_closed = true;
+    LOG_INFO("window closed, exiting");
+    Input_StopRumble();
+    fflush(nullptr);
+    _Exit(0);
 }
 
-static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
+// false while minimized (no client area): the swap chain keeps its size then
+static bool UpdateClientSize()
 {
-    if (Overlay_WndProc(hwnd, msg, wp, lp)) return 0;   // the settings overlay has the input
-    switch (msg)
+    int w = 0, h = 0;
+    SDL_GetWindowSizeInPixels(s_window, &w, &h);
+    s_minimized = (SDL_GetWindowFlags(s_window) & SDL_WINDOW_MINIMIZED) || w <= 0 || h <= 0;
+    if (s_minimized) return false;
+    s_clientW = w;
+    s_clientH = h;
+    return true;
+}
+
+static void HandleEvent(const SDL_Event& e)
+{
+    if (Overlay_HandleEvent(e)) return;   // the settings overlay has the input
+    Gamepad_HandleEvent(e);
+    switch (e.type)
     {
-    case WM_CLOSE:
-        // Closing the window quits. Saves are written to the host NAND as the game
-        // issues them, so there is nothing to flush; terminate directly rather than
-        // running DLL teardown while guest/GX/audio threads are mid-operation.
-        s_closed = true;
-        LOG_INFO("window closed, exiting");
-        { void Input_StopRumble(); Input_StopRumble(); }
-        TerminateProcess(GetCurrentProcess(), 0);
-        return 0;
-    case WM_SIZE:
-        s_resized = true;
-        return 0;
-    case WM_ACTIVATEAPP:
+    case SDL_EVENT_QUIT:
+    case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+        Quit();
+        break;
+    case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+    case SDL_EVENT_WINDOW_MINIMIZED:
+    case SDL_EVENT_WINDOW_RESTORED:
+        if (UpdateClientSize()) s_resized = true;
+        break;
+    case SDL_EVENT_WINDOW_FOCUS_GAINED:
+    case SDL_EVENT_WINDOW_FOCUS_LOST:
+        s_focused = e.type == SDL_EVENT_WINDOW_FOCUS_GAINED;
+        if (!s_focused) Input_StopRumble();
         if (g_config.pauseOnFocusLoss)
         {
             extern std::atomic<bool> g_pauseRequested;
-            g_pauseRequested = (wp == FALSE);
+            g_pauseRequested = !s_focused;
         }
         break;
-    case WM_SETCURSOR:
-        // the game draws its own Wii Remote pointer; the overlay needs the mouse cursor
-        if (LOWORD(lp) == HTCLIENT)
+    case SDL_EVENT_KEY_DOWN:
+        if (e.key.repeat) break;
+        if (e.key.scancode == SDL_SCANCODE_F11 || (e.key.scancode == SDL_SCANCODE_RETURN && (e.key.mod & SDL_KMOD_ALT)))
         {
-            SetCursor(Overlay_IsOpen() ? LoadCursorW(nullptr, MAKEINTRESOURCEW(32512)) : nullptr);
-            return TRUE;
+            bool on = !(SDL_GetWindowFlags(s_window) & SDL_WINDOW_FULLSCREEN);
+            SDL_SetWindowFullscreen(s_window, on);
+            g_config.fullscreen = on;
         }
-        break;
-    case WM_APP_FULLSCREEN:
-        SetFullscreen(hwnd, wp != 0);
-        return 0;
-    case WM_APP_WINDOWSIZE:
-        if (!s_fullscreen)
-        {
-            RECT r{ 0, 0, (LONG)wp, (LONG)lp };
-            AdjustWindowRect(&r, WS_OVERLAPPEDWINDOW, FALSE);
-            SetWindowPos(hwnd, nullptr, 0, 0, r.right - r.left, r.bottom - r.top, SWP_NOMOVE | SWP_NOZORDER);
-        }
-        return 0;
-    case WM_KEYDOWN:
-        if (wp == VK_F11 || (wp == VK_RETURN && (GetKeyState(VK_MENU) & 0x8000)))
-        {
-            SetFullscreen(hwnd, !s_fullscreen);
-            g_config.fullscreen = s_fullscreen;
-        }
-        else if (wp == VK_F1)
+        else if (e.key.scancode == SDL_SCANCODE_F1)
             Overlay_Toggle();
         break;
-    case WM_SYSKEYDOWN:
-        if (wp == VK_RETURN) { SendMessageW(hwnd, WM_KEYDOWN, VK_RETURN, lp); return 0; }
+    default:
+        if (e.type == s_evtFullscreen) SDL_SetWindowFullscreen(s_window, e.user.code != 0);
+        else if (e.type == s_evtWindowSize && !(SDL_GetWindowFlags(s_window) & SDL_WINDOW_FULLSCREEN))
+            SDL_SetWindowSize(s_window, e.user.code >> 16, e.user.code & 0xFFFF);
         break;
     }
-    return DefWindowProcW(hwnd, msg, wp, lp);
 }
 
 static void WindowThread(std::atomic<int>* ready)
 {
-    WNDCLASSW wc{};
-    wc.lpfnWndProc = WndProc;
-    wc.hInstance = GetModuleHandleW(nullptr);
-    wc.hCursor = LoadCursorW(nullptr, MAKEINTRESOURCEW(32512));
-    wc.hIcon = LoadIconW(nullptr, MAKEINTRESOURCEW(32512));
-    wc.lpszClassName = L"CastawayRecomp";
-    RegisterClassW(&wc);
-    RECT r{ 0, 0, g_videoConfig.windowWidth, g_videoConfig.windowHeight };
-    AdjustWindowRect(&r, WS_OVERLAPPEDWINDOW, FALSE);
-    s_hwnd = CreateWindowW(L"CastawayRecomp", L"The Sims 2: Castaway - Recompiled", WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-                           CW_USEDEFAULT, CW_USEDEFAULT, r.right - r.left, r.bottom - r.top, nullptr, nullptr, wc.hInstance, nullptr);
-    if (s_hwnd && g_videoConfig.fullscreen) SetFullscreen(s_hwnd, true);
-    *ready = s_hwnd ? 1 : -1;
-    MSG msg;
-    while (GetMessageW(&msg, nullptr, 0, 0) > 0)
+    SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");   // focus is checked by the input code
+    if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD))
     {
-        TranslateMessage(&msg);
-        DispatchMessageW(&msg);
+        LOG_ERROR("SDL video init failed: {}", SDL_GetError());
+        *ready = -1;
+        return;
+    }
+    s_evtFullscreen = SDL_RegisterEvents(2);
+    s_evtWindowSize = s_evtFullscreen + 1;
+    SDL_WindowFlags flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+    if (g_videoConfig.fullscreen) flags |= SDL_WINDOW_FULLSCREEN;
+    s_window = SDL_CreateWindow("The Sims 2: Castaway - Recompiled", g_videoConfig.windowWidth, g_videoConfig.windowHeight, flags);
+    if (!s_window)
+    {
+        LOG_ERROR("SDL_CreateWindow failed: {}", SDL_GetError());
+        *ready = -1;
+        return;
+    }
+#ifdef _WIN32
+    s_nativeWindow = SDL_GetPointerProperty(SDL_GetWindowProperties(s_window), SDL_PROP_WINDOW_WIN32_HWND_POINTER, nullptr);
+#else
+    s_nativeWindow = s_window;   // DXVK's native build presents to SDL windows
+#endif
+    UpdateClientSize();
+    Gamepad_Init();
+    *ready = 1;
+    for (;;)
+    {
+        SDL_Event e;
+        if (!SDL_WaitEventTimeout(&e, 100)) continue;
+        do
+        {
+            HandleEvent(e);
+        } while (SDL_PollEvent(&e));
+        // the game draws its own Wii Remote pointer; the overlay needs the mouse cursor
+        bool showCursor = Overlay_IsOpen();
+        if (showCursor != SDL_CursorVisible()) showCursor ? SDL_ShowCursor() : SDL_HideCursor();
     }
 }
 
@@ -181,6 +196,7 @@ static void CreateBackbufferRTV()
 // or wined3d, its HLSL compiler vkd3d-shader) and which d3dcompiler DLL is loaded.
 static void LogPlatform()
 {
+#ifdef _WIN32
     using WineVersionFn = const char*(__cdecl*)();
     if (auto wineVersion = (WineVersionFn)(void*)GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "wine_get_version"))
         LOG_INFO("running under Wine {}", wineVersion());
@@ -192,6 +208,7 @@ static void LogPlatform()
         WideCharToMultiByte(CP_UTF8, 0, path, -1, utf8, sizeof(utf8), nullptr, nullptr);
         LOG_INFO("HLSL compiler: {}", utf8);
     }
+#endif
 }
 
 bool Video_Init()
@@ -199,12 +216,8 @@ bool Video_Init()
     LogPlatform();
     std::atomic<int> ready{ 0 };
     std::thread(WindowThread, &ready).detach();
-    while (ready == 0) Sleep(1);
-    if (ready < 0)
-    {
-        LOG_ERROR("CreateWindow failed ({})", GetLastError());
-        return false;
-    }
+    while (ready == 0) std::this_thread::yield();
+    if (ready < 0) return false;
 
     UINT flags = 0;
 #ifdef _DEBUG
@@ -225,8 +238,8 @@ bool Video_Init()
     adapter->GetParent(__uuidof(IDXGIFactory2), (void**)&factory);
     DXGI_ADAPTER_DESC ad;
     adapter->GetDesc(&ad);
-    char name[128];
-    WideCharToMultiByte(CP_UTF8, 0, ad.Description, -1, name, sizeof(name), nullptr, nullptr);
+    char name[128] = {};
+    for (int i = 0; i < 127 && ad.Description[i]; i++) name[i] = ad.Description[i] < 128 ? (char)ad.Description[i] : '?';
     LOG_INFO("D3D11 adapter: {} (feature level {:x})", name, (uint32_t)g_device->GetFeatureLevel());
 
     DXGI_SWAP_CHAIN_DESC1 sd{};
@@ -237,13 +250,13 @@ bool Video_Init()
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.BufferCount = 2;
     sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-    hr = factory->CreateSwapChainForHwnd(g_device, s_hwnd, &sd, nullptr, nullptr, &s_swapchain);
+    hr = factory->CreateSwapChainForHwnd(g_device, (HWND)s_nativeWindow, &sd, nullptr, nullptr, &s_swapchain);
     if (FAILED(hr))
     {
         LOG_ERROR("CreateSwapChainForHwnd failed {:08x}", (uint32_t)hr);
         return false;
     }
-    factory->MakeWindowAssociation(s_hwnd, DXGI_MWA_NO_ALT_ENTER);
+    factory->MakeWindowAssociation((HWND)s_nativeWindow, DXGI_MWA_NO_ALT_ENTER);
     factory->Release();
     adapter->Release();
     dxgiDev->Release();
@@ -280,7 +293,7 @@ bool Video_Init()
     g_device->CreateBlendState(&bs, &s_blitBS);
     D3D11_DEPTH_STENCIL_DESC ds{};
     g_device->CreateDepthStencilState(&ds, &s_blitDS);
-    Overlay_Init(s_hwnd, g_device, g_ctx);
+    Overlay_Init(s_window, g_device, g_ctx);
     return true;
 }
 
@@ -293,12 +306,9 @@ void Video_Present(ID3D11ShaderResourceView* srv, float u0, float v0, float u1, 
         s_swapchain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
         CreateBackbufferRTV();
     }
-    RECT rc;
-    GetClientRect(s_hwnd, &rc);
-    float w = (float)std::max<LONG>(1, rc.right - rc.left);
-    float h = (float)std::max<LONG>(1, rc.bottom - rc.top);
+    float w = (float)s_clientW, h = (float)s_clientH;
     ID3D11RenderTargetView* target = s_backbufferRTV;
-    if (Overlay_ShotPending() && w < 64)
+    if (Overlay_ShotPending() && (s_minimized || w < 64))
     {
         if (!s_shotTex)
         {
@@ -359,6 +369,16 @@ void Video_Present(ID3D11ShaderResourceView* srv, float u0, float v0, float u1, 
 }
 
 bool Video_WindowClosed() { return s_closed; }
-void Video_SetFullscreen(bool on) { if (s_hwnd) PostMessageW(s_hwnd, WM_APP_FULLSCREEN, on ? 1 : 0, 0); }
-void Video_SetWindowSize(int w, int h) { if (s_hwnd) PostMessageW(s_hwnd, WM_APP_WINDOWSIZE, (WPARAM)w, (LPARAM)h); }
-void* Video_HWND() { return s_hwnd; }
+bool Video_HasFocus() { return s_focused; }
+
+static void PushUserEvent(Uint32 type, Sint32 code)
+{
+    if (!s_window || !type) return;
+    SDL_Event e{};
+    e.type = type;
+    e.user.code = code;
+    SDL_PushEvent(&e);
+}
+void Video_SetFullscreen(bool on) { PushUserEvent(s_evtFullscreen, on ? 1 : 0); }
+void Video_SetWindowSize(int w, int h) { PushUserEvent(s_evtWindowSize, (Sint32)((std::min(w, 0x7FFF) << 16) | std::min(h, 0xFFFF))); }
+void* Video_Window() { return s_window; }

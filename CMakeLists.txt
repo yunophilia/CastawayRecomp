@@ -83,7 +83,7 @@ if(WIN32)
     FetchContent_MakeAvailable(imgui)
     add_library(imgui STATIC ${imgui_SOURCE_DIR}/imgui.cpp ${imgui_SOURCE_DIR}/imgui_draw.cpp
                              ${imgui_SOURCE_DIR}/imgui_tables.cpp ${imgui_SOURCE_DIR}/imgui_widgets.cpp
-                             ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp ${imgui_SOURCE_DIR}/backends/imgui_impl_dx11.cpp)
+                             ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl3.cpp ${imgui_SOURCE_DIR}/backends/imgui_impl_dx11.cpp)
     target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends)
     target_compile_definitions(imgui PUBLIC IMGUI_DISABLE_OBSOLETE_FUNCTIONS)
 endif()
@@ -97,6 +97,7 @@ if(WIN32)
         DOWNLOAD_EXTRACT_TIMESTAMP FALSE)
     FetchContent_MakeAvailable(sdl3_prebuilt)
     find_package(SDL3 REQUIRED CONFIG PATHS ${sdl3_prebuilt_SOURCE_DIR}/cmake NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+    target_link_libraries(imgui PUBLIC SDL3::SDL3)   # the ImGui SDL3 backend
 endif()
 
 if(NOT EXISTS ${CMAKE_SOURCE_DIR}/generated/sources.cmake)
@@ -143,7 +144,7 @@ add_custom_target(bkr_version
     BYPRODUCTS ${BKR_VERSION_CPP} VERBATIM)
 target_sources(CastawayRecomp PRIVATE ${BKR_VERSION_CPP})
 add_dependencies(CastawayRecomp bkr_version)
-target_link_libraries(CastawayRecomp PRIVATE bkr_installer imgui SDL3::SDL3 d3d11 dxgi d3dcompiler winmm ole32 uuid shell32 xaudio2 dbghelp)
+target_link_libraries(CastawayRecomp PRIVATE bkr_installer imgui SDL3::SDL3 d3d11 dxgi d3dcompiler winmm ole32 uuid shell32 dbghelp)
 # SDL3.dll next to the exe
 add_custom_command(TARGET CastawayRecomp POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:SDL3::SDL3> $<TARGET_FILE_DIR:CastawayRecomp>)

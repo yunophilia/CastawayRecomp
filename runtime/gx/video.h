@@ -23,4 +23,7 @@ bool Video_WindowClosed();
 // Applied on the window thread (settings changed while the game runs)
 void Video_SetFullscreen(bool on);
 void Video_SetWindowSize(int width, int height);
-void* Video_HWND();
+// The game window has the keyboard focus (input is only read then).
+bool Video_HasFocus();
+// The SDL_Window of the game.
+void* Video_Window();

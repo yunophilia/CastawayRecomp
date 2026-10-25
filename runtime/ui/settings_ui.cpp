@@ -316,6 +316,26 @@ void SettingsUI_DrawVersion()
     ImGui::TextDisabled("%s", g_version);
 }
 
+void SettingsUI_LoadFont()
+{
+#ifdef _WIN32
+    const char* windir = getenv("WINDIR");
+    std::string base = windir ? windir : "C:\\Windows";
+    const char* candidates[] = { "\\Fonts\\segoeui.ttf" };
+#else
+    std::string base;
+    const char* candidates[] = { "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", "/usr/share/fonts/TTF/DejaVuSans.ttf",
+                                 "/usr/share/fonts/noto/NotoSans-Regular.ttf" };
+#endif
+    for (const char* c : candidates)
+        if (FILE* f = fopen((base + c).c_str(), "rb"))
+        {
+            fclose(f);
+            ImGui::GetIO().Fonts->AddFontFromFileTTF((base + c).c_str(), 18.0f);
+            return;
+        }
+}
+
 void SettingsUI_ApplyStyle()
 {
     ImGuiStyle& s = ImGui::GetStyle();

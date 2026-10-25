@@ -18,3 +18,5 @@ void SettingsUI_DrawVersion();
 
 // Dark theme with sea-green accents.
 void SettingsUI_ApplyStyle();
+// Loads a system UI font into the current ImGui context (ImGui's own font if there is none).
+void SettingsUI_LoadFont();

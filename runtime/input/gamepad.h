@@ -6,7 +6,12 @@
 // The first connected gamepad that is pressed becomes the active one.
 #include "input.h"
 
+union SDL_Event;
+
+// Window thread, once SDL's gamepad subsystem is up; connected pads arrive as events.
 void Gamepad_Init();
+// Window thread: gamepad hotplug events.
+void Gamepad_HandleEvent(const SDL_Event& e);
 // Reads the active gamepad (false if none, or the game window is not in front).
 bool Gamepad_Read(PadState& out);
 void Gamepad_Rumble(bool on);

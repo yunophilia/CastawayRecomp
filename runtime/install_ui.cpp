@@ -1,135 +1,125 @@
-// First-run installer: asks for the disc image and installs the game data from it
+// First-run installer: asks for the disc image and installs the game data from it. Dialogs
+// are SDL's (native message boxes and file picker); the progress is drawn by the launcher.
+#include "install_ui.h"
 #include "install/install.h"
 #include "install/releases.h"
 #include "log.h"
 
+#include <SDL3/SDL.h>
+
+#include <atomic>
+#include <chrono>
 #include <filesystem>
 #include <string>
 #include <thread>
-#include <windows.h>
-#include <shlobj.h>
-#include <shobjidl.h>
 
 namespace fs = std::filesystem;
 
 namespace
 {
-constexpr const wchar_t* kTitle = L"CastawayRecomp";
+constexpr const char* kTitle = "CastawayRecomp";
 
-std::wstring Widen(const std::string& s)
+enum class Answer { Yes, No, Cancel };
+
+// buttons: "yes|no|cancel", "ok|cancel" or "ok"
+Answer Ask(SDL_Window* parent, SDL_MessageBoxFlags icon, const std::string& text, const char* buttons)
 {
-    std::wstring w(MultiByteToWideChar(CP_UTF8, 0, s.data(), (int)s.size(), nullptr, 0), L'\0');
-    MultiByteToWideChar(CP_UTF8, 0, s.data(), (int)s.size(), w.data(), (int)w.size());
-    return w;
+    std::string b = buttons;
+    std::vector<SDL_MessageBoxButtonData> bd;
+    auto add = [&](const char* id, int value, const char* label, SDL_MessageBoxButtonFlags f) {
+        if (b.find(id) != std::string::npos) bd.push_back({ f, value, label });
+    };
+    add("yes", (int)Answer::Yes, "Yes", SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT);
+    add("ok", (int)Answer::Yes, "OK", SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT);
+    add("no", (int)Answer::No, "No", 0);
+    add("cancel", (int)Answer::Cancel, "Cancel", SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT);
+    SDL_MessageBoxData data{ icon, parent, kTitle, text.c_str(), (int)bd.size(), bd.data(), nullptr };
+    int pressed = (int)Answer::Cancel;
+    if (!SDL_ShowMessageBox(&data, &pressed)) return Answer::Cancel;
+    return (Answer)pressed;
 }
 
-bool PickImage(fs::path& out)
+// The native file picker; SDL reports the choice through a callback while events are pumped.
+bool PickImage(SDL_Window* parent, fs::path& out)
 {
-    IFileOpenDialog* dlg = nullptr;
-    if (FAILED(CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dlg))))
-        return false;
-    COMDLG_FILTERSPEC filters[] = { { L"Wii disc images", kInstallImageFilter }, { L"All files", L"*.*" } };
-    dlg->SetFileTypes(2, filters);
-    dlg->SetTitle(L"Select your The Sims 2: Castaway disc image (USA)");
-    bool ok = false;
-    IShellItem* item = nullptr;
-    if (SUCCEEDED(dlg->Show(nullptr)) && SUCCEEDED(dlg->GetResult(&item)))
+    struct Pick { std::atomic<bool> done{ false }; std::string path; } pick;
+    static const SDL_DialogFileFilter filters[] = { { "Wii disc images", "iso;rvz;wia;wbfs;ciso;gcz;nfs" }, { "All files", "*" } };
+    SDL_ShowOpenFileDialog(
+        [](void* user, const char* const* files, int) {
+            auto* p = (Pick*)user;
+            if (files && files[0]) p->path = files[0];
+            p->done = true;
+        },
+        &pick, parent, filters, 2, nullptr, false);
+    while (!pick.done)
     {
-        PWSTR path = nullptr;
-        if (SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &path)))
-        {
-            out = path;
-            ok = true;
-            CoTaskMemFree(path);
-        }
-        item->Release();
+        SDL_PumpEvents();
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
-    dlg->Release();
-    return ok;
+    if (pick.path.empty()) return false;
+    out = fs::u8path(pick.path);
+    return true;
 }
 
-InstallResult RunWithProgress(const fs::path& image, const fs::path& dest, std::string& error)
+InstallResult RunWithProgress(const fs::path& image, const fs::path& dest, std::string& error, const InstallProgressFn& draw)
 {
     InstallProgress progress;
     InstallResult result = InstallResult::Canceled;
-    IProgressDialog* dlg = nullptr;
-    CoCreateInstance(CLSID_ProgressDialog, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dlg));
-    if (dlg)
+    std::atomic<bool> done{ false };
+    std::thread worker([&] {
+        result = Install_Run(image, dest, progress, error);
+        done = true;
+    });
+    std::string line = "Installing the game data from " + image.filename().string() + "...";
+    while (!done)
     {
-        dlg->SetTitle(kTitle);
-        dlg->SetLine(1, L"Installing the game data from your disc image...", FALSE, nullptr);
-        dlg->SetLine(2, image.c_str(), TRUE, nullptr);
-        dlg->StartProgressDialog(nullptr, nullptr, PROGDLG_NORMAL | PROGDLG_AUTOTIME, nullptr);
-    }
-    std::thread worker([&] { result = Install_Run(image, dest, progress, error); });
-    while (WaitForSingleObject(worker.native_handle(), 100) == WAIT_TIMEOUT)
-    {
-        if (!dlg) continue;
-        dlg->SetProgress64(progress.done, progress.total ? progress.total.load() : 1);
-        if (dlg->HasUserCancelled()) progress.cancel = true;
+        double f = progress.total ? (double)progress.done / progress.total : 0.0;
+        if (!draw(line.c_str(), f)) progress.cancel = true;
+        std::this_thread::sleep_for(std::chrono::milliseconds(15));
     }
     worker.join();
-    if (dlg)
-    {
-        dlg->StopProgressDialog();
-        dlg->Release();
-    }
     return result;
 }
 }   // namespace
 
-// Returns true once the data is installed in dest. foundImage: a disc image found next to
-// the game, offered first. damage: why the existing install needs replacing (empty when
-// nothing is installed yet).
-bool InstallUI_Run(const fs::path& dest, const std::string& foundImage, const std::string& damage)
+bool InstallUI_Run(SDL_Window* parent, const fs::path& dest, const std::string& foundImage, const std::string& damage,
+                   const InstallProgressFn& draw)
 {
-    std::wstring why = damage.empty() ? L"The game data is not installed yet."
-                                      : L"The installed game data is damaged (" + Widen(damage) + L") and needs reinstalling.";
-    HRESULT co = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
-    bool installed = false;
+    std::string why = damage.empty() ? "The game data is not installed yet."
+                                     : "The installed game data is damaged (" + damage + ") and needs reinstalling.";
     fs::path image;
     if (!foundImage.empty() && Release_Find(Install_GameId(foundImage)))
     {
-        std::wstring msg = why + L" Install it from\n\n" + Widen(foundImage) +
-                           L"?\n\nChoose No to select a different disc image.";
-        int r = MessageBoxW(nullptr, msg.c_str(), kTitle, MB_YESNOCANCEL | MB_ICONQUESTION);
-        if (r == IDYES) image = foundImage;
-        else if (r == IDCANCEL) goto done;
+        Answer a = Ask(parent, SDL_MESSAGEBOX_INFORMATION,
+                       why + " Install it from\n\n" + foundImage + "?\n\nChoose No to select a different disc image.", "yes|no|cancel");
+        if (a == Answer::Cancel) return false;
+        if (a == Answer::Yes) image = fs::u8path(foundImage);
     }
-    else
-    {
-        int r = MessageBoxW(nullptr,
-                            (why + L"\n\nSelect your own disc image of The Sims 2: "
-                            L"Castaway (USA) to install it. ISO, RVZ, WIA and WBFS images work. "
-                            L"This takes a minute and needs about 3.5 GB; the image is not needed afterwards.").c_str(),
-                            kTitle, MB_OKCANCEL | MB_ICONINFORMATION);
-        if (r != IDOK) goto done;
-    }
+    else if (Ask(parent, SDL_MESSAGEBOX_INFORMATION,
+                 why + "\n\nSelect your own disc image of The Sims 2: Castaway (USA) to install it. ISO, RVZ, WIA and WBFS "
+                       "images work. This takes a minute and needs about 1.3 GB; the image is not needed afterwards.",
+                 "ok|cancel") != Answer::Yes)
+        return false;
     for (;;)
     {
-        if (image.empty() && !PickImage(image)) break;
+        if (image.empty() && !PickImage(parent, image)) return false;
         LOG_INFO("installing game data from {} to {}", image.string(), dest.string());
         std::string error;
-        InstallResult r = RunWithProgress(image, dest, error);
+        InstallResult r = RunWithProgress(image, dest, error, draw);
         if (r == InstallResult::Ok)
         {
             LOG_INFO("game data installed");
-            installed = true;
-            break;
+            return true;
         }
-        if (r == InstallResult::Canceled) break;
+        if (r == InstallResult::Canceled) return false;
         LOG_ERROR("install failed: {}", error);
-        std::wstring msg = L"Could not install the game data:\n\n" + Widen(error);
+        std::string msg = "Could not install the game data:\n\n" + error;
         if (r == InstallResult::WriteFailed)
         {
-            MessageBoxW(nullptr, msg.c_str(), kTitle, MB_ICONERROR);
-            break;
+            Ask(parent, SDL_MESSAGEBOX_ERROR, msg, "ok");
+            return false;
         }
-        msg += L"\n\nSelect a different disc image?";
-        if (MessageBoxW(nullptr, msg.c_str(), kTitle, MB_OKCANCEL | MB_ICONERROR) != IDOK) break;
+        if (Ask(parent, SDL_MESSAGEBOX_ERROR, msg + "\n\nSelect a different disc image?", "ok|cancel") != Answer::Yes) return false;
         image.clear();
     }
-done:
-    if (SUCCEEDED(co)) CoUninitialize();
-    return installed;
 }

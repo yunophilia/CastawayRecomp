@@ -7,23 +7,25 @@
 #include "../install/verify.h"
 #include "../log.h"
 #include "../region.h"
+#include "../install_ui.h"
 
+#include <SDL3/SDL.h>
 #include <imgui.h>
 #include <imgui_impl_dx11.h>
-#include <imgui_impl_win32.h>
+#include <imgui_impl_sdl3.h>
 
+#include <atomic>
 #include <d3d11.h>
 #include <dxgi.h>
 #include <cstring>
 #include <filesystem>
 #include <thread>
+#ifdef _WIN32
 #include <windows.h>
-#include <shellapi.h>
+#endif
 
 namespace fs = std::filesystem;
 
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-bool InstallUI_Run(const fs::path& dest, const std::string& foundImage, const std::string& damage);
 
 namespace
 {
@@ -32,7 +34,53 @@ ID3D11DeviceContext* s_ctx = nullptr;
 IDXGISwapChain* s_swap = nullptr;
 ID3D11RenderTargetView* s_rtv = nullptr;
 bool s_quit = false;
-UINT s_resizeW = 0, s_resizeH = 0;
+bool s_resize = false;
+SDL_Window* s_window = nullptr;
+void CreateRTV();
+
+// One launcher frame showing install progress; false when the player cancels or closes.
+bool DrawProgressFrame(const char* line, double fraction)
+{
+    SDL_Event e;
+    bool cancel = false;
+    while (SDL_PollEvent(&e))
+    {
+        ImGui_ImplSDL3_ProcessEvent(&e);
+        if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED) cancel = s_quit = true;
+        else if (e.type == SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED) s_resize = true;
+    }
+    if (s_resize)
+    {
+        s_resize = false;
+        int pw = 0, ph = 0;
+        SDL_GetWindowSizeInPixels(s_window, &pw, &ph);
+        if (pw > 0 && ph > 0 && !(SDL_GetWindowFlags(s_window) & SDL_WINDOW_MINIMIZED))   // keep the size while minimized
+        {
+            if (s_rtv) { s_rtv->Release(); s_rtv = nullptr; }
+            s_swap->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+            CreateRTV();
+        }
+    }
+    ImGui_ImplDX11_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
+    ImGui::NewFrame();
+    const ImGuiViewport* vp = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(vp->Pos);
+    ImGui::SetNextWindowSize(vp->Size);
+    ImGui::Begin("install", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+    ImGui::Dummy(ImVec2(0, vp->Size.y * 0.35f));
+    ImGui::TextWrapped("%s", line);
+    ImGui::ProgressBar((float)fraction, ImVec2(-1, 0));
+    if (ImGui::Button("Cancel")) cancel = true;
+    ImGui::End();
+    ImGui::Render();
+    const float clear[4] = { 0.06f, 0.06f, 0.05f, 1 };
+    s_ctx->OMSetRenderTargets(1, &s_rtv, nullptr);
+    s_ctx->ClearRenderTargetView(s_rtv, clear);
+    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+    s_swap->Present(1, 0);
+    return !cancel;
+}
 
 void CreateRTV()
 {
@@ -40,21 +88,6 @@ void CreateRTV()
     s_swap->GetBuffer(0, IID_PPV_ARGS(&bb));
     s_dev->CreateRenderTargetView(bb, nullptr, &s_rtv);
     bb->Release();
-}
-
-LRESULT CALLBACK LauncherProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
-{
-    if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wp, lp)) return TRUE;
-    switch (msg)
-    {
-    case WM_SIZE:
-        if (wp != SIZE_MINIMIZED) { s_resizeW = LOWORD(lp); s_resizeH = HIWORD(lp); }
-        return 0;
-    case WM_CLOSE:
-        s_quit = true;
-        return 0;
-    }
-    return DefWindowProcW(hwnd, msg, wp, lp);
 }
 
 struct State
@@ -134,7 +167,7 @@ void DrawHome(State& st, bool& play, const std::string& isoPath, const fs::path&
     if (ImGui::Button(st.status == DataStatus::Ok ? "Reinstall from disc image..." : "Install from disc image..."))
     {
         fs::path dest = st.status == DataStatus::Missing ? installDest : st.data;
-        if (InstallUI_Run(dest, isoPath, st.status == DataStatus::Corrupt ? st.problem : ""))
+        if (InstallUI_Run(s_window, dest, isoPath, st.status == DataStatus::Corrupt ? st.problem : "", DrawProgressFrame))
             st.data = dest;
         Check(st);
     }
@@ -171,52 +204,49 @@ void DrawHome(State& st, bool& play, const std::string& isoPath, const fs::path&
 // Returns true to start the game, with dataDir set to the installed data.
 bool Launcher_Run(std::string& dataDir, const std::string& isoPath, const fs::path& installDest)
 {
-    HRESULT co = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
-    WNDCLASSW wc{};
-    wc.lpfnWndProc = LauncherProc;
-    wc.hInstance = GetModuleHandleW(nullptr);
-    wc.hCursor = LoadCursorW(nullptr, MAKEINTRESOURCEW(32512));
-    wc.hIcon = LoadIconW(nullptr, MAKEINTRESOURCEW(32512));
-    wc.lpszClassName = L"CastawayRecompLauncher";
-    RegisterClassW(&wc);
-    int w = 900, h = 640;
-    RECT wa;
-    SystemParametersInfoW(SPI_GETWORKAREA, 0, &wa, 0);
-    HWND hwnd = CreateWindowW(wc.lpszClassName, L"The Sims 2: Castaway - Recompiled", WS_OVERLAPPEDWINDOW,
-                              wa.left + (wa.right - wa.left - w) / 2, wa.top + (wa.bottom - wa.top - h) / 2, w, h,
-                              nullptr, nullptr, wc.hInstance, nullptr);
+#ifdef _WIN32
+    HRESULT co = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);   // the disc image file dialog
+#endif
+    if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD))
+    {
+        LOG_WARN("launcher: SDL video unavailable ({}), starting the game directly", SDL_GetError());
+        return true;
+    }
+    SDL_Window* window = s_window = SDL_CreateWindow("The Sims 2: Castaway - Recompiled", 900, 640, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
+#ifdef _WIN32
+    void* native = window ? SDL_GetPointerProperty(SDL_GetWindowProperties(window), SDL_PROP_WINDOW_WIN32_HWND_POINTER, nullptr) : nullptr;
+#else
+    void* native = window;   // DXVK's native build presents to SDL windows
+#endif
     DXGI_SWAP_CHAIN_DESC sd{};
     sd.BufferCount = 2;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.OutputWindow = hwnd;
+    sd.OutputWindow = (HWND)native;
     sd.SampleDesc.Count = 1;
     sd.Windowed = TRUE;
     sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-    if (FAILED(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &sd,
-                                             &s_swap, &s_dev, nullptr, &s_ctx)))
+    if (!native || FAILED(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION,
+                                                        &sd, &s_swap, &s_dev, nullptr, &s_ctx)))
     {
-        LOG_WARN("launcher: no D3D11 device, starting the game directly");
-        DestroyWindow(hwnd);
-        if (SUCCEEDED(co)) CoUninitialize();
+        LOG_WARN("launcher: no window or D3D11 device, starting the game directly");
+        if (window) SDL_DestroyWindow(window);
+        SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD);
         return true;
     }
     CreateRTV();
-    ShowWindow(hwnd, SW_SHOWDEFAULT);
-    UpdateWindow(hwnd);
+    SDL_ShowWindow(window);
 
     IMGUI_CHECKVERSION();
     ImGuiContext* imgui = ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     io.IniFilename = nullptr;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableGamepad;
-    char winDir[MAX_PATH];
-    UINT n = GetWindowsDirectoryA(winDir, MAX_PATH);
-    std::string font = n ? std::string(winDir, n) + "\\Fonts\\segoeui.ttf" : "";
-    if (!font.empty() && GetFileAttributesA(font.c_str()) != INVALID_FILE_ATTRIBUTES) io.Fonts->AddFontFromFileTTF(font.c_str(), 18.0f);
+    SettingsUI_LoadFont();
     SettingsUI_ApplyStyle();
-    ImGui_ImplWin32_Init(hwnd);
+    ImGui_ImplSDL3_InitForD3D(window);
     ImGui_ImplDX11_Init(s_dev, s_ctx);
+    SDL_StartTextInput(window);
 
     State st;
     st.data = dataDir.empty() ? installDest : fs::path(dataDir);
@@ -232,31 +262,45 @@ bool Launcher_Run(std::string& dataDir, const std::string& isoPath, const fs::pa
     int frames = 0;
     while (!s_quit && !play)
     {
-        MSG msg;
-        while (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE))
+        SDL_Event e;
+        bool any = false;
+        while (SDL_PollEvent(&e))
         {
-            TranslateMessage(&msg);
-            DispatchMessageW(&msg);
+            any = true;
+            ImGui_ImplSDL3_ProcessEvent(&e);
+            if (e.type == SDL_EVENT_QUIT || e.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED) s_quit = true;
+            else if (e.type == SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED) s_resize = true;
         }
         if (s_quit) break;
-        if (s_resizeW)
+        if (!any && (SDL_GetWindowFlags(window) & SDL_WINDOW_MINIMIZED) && !shot)
         {
-            if (s_rtv) { s_rtv->Release(); s_rtv = nullptr; }
-            s_swap->ResizeBuffers(0, s_resizeW, s_resizeH, DXGI_FORMAT_UNKNOWN, 0);
-            s_resizeW = s_resizeH = 0;
-            CreateRTV();
+            SDL_WaitEventTimeout(nullptr, 50);
+            continue;
+        }
+        if (s_resize)
+        {
+            s_resize = false;
+            int pw = 0, ph = 0;
+            SDL_GetWindowSizeInPixels(s_window, &pw, &ph);
+            if (pw > 0 && ph > 0 && !(SDL_GetWindowFlags(s_window) & SDL_WINDOW_MINIMIZED))   // keep the size while minimized
+            {
+                if (s_rtv) { s_rtv->Release(); s_rtv = nullptr; }
+                s_swap->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+                CreateRTV();
+            }
         }
         // first start, deleted or damaged data: ask for the disc image once the window is up
         if (st.promptInstall && frames++ > 2)
         {
             st.promptInstall = false;
             fs::path dest = st.status == DataStatus::Missing ? installDest : st.data;
-            if (InstallUI_Run(dest, isoPath, st.status == DataStatus::Corrupt ? st.problem : "")) st.data = dest;
+            if (InstallUI_Run(s_window, dest, isoPath, st.status == DataStatus::Corrupt ? st.problem : "", DrawProgressFrame))
+                st.data = dest;
             Check(st);
         }
 
         ImGui_ImplDX11_NewFrame();
-        ImGui_ImplWin32_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
         if (shot)
         {
             // screenshots run minimized (no client area): lay out for the back buffer
@@ -311,16 +355,19 @@ bool Launcher_Run(std::string& dataDir, const std::string& isoPath, const fs::pa
     st.verify.cancel = true;
     if (st.verifyThread.joinable()) st.verifyThread.join();
     ImGui_ImplDX11_Shutdown();
-    ImGui_ImplWin32_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext(imgui);
     if (s_rtv) s_rtv->Release();
     s_swap->Release();
     s_ctx->Release();
     s_dev->Release();
     s_rtv = nullptr;
-    DestroyWindow(hwnd);
-    UnregisterClassW(wc.lpszClassName, wc.hInstance);
+    SDL_DestroyWindow(window);
+    // the game window starts SDL video again on its own thread
+    SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD);
+#ifdef _WIN32
     if (SUCCEEDED(co)) CoUninitialize();
+#endif
     if (play) dataDir = st.data.string();
     LOG_INFO("launcher: {}", play ? "play" : "quit");
     return play;

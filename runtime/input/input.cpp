@@ -23,7 +23,7 @@
 #include <mutex>
 #include <string>
 #include <vector>
-#include <windows.h>
+#include <SDL3/SDL.h>
 
 namespace
 {
@@ -31,7 +31,7 @@ constexpr int8_t kStickMax = 100;   // a real GameCube stick reaches about +-100
 
 std::mutex s_lock;
 bool s_inited = false;
-DWORD s_lastPoll = 0;
+uint64_t s_lastPoll = 0;
 PadState s_pad{};
 PointerState s_pointer{};
 
@@ -42,12 +42,13 @@ constexpr float kPtrMinX = (0.0f - 0.488f) / 0.360f, kPtrMaxX = (1.0f - 0.488f) 
 constexpr float kPtrMinY = (0.0f - 0.462f) / 0.462f, kPtrMaxY = (1.0f - 0.462f) / 0.462f;
 constexpr float kPtrSpeed = 2.4f;   // pointer units per second at full deflection
 float s_ptrX = 0, s_ptrY = 0;
-POINT s_lastMouse{ -1, -1 };
+struct MousePos { int x, y; };
+MousePos s_lastMouse{ -1, -1 };
 // The pointer is on screen only while it is being used: like pointing the Wii Remote away,
 // an idle pointer leaves the screen, so A works on the highlighted button again (dialogs
 // act on the pointed button while there is a pointer) and the game hides its interface.
-constexpr DWORD kPointerIdleMs = 8000;
-DWORD s_ptrUsed = 0;   // GetTickCount of the last mouse move/click or right-stick push
+constexpr uint64_t kPointerIdleMs = 8000;
+uint64_t s_ptrUsed = 0;   // SDL_GetTicks of the last mouse move/click or right-stick push
 bool s_ptrEver = false;
 
 // ---------------------------------------------------------------- scripted input
@@ -118,7 +119,7 @@ void RunScript(void (*save)(const char*))
         {
             LOG_INFO("script: quit at frame {}", frame);
             fflush(nullptr);
-            TerminateProcess(GetCurrentProcess(), 0);
+            _Exit(0);
         }
         else
             LOG_WARN("script: unknown action {} at frame {}", e.action, e.frame);
@@ -126,9 +127,9 @@ void RunScript(void (*save)(const char*))
 }
 
 // ---------------------------------------------------------------- keyboard and mouse
-bool Key(int vk) { return (GetAsyncKeyState(vk) & 0x8000) != 0; }
+bool Key(SDL_Scancode sc) { return Binding_Held(sc); }
 
-bool IsMouseButton(int vk) { return vk == VK_LBUTTON || vk == VK_RBUTTON || vk == VK_MBUTTON || vk == VK_XBUTTON1 || vk == VK_XBUTTON2; }
+bool IsMouseButton(int code) { return code >= kMouseCode; }
 
 // keyboard and mouse bindings: key -> BTN_*, rebuilt when the settings change
 bool s_keysReload = true;
@@ -136,16 +137,14 @@ std::vector<std::pair<int, uint32_t>> s_keys;
 
 void PointerUsed()
 {
-    s_ptrUsed = GetTickCount();
+    s_ptrUsed = SDL_GetTicks();
     s_ptrEver = true;
 }
 
 void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
 {
-    HWND hwnd = (HWND)Video_HWND();
-    bool focused = hwnd && GetForegroundWindow() == hwnd;
     ptr = {};
-    if (!focused) return;
+    if (!Video_HasFocus()) return;
 
     if (s_keysReload)
     {
@@ -155,19 +154,23 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
             for (int vk : Binding_ParseKeys(Binding_Keys(i))) s_keys.push_back({ vk, kControls[i].bit });
     }
     for (auto& [vk, bit] : s_keys)
-        if (!IsMouseButton(vk) && Key(vk)) pad.buttons |= bit;
-    if (Key('Q')) pad.triggerL = 255;
-    if (Key('E')) pad.triggerR = 255;
+        if (!IsMouseButton(vk) && Binding_Held(vk)) pad.buttons |= bit;
+    if (Key(SDL_SCANCODE_Q)) pad.triggerL = 255;
+    if (Key(SDL_SCANCODE_E)) pad.triggerR = 255;
     auto axis = [](bool neg, bool pos) { return (int8_t)((pos ? kStickMax : 0) - (neg ? kStickMax : 0)); };
-    int8_t kx = axis(Key('A'), Key('D')), ky = axis(Key('S'), Key('W'));
+    int8_t kx = axis(Key(SDL_SCANCODE_A), Key(SDL_SCANCODE_D)), ky = axis(Key(SDL_SCANCODE_S), Key(SDL_SCANCODE_W));
     if (kx || ky) pad.stickX = kx, pad.stickY = ky;
-    int8_t cx = axis(Key('J'), Key('L')), cy = axis(Key('K'), Key('I'));
+    int8_t cx = axis(Key(SDL_SCANCODE_J), Key(SDL_SCANCODE_L)), cy = axis(Key(SDL_SCANCODE_K), Key(SDL_SCANCODE_I));
     if (cx || cy) pad.substickX = cx, pad.substickY = cy;
 
-    POINT pt;
-    RECT rc;
-    if (GetCursorPos(&pt) && ScreenToClient(hwnd, &pt) && GetClientRect(hwnd, &rc) && rc.right > 0 && rc.bottom > 0)
+    SDL_Window* win = (SDL_Window*)Video_Window();
+    float mx = 0, my = 0;
+    int ww = 0, wh = 0;
+    SDL_GetMouseState(&mx, &my);   // relative to the focused window
+    if (win && SDL_GetWindowSize(win, &ww, &wh) && ww > 0 && wh > 0)
     {
+        MousePos pt{ (int)mx, (int)my };
+        struct { int right, bottom; } rc{ ww, wh };
         // The game's pointer coordinates reach past the screen edges: measured on the main
         // menu, the cursor lands at screen fraction u = 0.488 + 0.360 x, v = 0.462 + 0.462 y.
         bool inside = pt.x >= 0 && pt.y >= 0 && pt.x < rc.right && pt.y < rc.bottom;
@@ -181,7 +184,7 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
         s_lastMouse = pt;
         if (inside)
             for (auto& [vk, bit] : s_keys)
-                if (IsMouseButton(vk) && Key(vk))
+                if (IsMouseButton(vk) && Binding_Held(vk))
                 {
                     pad.buttons |= bit;
                     PointerUsed();
@@ -217,13 +220,13 @@ void Input_Init()
     std::lock_guard lk(s_lock);
     if (s_inited) return;
     s_inited = true;
-    if (!s_scripted) Gamepad_Init();
+    // gamepads are set up with the window (gx/video.cpp)
 }
 
 void Input_Poll()
 {
     std::lock_guard lk(s_lock);
-    DWORD now = GetTickCount();
+    uint64_t now = SDL_GetTicks();
     if (s_lastPoll == now) return;
     s_lastPoll = now;
     PadState pad{};
@@ -248,7 +251,7 @@ void Input_Poll()
     }
     else
     {
-        static DWORD last = now;
+        static uint64_t last = now;
         float dt = std::min(0.1f, (now - last) / 1000.0f);
         last = now;
         ReadKeyboardMouse(pad, ptr);
@@ -269,7 +272,7 @@ void Input_Poll()
     if (!s_scripted)
     {
         // the settings overlay has the input while it is open; its HOME button holds HOME
-        static DWORD homeUntil = 0;
+        static uint64_t homeUntil = 0;
         if (Overlay_TakeHomePress()) homeUntil = now + 150;
         if (Overlay_IsOpen())
         {
@@ -298,8 +301,7 @@ PointerState Input_Pointer()
 void Input_SetRumble(bool on)
 {
     // never during scripted runs, and only while the game window is in front
-    HWND hwnd = (HWND)Video_HWND();
-    bool allowed = on && g_config.rumble && !s_scripted && hwnd && GetForegroundWindow() == hwnd;
+    bool allowed = on && g_config.rumble && !s_scripted && Video_HasFocus();
     Gamepad_Rumble(allowed);
 }
 

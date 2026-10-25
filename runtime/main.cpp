@@ -159,13 +159,9 @@ int main(int argc, char** argv)
     LOG_INFO("CastawayRecomp starting; data={} iso={} fps={} scale={}", dataDir, isoPath, g_cfgFrameRate, g_videoConfig.internalScale);
     if (dataDir.empty())
     {
-        // no launcher (restart, --skip-launcher): install directly
-        if (g_noMessageBox)
-            FATAL("Game data not installed. Start the game once normally to install it from your disc image, "
-                  "or run out/bkr_install <disc image> game/R42E69 (see README).");
-        extern bool InstallUI_Run(const std::filesystem::path&, const std::string&, const std::string&);
-        if (!InstallUI_Run(installDest, isoPath, "")) return 1;
-        dataDir = installDest.string();
+        // no launcher (restart, --skip-launcher): installing needs the launcher's window
+        FATAL("Game data not installed. Start the game once normally to install it from your disc image, "
+              "or run out/bkr_install <disc image> game/R42E69 (see README).");
     }
 
     {
