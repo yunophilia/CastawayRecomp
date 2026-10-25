@@ -2,7 +2,7 @@
 #include <d3d11.h>
 #include <windows.h>
 
-// In-game settings overlay (Dear ImGui), opened with the controller's View button or F1.
+// In-game settings overlay (Dear ImGui), opened with F1 or both gamepad stick clicks.
 // The game keeps running underneath; while the overlay is open the game sees no input.
 void Overlay_Init(HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* ctx);
 // Window thread: forwards input to the overlay. True if the message was consumed.

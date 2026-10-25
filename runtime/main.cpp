@@ -148,7 +148,7 @@ int main(int argc, char** argv)
         if (!Launcher_Run(dataDir, isoPath, installDest)) return 0;
     }
 
-    g_cfgFrameRate = fps60 ? 60 : g_config.frameRate;
+    g_cfgFrameRate = fps60 ? 60 : 30;   // unused: no frame-rate patch for this game (tools/recomp.py PATCHES)
     { extern bool g_gpuThread; g_gpuThread = g_config.gpuThread && !singleCore; }
     g_videoConfig.internalScale = scaleOverride ? scaleOverride : g_config.internalScale;
     g_videoConfig.windowWidth = g_config.windowWidth;
@@ -162,7 +162,7 @@ int main(int argc, char** argv)
         // no launcher (restart, --skip-launcher): install directly
         if (g_noMessageBox)
             FATAL("Game data not installed. Start the game once normally to install it from your disc image, "
-                  "or run bkr_install <disc image> (see README).");
+                  "or run out/bkr_install <disc image> game/R42E69 (see README).");
         extern bool InstallUI_Run(const std::filesystem::path&, const std::string&, const std::string&);
         if (!InstallUI_Run(installDest, isoPath, "")) return 1;
         dataDir = installDest.string();

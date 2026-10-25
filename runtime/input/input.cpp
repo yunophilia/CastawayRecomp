@@ -12,6 +12,7 @@
 #include "../config.h"
 #include "../gx/video.h"
 #include "../log.h"
+#include "../ui/overlay.h"
 
 #include <algorithm>
 #include <cmath>
@@ -256,6 +257,18 @@ void Input_Poll()
         ptr.x = s_ptrX;
         ptr.y = s_ptrY;
         ptr.valid = ptr.valid && s_ptrEver && now - s_ptrUsed < kPointerIdleMs;
+    }
+    if (!s_scripted)
+    {
+        // the settings overlay has the input while it is open; its HOME button holds HOME
+        static DWORD homeUntil = 0;
+        if (Overlay_TakeHomePress()) homeUntil = now + 150;
+        if (Overlay_IsOpen())
+        {
+            pad = {};
+            ptr.valid = false;
+        }
+        if (now < homeUntil) pad.buttons |= BTN_HOME;
     }
     pad.connected = true;   // the port always has a controller, so the game never asks for one
     s_pad = pad;

@@ -20,10 +20,8 @@ static const char* Bool(bool b) { return b ? "true" : "false"; }
 std::string Config_Text(const Config& c)
 {
     std::string s;
-    s += "; CastawayRecomp settings (also editable in the launcher and in game: View button / F1)\n\n";
+    s += "; CastawayRecomp settings (also editable in the launcher and in game: F1 or both stick clicks)\n\n";
     s += "[Video]\n";
-    s += "; 30 = original speed and pacing, 60 = doubled frame rate\n";
-    s += std::format("frame_rate = {}\n", c.frameRate);
     s += "; internal resolution multiplier (1 = 640x528, 3 = 1920x1584)\n";
     s += std::format("internal_scale = {}\n", c.internalScale);
     s += std::format("window_width = {}\nwindow_height = {}\n", c.windowWidth, c.windowHeight);
@@ -125,8 +123,7 @@ void Config_Load(const std::string& path)
         Config& c = g_config;
         if (section == "video")
         {
-            if (key == "frame_rate") c.frameRate = atoi(val.c_str()) >= 60 ? 60 : 30;
-            else if (key == "internal_scale") c.internalScale = std::clamp(atoi(val.c_str()), 1, 8);
+            if (key == "internal_scale") c.internalScale = std::clamp(atoi(val.c_str()), 1, 8);
             else if (key == "window_width") c.windowWidth = std::max(320, atoi(val.c_str()));
             else if (key == "window_height") c.windowHeight = std::max(240, atoi(val.c_str()));
             else if (key == "fullscreen") c.fullscreen = ParseBool(val);

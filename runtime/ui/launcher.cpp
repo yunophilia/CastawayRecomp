@@ -62,7 +62,7 @@ struct State
     fs::path data;
     DataStatus status = DataStatus::Missing;
     std::string problem;
-    std::string release;            // "USA (RENE8P)" once installed
+    std::string release;            // "USA (R42E69)" once installed
     std::string releaseError;       // this build cannot play the installed release
     bool promptInstall = false;     // ask for the disc image after the window is shown
     std::thread verifyThread;
@@ -156,7 +156,15 @@ void DrawHome(State& st, bool& play, const std::string& isoPath, const fs::path&
 
     ImGui::Spacing();
     ImGui::SeparatorText("Controls");
-    ImGui::TextDisabled("In game: View (Back) or F1 opens the settings. View + Start is the Wii HOME button.");
+    ImGui::TextWrapped("Gamepad: left stick moves the Sim, right stick moves the pointer, A / B are A / B, "
+                       "LB / RB are the Nunchuk Z / C, X / Y are 1 / 2, Back / Start are - / +, D-pad is the D-pad.");
+    ImGui::TextWrapped("Keyboard and mouse: WASD moves, the mouse points (left click A, right click B), Space A, "
+                       "Backspace B, Z / C Nunchuk Z / C, 1 / 2, Enter +, Tab -, arrow keys D-pad, IJKL move the pointer.");
+    ImGui::PushTextWrapPos(0.0f);
+    ImGui::TextDisabled("Where the game asks to tilt the Nunchuk, use the D-pad. An unused pointer leaves the screen "
+                        "after a few seconds, like pointing the Wii Remote away.");
+    ImGui::TextDisabled("In game: F1 or both stick clicks open the settings. Guide or Back + Start is the Wii HOME button.");
+    ImGui::PopTextWrapPos();
 }
 }   // namespace
 

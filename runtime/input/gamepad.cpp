@@ -1,6 +1,7 @@
 #include "gamepad.h"
 #include "../gx/video.h"
 #include "../log.h"
+#include "../ui/overlay.h"
 
 #include <SDL3/SDL.h>
 
@@ -146,6 +147,11 @@ bool Gamepad_Read(PadState& p)
     Stick(g, SDL_GAMEPAD_AXIS_RIGHTX, SDL_GAMEPAD_AXIS_RIGHTY, p.substickX, p.substickY);
     p.triggerL = Trigger(g, SDL_GAMEPAD_AXIS_LEFT_TRIGGER);
     p.triggerR = Trigger(g, SDL_GAMEPAD_AXIS_RIGHT_TRIGGER);
+    // both stick clicks open/close the settings overlay
+    static bool bothSticks = false;
+    bool sticks = SDL_GetGamepadButton(g, SDL_GAMEPAD_BUTTON_LEFT_STICK) && SDL_GetGamepadButton(g, SDL_GAMEPAD_BUTTON_RIGHT_STICK);
+    if (sticks && !bothSticks) Overlay_Toggle();
+    bothSticks = sticks;
     // Back + Start together is HOME too (pads without a usable guide button)
     if ((p.buttons & (BTN_MINUS | BTN_PLUS)) == (BTN_MINUS | BTN_PLUS)) p.buttons = (p.buttons & ~(BTN_MINUS | BTN_PLUS)) | BTN_HOME;
     return true;

@@ -6,7 +6,6 @@
 struct Config
 {
     // [Video]
-    int frameRate = 30;          // 30 (original) or 60
     int internalScale = 3;       // EFB resolution multiplier (1 = 640x528)
     int windowWidth = 1280;
     int windowHeight = 720;

@@ -155,7 +155,7 @@ void Overlay_Render(float w, float h)
             TerminateProcess(GetCurrentProcess(), 0);
         }
         ImGui::SameLine();
-        ImGui::TextDisabled("View / F1 / Esc closes");
+        ImGui::TextDisabled("F1 / Esc / both stick clicks close");
         SettingsUI_DrawVersion();
     }
     ImGui::End();

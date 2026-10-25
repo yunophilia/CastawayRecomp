@@ -103,10 +103,6 @@ void VideoTab(SettingsHost host)
     }
 
     ImGui::SeparatorText("Rendering");
-    const int fps[] = { 30, 60 };
-    const char* fpsNames[] = { "30 (original)", "60" };
-    if (Combo(host, "Frame rate", c.frameRate, fps, fpsNames, 2, true, "60 doubles the frame rate. Game speed stays the same."))
-        Changed(host, true);
     const int scales[] = { 1, 2, 3, 4, 5, 6 };
     const char* scaleNames[] = { "1x (640 x 528)", "2x (1280 x 1056)", "3x (1920 x 1584)", "4x (2560 x 2112)", "5x (3200 x 2640)", "6x (3840 x 3168)" };
     if (Combo(host, "Internal resolution", c.internalScale, scales, scaleNames, 6, true, "Resolution the game is rendered at."))
