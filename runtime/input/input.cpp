@@ -13,6 +13,7 @@
 #include "../log.h"
 
 #include <algorithm>
+#include <cmath>
 #include <atomic>
 #include <cstdio>
 #include <cstring>
@@ -30,6 +31,15 @@ bool s_inited = false;
 DWORD s_lastPoll = 0;
 PadState s_pad{};
 PointerState s_pointer{};
+
+// The pointer: the mouse while it moves over the window, else a virtual pointer the right
+// stick (or IJKL) pushes around. Screen edges in the game's pointer coordinates follow
+// from the calibration in ReadKeyboardMouse.
+constexpr float kPtrMinX = (0.0f - 0.488f) / 0.360f, kPtrMaxX = (1.0f - 0.488f) / 0.360f;
+constexpr float kPtrMinY = (0.0f - 0.462f) / 0.462f, kPtrMaxY = (1.0f - 0.462f) / 0.462f;
+constexpr float kPtrSpeed = 2.4f;   // pointer units per second at full deflection
+float s_ptrX = 0, s_ptrY = 0;
+POINT s_lastMouse{ -1, -1 };
 
 // ---------------------------------------------------------------- scripted input
 struct ScriptEvent
@@ -137,17 +147,34 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
     {
         // The game's pointer coordinates reach past the screen edges: measured on the main
         // menu, the cursor lands at screen fraction u = 0.488 + 0.360 x, v = 0.462 + 0.462 y.
-        ptr.valid = pt.x >= 0 && pt.y >= 0 && pt.x < rc.right && pt.y < rc.bottom;
-        float u = (float)pt.x / rc.right, v = (float)pt.y / rc.bottom;
-        ptr.x = (u - 0.488f) / 0.360f;
-        ptr.y = (v - 0.462f) / 0.462f;
-        if (ptr.valid)
+        bool inside = pt.x >= 0 && pt.y >= 0 && pt.x < rc.right && pt.y < rc.bottom;
+        if (inside && (pt.x != s_lastMouse.x || pt.y != s_lastMouse.y))
+        {
+            float u = (float)pt.x / rc.right, v = (float)pt.y / rc.bottom;
+            s_ptrX = (u - 0.488f) / 0.360f;
+            s_ptrY = (v - 0.462f) / 0.462f;
+        }
+        s_lastMouse = pt;
+        if (inside)
         {
             if (Key(VK_LBUTTON)) pad.buttons |= BTN_A;
             if (Key(VK_RBUTTON)) pad.buttons |= BTN_B;
             if (Key(VK_MBUTTON)) pad.buttons |= BTN_C;
         }
     }
+    ptr.valid = true;   // the game window has focus
+}
+
+// Moves a pointer by the right stick (substick) for dt seconds.
+void MovePointer(const PadState& pad, float dt, float& s_ptrX, float& s_ptrY)
+{
+    float x = pad.substickX / 100.0f, y = -pad.substickY / 100.0f;
+    // squared response: slow near the centre for aiming, fast at the edge
+    float m = std::sqrt(x * x + y * y);
+    if (m < 0.01f) return;
+    float k = std::min(m, 1.0f) * kPtrSpeed * dt;   // speed grows with deflection squared (k * x)
+    s_ptrX = std::clamp(s_ptrX + x * k, kPtrMinX, kPtrMaxX);
+    s_ptrY = std::clamp(s_ptrY + y * k, kPtrMinY, kPtrMaxY);
 }
 
 void Merge(PadState& into, const PadState& p)
@@ -178,14 +205,35 @@ void Input_Poll()
     PointerState ptr{};
     if (s_scripted)
     {
+        // scripts step in whole frames: the right stick moves the pointer by 1/60 s per poll
+        // that sees a new frame
+        static uint32_t lastFrame = 0;
+        if (s_frame.load() != lastFrame)
+        {
+            lastFrame = s_frame.load();
+            if (s_scriptPad.substickX || s_scriptPad.substickY)
+            {
+                s_scriptPointer.valid = true;
+                MovePointer(s_scriptPad, 1.0f / 60, s_scriptPointer.x, s_scriptPointer.y);
+            }
+        }
         pad = s_scriptPad;
+        pad.substickX = pad.substickY = 0;
         ptr = s_scriptPointer;
     }
     else
     {
+        static DWORD last = now;
+        float dt = std::min(0.1f, (now - last) / 1000.0f);
+        last = now;
         ReadKeyboardMouse(pad, ptr);
         PadState g{};
         if (Gamepad_Read(g)) Merge(pad, g);
+        // the Wii game has no C-stick: the right stick is the pointer
+        if (ptr.valid) MovePointer(pad, dt, s_ptrX, s_ptrY);
+        pad.substickX = pad.substickY = 0;
+        ptr.x = s_ptrX;
+        ptr.y = s_ptrY;
     }
     pad.connected = true;   // the port always has a controller, so the game never asks for one
     s_pad = pad;

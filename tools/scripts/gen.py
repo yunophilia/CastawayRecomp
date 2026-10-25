@@ -189,6 +189,33 @@ def continue_game():
     s.save('continue_game', f + 3002)
 
 
+@script
+def menu_dpad():
+    s = Script('main menu with the D-pad only (no pointer): shots after each press')
+    f = boot_to_menu(s) + 200
+    s.at(f, 'shot md_00')
+    for i, b in enumerate(['DOWN', 'DOWN', 'UP', 'LEFT', 'RIGHT', 'A'], start=1):
+        s.tap(f + 20, b)
+        s.at(f + 100, f'shot md_{i:02d}_{b}')
+        f += 120
+    s.save('menu_dpad', f + 300)
+
+
+@script
+def menu_stick():
+    s = Script('main menu, gamepad only: the right stick moves the pointer to Start New Game, A')
+    f = boot_to_menu(s) + 200
+    s.at(f, 'shot ms_00')
+    # 2.4 pointer units/s at full deflection = 0.04 per frame; target ~(0.31, 0.80) from (0, 0)
+    s.at(f + 10, 'cstick 100 0')
+    s.at(f + 18, 'cstick 0 -100')
+    s.at(f + 38, 'cstick 0 0')
+    s.at(f + 60, 'shot ms_01_pointed')
+    s.tap(f + 70)
+    s.at(f + 200, 'shot ms_02_after_a')
+    s.save('menu_stick', f + 210)
+
+
 if __name__ == '__main__':
     for name in sys.argv[1:]:
         SCRIPTS[name]()
