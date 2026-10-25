@@ -11,7 +11,9 @@
 - [x] Input: gamepads (SDL3), keyboard, mouse pointer, scripted input for tests
 - [x] Random-input soak, 12 minutes from the beach (tools/scripts/gen.py soak): no crash;
       harvesting bamboo, the pause menu, Plans & Ideas, the island map dialog, tutorial tips
-- [ ] Interactions with objects, the action menu, the HUD buttons
+- [x] Actions: Z harvests bamboo; with two actions (coconut: Put in Inventory / Eat) the
+      D-pad picks one instead of tilting the Nunchuk, Z does it (gen.py actions, actions_choice)
+- [ ] The HUD buttons, the inventory, building
 - [x] Continue Game from a save (/dev/fs ReadDir of a file is EINVAL, not ENOENT: the game
       checks for its save that way)
 - [x] Gamepad-only play: the right stick moves a virtual pointer (the mouse takes over when it
@@ -50,6 +52,10 @@
   `MapPlayerToController` is overridden to always pick slot 3. The Flash UI (AptViewer) reads
   the player's controller once mapped, else the first active one.
 * Pointer: on the main menu the cursor lands at screen fraction u = 0.488 + 0.360 x,
-  v = 0.462 + 0.462 y for game pointer coordinates (x, y).
+  v = 0.462 + 0.462 y for game pointer coordinates (x, y). EWiiController reports
+  (-1000, -1000) when the remote points away. While a pointer is on screen, dialogs act on
+  the pointed button and ignore A for the highlighted one, so an idle pointer (8 s without
+  mouse or right-stick use) counts as pointed away. On the GameCube slot "away" means not
+  writing the cursor at all; writing -1000 there also breaks A in dialogs.
 * The safety screens, the Nunchuk notice and the title read Wii Remotes directly, so the
   virtual remote carries the same buttons.

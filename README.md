@@ -55,7 +55,9 @@ Remote with a Nunchuk is always connected, so the game never asks for one.
 | GameCube L / R | LT / RT | Q / E |
 
 The Wii version has no C-stick, so the right stick (and IJKL) moves a virtual pointer; the
-mouse takes over as soon as it moves. Gamepads are read through SDL3 (Xbox, PlayStation, Switch Pro and generic pads). Rumble goes
+mouse takes over as soon as it moves. After 8 seconds without use the pointer leaves the
+screen, like pointing the Wii Remote away: then the D-pad and A work the highlighted buttons,
+and the D-pad also picks between actions where the game asks to tilt the Nunchuk. Gamepads are read through SDL3 (Xbox, PlayStation, Switch Pro and generic pads). Rumble goes
 to the gamepad.
 
 ## Building

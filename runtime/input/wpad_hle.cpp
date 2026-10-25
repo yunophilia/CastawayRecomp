@@ -219,7 +219,7 @@ PPC_OVERRIDE(KPADRead)
 PPC_OVERRIDE(WiiCursorPosition)
 {
     PointerState p = Input_Pointer();
-    float x = p.valid ? p.x : 0.0f, y = p.valid ? p.y : 0.0f;
+    float x = p.valid ? p.x : kPointerAway, y = p.valid ? p.y : kPointerAway;
     Write32(ctx.r[5], std::bit_cast<uint32_t>(x));
     Write32(ctx.r[6], std::bit_cast<uint32_t>(y));
 }

@@ -158,6 +158,8 @@ PPC_OVERRIDE(NgcControllerUpdate)
     }
     PointerState p = Input_Pointer();
     uint32_t ctrl = Read32(GameAddr(GA::CtrlPads) + 4 * kPort);
+    // No pointer: leave the cursor the game reset this frame. (Writing EWiiController's
+    // "pointed away" value here makes dialogs ignore A on their highlighted button.)
     if (!ctrl || !p.valid) return;
     for (uint32_t buf : { 508u, 512u })
         if (uint32_t data = Read32(ctrl + buf))

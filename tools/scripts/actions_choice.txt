@@ -1,0 +1,148 @@
+# beach: walk to the coconut (two actions), DOWN to pick the second, Z
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1140 press A
+1145 release A
+1190 press A
+1195 release A
+1240 press A
+1245 release A
+1350 point 0.308 0.804
+1390 press A
+1396 release A
+1486 point 0.033 0.545
+1506 press A
+1512 release A
+1586 point 0.033 0.545
+1606 press A
+1612 release A
+1686 point 0.033 0.545
+1706 press A
+1712 release A
+1786 point 0.033 0.545
+1806 press A
+1812 release A
+2546 point -0.050 0.840
+2586 press A
+2592 release A
+2742 point -0.506 0.861
+2782 press A
+2788 release A
+2898 point -0.747 -0.452
+2938 press A
+2944 release A
+3044 point -0.506 0.861
+3084 press A
+3090 release A
+3390 point 0.692 0.846
+3430 press A
+3436 release A
+3556 point 0.033 0.039
+3576 press A
+3582 release A
+3656 point 0.033 0.039
+3676 press A
+3682 release A
+3756 point 0.033 0.039
+3776 press A
+3782 release A
+3856 point 0.033 0.218
+3876 press A
+3882 release A
+3956 point 0.033 0.218
+3976 press A
+3982 release A
+4036 nopoint
+4336 press A
+4342 release A
+4576 press A
+4582 release A
+4816 press A
+4822 release A
+5056 press A
+5062 release A
+5296 press A
+5302 release A
+5536 press A
+5542 release A
+5776 press A
+5782 release A
+6016 press A
+6022 release A
+6256 press A
+6262 release A
+6496 press A
+6502 release A
+6736 press A
+6742 release A
+6976 press A
+6982 release A
+7216 press A
+7222 release A
+7456 press A
+7462 release A
+7696 press A
+7702 release A
+7936 press A
+7942 release A
+8176 press A
+8182 release A
+8416 press A
+8422 release A
+8656 press A
+8662 release A
+8936 stick -70 70
+9406 stick 0 0
+9436 shot ax_00_coconut
+9446 press DOWN
+9452 release DOWN
+9486 shot ax_01_down
+9496 press UP
+9502 release UP
+9536 shot ax_02_up
+9546 press DOWN
+9552 release DOWN
+9586 shot ax_03_down
+9596 press Z
+9602 release Z
+9636 shot ax_1_00
+9736 shot ax_1_01
+9836 shot ax_1_02
+9936 shot ax_1_03
+10036 shot ax_1_04
+10136 shot ax_1_05
+10238 quit

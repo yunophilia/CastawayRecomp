@@ -124,15 +124,23 @@ def crew_done():
     s.save('crew_done', f + 6002)
 
 
-def to_beach(s):
+def to_beach(s, park=None):
     """Boot, new game, create a Sim, Done, save, story intro, OK: returns the frame the Sim
     stands on the beach with the movement tutorial up."""
     f = create_sim(s, new_crew(s, boot_to_menu(s)))
     f = s.click(f + 300, 0.737, 0.853)   # Done
-    s.at(f + 10, 'nopoint')
-    for d in range(600, 4200, 240):      # save Yes, story, "shipwrecked" OK
+    for d in (120, 220, 320):            # "save before continuing?": Yes
+        s.click(f + d, 0.5, 0.48, settle=20)
+    for d in (420, 520):                 # "overwrite your saved game data?" (if there is one): Yes
+        s.click(f + d, 0.5, 0.5625, settle=20)
+    if park is None:                     # then no pointer (pointed away from the screen)
+        s.at(f + 600, 'nopoint')
+    else:                                # or parked at a screen position
+        x, y = game(*park)
+        s.at(f + 600, f'point {x:.3f} {y:.3f}')
+    for d in range(900, 5400, 240):      # story, "shipwrecked" OK (its timing varies)
         s.tap(f + d)
-    return f + 4300
+    return f + 5500
 
 
 @script
@@ -214,6 +222,62 @@ def menu_stick():
     s.tap(f + 70)
     s.at(f + 200, 'shot ms_02_after_a')
     s.save('menu_stick', f + 210)
+
+
+@script
+def find_bamboo():
+    s = Script('beach: walk up-left looking for bamboo, screenshots every half second')
+    f = to_beach(s)
+    s.at(f, 'stick -70 70')
+    s.shots(f, f + 600, 30, 'fb')
+    s.at(f + 600, 'stick 0 0')
+    s.save('find_bamboo', f + 602)
+
+
+@script
+def actions():
+    s = Script('beach: harvest bamboo with Z; at the coconut pick Eat with the D-pad and Z')
+    f = to_beach(s)
+    s.at(f, 'stick -70 70')
+    s.at(f + 100, 'stick 0 0')
+    s.at(f + 130, 'shot ac_00_bamboo')
+    s.tap(f + 140, 'Z')
+    s.shots(f + 200, f + 800, 100, 'ac_1')
+    f += 800
+    s.at(f, 'stick -70 70')        # on towards the coconut (it was ~380 frames further)
+    s.at(f + 380, 'stick 0 0')
+    s.at(f + 420, 'shot ac_20_coconut')
+    s.tap(f + 430, 'DOWN')
+    s.at(f + 470, 'shot ac_21_down')
+    s.tap(f + 480, 'Z')
+    s.shots(f + 540, f + 1200, 100, 'ac_3')
+    s.save('actions', f + 1202)
+
+
+@script
+def actions_choice():
+    s = Script('beach: walk to the coconut (two actions), DOWN to pick the second, Z')
+    f = to_beach(s)
+    s.at(f, 'stick -70 70')
+    s.at(f + 470, 'stick 0 0')
+    s.at(f + 500, 'shot ax_00_coconut')
+    s.tap(f + 510, 'DOWN')
+    s.at(f + 550, 'shot ax_01_down')
+    s.tap(f + 560, 'UP')
+    s.at(f + 600, 'shot ax_02_up')
+    s.tap(f + 610, 'DOWN')
+    s.at(f + 650, 'shot ax_03_down')
+    s.tap(f + 660, 'Z')
+    s.shots(f + 700, f + 1300, 100, 'ax_1')
+    s.save('actions_choice', f + 1302)
+
+
+@script
+def dialog_park_low():
+    s = Script('to the beach with the pointer parked below the dialogs')
+    f = to_beach(s, park=(0.5, 0.9))
+    s.shots(f - 2000, f + 200, 200, 'dp')
+    s.save('dialog_park_low', f + 202)
 
 
 if __name__ == '__main__':

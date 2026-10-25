@@ -41,6 +41,12 @@ constexpr float kPtrMinY = (0.0f - 0.462f) / 0.462f, kPtrMaxY = (1.0f - 0.462f) 
 constexpr float kPtrSpeed = 2.4f;   // pointer units per second at full deflection
 float s_ptrX = 0, s_ptrY = 0;
 POINT s_lastMouse{ -1, -1 };
+// The pointer is on screen only while it is being used: like pointing the Wii Remote away,
+// an idle pointer leaves the screen, so A works on the highlighted button again (dialogs
+// act on the pointed button while there is a pointer) and the game hides its interface.
+constexpr DWORD kPointerIdleMs = 8000;
+DWORD s_ptrUsed = 0;   // GetTickCount of the last mouse move/click or right-stick push
+bool s_ptrEver = false;
 
 // ---------------------------------------------------------------- scripted input
 struct ScriptEvent
@@ -120,6 +126,12 @@ void RunScript(void (*save)(const char*))
 // ---------------------------------------------------------------- keyboard and mouse
 bool Key(int vk) { return (GetAsyncKeyState(vk) & 0x8000) != 0; }
 
+void PointerUsed()
+{
+    s_ptrUsed = GetTickCount();
+    s_ptrEver = true;
+}
+
 void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
 {
     HWND hwnd = (HWND)Video_HWND();
@@ -149,21 +161,24 @@ void ReadKeyboardMouse(PadState& pad, PointerState& ptr)
         // The game's pointer coordinates reach past the screen edges: measured on the main
         // menu, the cursor lands at screen fraction u = 0.488 + 0.360 x, v = 0.462 + 0.462 y.
         bool inside = pt.x >= 0 && pt.y >= 0 && pt.x < rc.right && pt.y < rc.bottom;
-        if (inside && (pt.x != s_lastMouse.x || pt.y != s_lastMouse.y))
+        if (inside && s_lastMouse.x >= 0 && (pt.x != s_lastMouse.x || pt.y != s_lastMouse.y))
         {
             float u = (float)pt.x / rc.right, v = (float)pt.y / rc.bottom;
             s_ptrX = (u - 0.488f) / 0.360f;
             s_ptrY = (v - 0.462f) / 0.462f;
+            PointerUsed();
         }
         s_lastMouse = pt;
         if (inside)
         {
-            if (Key(VK_LBUTTON)) pad.buttons |= BTN_A;
-            if (Key(VK_RBUTTON)) pad.buttons |= BTN_B;
-            if (Key(VK_MBUTTON)) pad.buttons |= BTN_C;
+            bool l = Key(VK_LBUTTON), r = Key(VK_RBUTTON), m = Key(VK_MBUTTON);
+            if (l) pad.buttons |= BTN_A;
+            if (r) pad.buttons |= BTN_B;
+            if (m) pad.buttons |= BTN_C;
+            if (l || r || m) PointerUsed();
         }
     }
-    ptr.valid = true;   // the game window has focus
+    ptr.valid = true;   // the game window has focus; Input_Poll applies the idle timeout
 }
 
 // Moves a pointer by the right stick (substick) for dt seconds.
@@ -231,10 +246,16 @@ void Input_Poll()
         PadState g{};
         if (Gamepad_Read(g)) Merge(pad, g);
         // the Wii game has no C-stick: the right stick is the pointer
-        if (ptr.valid) MovePointer(pad, dt, s_ptrX, s_ptrY);
+        if (ptr.valid && (pad.substickX || pad.substickY))
+        {
+            // a pointer that was away comes back where it left
+            MovePointer(pad, dt, s_ptrX, s_ptrY);
+            PointerUsed();
+        }
         pad.substickX = pad.substickY = 0;
         ptr.x = s_ptrX;
         ptr.y = s_ptrY;
+        ptr.valid = ptr.valid && s_ptrEver && now - s_ptrUsed < kPointerIdleMs;
     }
     pad.connected = true;   // the port always has a controller, so the game never asks for one
     s_pad = pad;

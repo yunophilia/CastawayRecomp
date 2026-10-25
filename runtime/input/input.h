@@ -36,6 +36,7 @@ struct PadState
 
 // Wii Remote pointer, in the game's pointer coordinates (0, 0 is the screen centre; the
 // screen edges are beyond +-1, see input.cpp)
+constexpr float kPointerAway = -1000.0f;   // what the game uses for "pointed away from the screen"
 struct PointerState
 {
     float x, y;
