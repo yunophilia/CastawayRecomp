@@ -66,6 +66,13 @@
   spectrum and L/R correlation per section (see the music fix above for why correlation
   matters).
 
+* Open: one crash in four 60-minute soaks (Linux, CPU-starved, field ~50k of soak60b): a
+  virtual call through a stale AptValue in AptScriptFunctionBase::SetRegisterValue (EA's
+  ActionScript VM) landed in heap memory (interp: illegal instruction at 80864b48). Not
+  reproduced: the same script passed clean on Linux and Windows and again on Linux with
+  12 busy processes starving it (VI ~30 Hz). The interpreter now logs the guest call chain
+  (Cpu_LogGuestStack) when this happens.
+
 ## Controllers
 
 * `EControllerManager::_ctrlPads[4]`: slots 0-2 Wii Remotes (EWiiController), slot 3 a
