@@ -467,7 +467,13 @@ static bool InitDevice()
 
 void Renderer_Init()
 {
-    if (!Video_Init()) FATAL("video init failed");
+#ifdef _WIN32
+    if (!Video_Init()) FATAL("Could not start Direct3D 11. Check that your graphics driver is installed and up to date.");
+#else
+    if (!Video_Init())
+        FATAL("Could not start Direct3D 11 on Vulkan (DXVK). Check that a Vulkan driver for your GPU is "
+              "installed (vulkaninfo lists it), e.g. mesa-vulkan-drivers or the NVIDIA driver.");
+#endif
     if (!InitDevice()) FATAL("renderer init failed");
     if (g_config.texturePack) HiRes_Init(g_config.texturePackDir);
     g_asyncShaders = g_config.asyncShaders;
