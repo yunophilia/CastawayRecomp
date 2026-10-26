@@ -17,6 +17,8 @@ extern ID3D11Device* g_device;
 extern ID3D11DeviceContext* g_ctx;
 
 bool Video_Init();
+// What to tell the player when no Direct3D 11 device can be created
+const char* Video_DeviceHelp();
 // Presents the given texture region (an XFB copy) to the window.
 void Video_Present(ID3D11ShaderResourceView* srv, float u0, float v0, float u1, float v1);
 bool Video_WindowClosed();

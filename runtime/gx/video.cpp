@@ -211,6 +211,16 @@ static void LogPlatform()
 #endif
 }
 
+const char* Video_DeviceHelp()
+{
+#ifdef _WIN32
+    return "Could not start Direct3D 11. Check that your graphics driver is installed and up to date.";
+#else
+    return "Could not start Direct3D 11 on Vulkan (DXVK). Check that a Vulkan driver for your GPU is "
+           "installed (vulkaninfo lists it), e.g. mesa-vulkan-drivers or the NVIDIA driver.";
+#endif
+}
+
 bool Video_Init()
 {
     LogPlatform();

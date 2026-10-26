@@ -5,6 +5,7 @@
 #include "ui_shot.h"
 #include "../config.h"
 #include "../install/verify.h"
+#include "../gx/video.h"
 #include "../log.h"
 #include "../region.h"
 #include "../install_ui.h"
@@ -228,8 +229,14 @@ bool Launcher_Run(std::string& dataDir, const std::string& isoPath, const fs::pa
     sd.SampleDesc.Count = 1;
     sd.Windowed = TRUE;
     sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-    if (!native || FAILED(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION,
-                                                        &sd, &s_swap, &s_dev, nullptr, &s_ctx)))
+    if (native && FAILED(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION,
+                                                       &sd, &s_swap, &s_dev, nullptr, &s_ctx)))
+    {
+        // the game could not start either (and DXVK does not survive a second attempt)
+        SDL_DestroyWindow(window);
+        FATAL("{}", Video_DeviceHelp());
+    }
+    if (!native)
     {
         LOG_WARN("launcher: no window or D3D11 device, starting the game directly");
         if (window) SDL_DestroyWindow(window);

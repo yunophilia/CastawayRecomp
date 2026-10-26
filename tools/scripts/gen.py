@@ -426,6 +426,19 @@ def beach_walk():
         f += 620
     s.save('beach_walk', f + 2)
 
+
+@script
+def world_hover():
+    s = Script('beach: sweep the pointer over the scene in a grid (object names on hover?)')
+    f = to_beach(s)
+    for j, v in enumerate((0.35, 0.5, 0.65, 0.8)):
+        for i, u in enumerate((0.1, 0.25, 0.4, 0.55, 0.7, 0.85)):
+            x, y = game(u, v)
+            s.at(f, f'point {x:.3f} {y:.3f}')
+            s.at(f + 25, f'shot wh_{j}{i}')
+            f += 30
+    s.save('world_hover', f + 2)
+
 if __name__ == '__main__':
     for name in sys.argv[1:]:
         SCRIPTS[name]()

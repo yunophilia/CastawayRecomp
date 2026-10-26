@@ -60,6 +60,8 @@ int main(int argc, char** argv)
     // DXVK-native creates no DXGI factory unless told which window system it draws to; ours
     // is SDL3 (a value set by the user wins)
     setenv("DXVK_WSI_DRIVER", "SDL3", 0);
+    // no DXVK log files next to the game (set DXVK_LOG_PATH to get them)
+    setenv("DXVK_LOG_PATH", "none", 0);
 #endif
     // packaging: fill the shader cache that ships with the exe (no window, no game data)
     if (argc == 3 && std::string(argv[1]) == "--precompile-shaders")

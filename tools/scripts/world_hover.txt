@@ -1,0 +1,170 @@
+# beach: sweep the pointer over the scene in a grid (object names on hover?)
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
+1586 point 0.033 0.545
+1606 press A
+1612 release A
+1686 point 0.033 0.545
+1706 press A
+1712 release A
+1786 point 0.033 0.545
+1806 press A
+1812 release A
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3490 point 0.692 0.846
+3530 press A
+3536 release A
+3656 point 0.033 0.039
+3676 press A
+3682 release A
+3756 point 0.033 0.039
+3776 press A
+3782 release A
+3856 point 0.033 0.039
+3876 press A
+3882 release A
+3956 point 0.033 0.218
+3976 press A
+3982 release A
+4056 point 0.033 0.218
+4076 press A
+4082 release A
+4136 nopoint
+4436 press A
+4442 release A
+4676 press A
+4682 release A
+4916 press A
+4922 release A
+5156 press A
+5162 release A
+5396 press A
+5402 release A
+5636 press A
+5642 release A
+5876 press A
+5882 release A
+6116 press A
+6122 release A
+6356 press A
+6362 release A
+6596 press A
+6602 release A
+6836 press A
+6842 release A
+7076 press A
+7082 release A
+7316 press A
+7322 release A
+7556 press A
+7562 release A
+7796 press A
+7802 release A
+8036 press A
+8042 release A
+8276 press A
+8282 release A
+8516 press A
+8522 release A
+8756 press A
+8762 release A
+9036 point -1.078 -0.242
+9061 shot wh_00
+9066 point -0.661 -0.242
+9091 shot wh_01
+9096 point -0.244 -0.242
+9121 shot wh_02
+9126 point 0.172 -0.242
+9151 shot wh_03
+9156 point 0.589 -0.242
+9181 shot wh_04
+9186 point 1.006 -0.242
+9211 shot wh_05
+9216 point -1.078 0.082
+9241 shot wh_10
+9246 point -0.661 0.082
+9271 shot wh_11
+9276 point -0.244 0.082
+9301 shot wh_12
+9306 point 0.172 0.082
+9331 shot wh_13
+9336 point 0.589 0.082
+9361 shot wh_14
+9366 point 1.006 0.082
+9391 shot wh_15
+9396 point -1.078 0.407
+9421 shot wh_20
+9426 point -0.661 0.407
+9451 shot wh_21
+9456 point -0.244 0.407
+9481 shot wh_22
+9486 point 0.172 0.407
+9511 shot wh_23
+9516 point 0.589 0.407
+9541 shot wh_24
+9546 point 1.006 0.407
+9571 shot wh_25
+9576 point -1.078 0.732
+9601 shot wh_30
+9606 point -0.661 0.732
+9631 shot wh_31
+9636 point -0.244 0.732
+9661 shot wh_32
+9666 point 0.172 0.732
+9691 shot wh_33
+9696 point 0.589 0.732
+9721 shot wh_34
+9726 point 1.006 0.732
+9751 shot wh_35
+9758 quit
