@@ -24,6 +24,8 @@
 - [x] Items: Inventory -> Use the sleeping mat -> Sleep on Ground; the night passes with
       fast-forward and the day/night lighting (gen.py sleep_mat)
 - [ ] Building / crafting from Plans (needs gathered resources)
+- [x] Wii HOME Menu (the recompiled HBM module): HOME opens it over the game, HOME again
+      returns to the game (gen.py home_menu)
 - [x] Continue Game from a save (/dev/fs ReadDir of a file is EINVAL, not ENOENT: the game
       checks for its save that way)
 - [x] Gamepad-only play: the right stick moves a virtual pointer (the mouse takes over when it

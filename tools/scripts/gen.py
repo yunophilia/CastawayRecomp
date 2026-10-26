@@ -439,6 +439,17 @@ def world_hover():
             f += 30
     s.save('world_hover', f + 2)
 
+
+@script
+def home_menu():
+    s = Script('beach: HOME opens the Wii HOME Menu; screenshots; HOME again closes it')
+    f = to_beach(s)
+    s.tap(f, 'HOME', hold=10)
+    s.shots(f + 30, f + 330, 60, 'hm_open')
+    s.tap(f + 340, 'HOME', hold=10)
+    s.shots(f + 400, f + 640, 60, 'hm_closed')
+    s.save('home_menu', f + 642)
+
 if __name__ == '__main__':
     for name in sys.argv[1:]:
         SCRIPTS[name]()
