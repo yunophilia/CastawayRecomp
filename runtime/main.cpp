@@ -56,6 +56,10 @@ int main(int argc, char** argv)
         pt.StateMask = 0;
         SetProcessInformation(GetCurrentProcess(), ProcessPowerThrottling, &pt, sizeof(pt));
     }
+#else
+    // DXVK-native creates no DXGI factory unless told which window system it draws to; ours
+    // is SDL3 (a value set by the user wins)
+    setenv("DXVK_WSI_DRIVER", "SDL3", 0);
 #endif
     // packaging: fill the shader cache that ships with the exe (no window, no game data)
     if (argc == 3 && std::string(argv[1]) == "--precompile-shaders")

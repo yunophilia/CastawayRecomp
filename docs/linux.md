@@ -44,7 +44,7 @@ the scripted tests run headless:
 
 ```
 cd out/linux
-DXVK_WSI_DRIVER=SDL3 SDL_VIDEO_DRIVER=x11 SDL_AUDIO_DRIVER=dummy \
+SDL_VIDEO_DRIVER=x11 SDL_AUDIO_DRIVER=dummy \
 VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json \
 xvfb-run -a -s "-screen 0 1280x720x24" ./CastawayRecomp --nobox --skip-launcher --mute \
     --scale 1 --data ../../game/R42E69 --nand /tmp/castaway_nand \
@@ -56,6 +56,11 @@ presented frames (`Timebase_SetFrameLock`), so a script reaches the same screens
 renderer as on a fast one, just more slowly.
 
 ## Porting notes
+
+- **DXVK's window system**: DXVK-native creates no DXGI factory unless `DXVK_WSI_DRIVER`
+  names one. The game sets it to `SDL3` at startup unless the variable is already set.
+- **Installing on Linux** was checked end to end: `bkr_install` from the RVZ image gives files
+  identical to the Windows install, and `--verify` passes.
 
 - **vkd3d's calling convention.** vkd3d builds its `WINAPI` functions and COM methods with
   `ms_abi`, while DXVK-native's headers, which the runtime uses, declare everything with the
