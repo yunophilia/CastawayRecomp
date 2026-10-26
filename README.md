@@ -27,12 +27,19 @@ main.dol + tsc_wii_release_dvd.elf ──► tools/analyze.py ──► tools/re
 * **Runtime** (`runtime/`): the game's own Revolution OS runs recompiled; threads are host
   fibers. Memory-mapped hardware (VI, PI, CP/PE, DSP/AI, EXI, SI, IPC) and IOS (`/dev/di`
   served from the installed disc files, `/dev/fs` with saves in `nand/`) are emulated at a high
-  level. GX is rendered with Direct3D 11 on its own thread, audio goes through an AX HLE to
-  XAudio2.
+  level. GX is rendered with Direct3D 11 on its own thread (through DXVK on Linux), audio
+  goes through an AX HLE to SDL3.
 * **Input** (`runtime/input`): see below.
 
 The recompiler and most of the runtime come from
 [BlackKnightRecomp](https://github.com/yunophilia/BlackKnightRecomp); the input layer is new.
+
+## Fixes
+
+* **Music from the front** (`[Audio] music_front`, on by default): the Wii version hands its
+  music to the mixer with GameCube-era arguments, which puts it in the rear surround channel.
+  On stereo it plays in antiphase (hollow, and near silent in mono). The fix plays it from
+  the front, like the sound effects. Details in docs/progress.md.
 
 ## Controls
 
