@@ -11,6 +11,9 @@
 - [x] Input: gamepads (SDL3), keyboard, mouse pointer, scripted input for tests
 - [x] Random-input soak, 12 minutes from the beach (tools/scripts/gen.py soak): no crash;
       harvesting bamboo, the pause menu, Plans & Ideas, the island map dialog, tutorial tips
+- [x] 30-minute random-input soak (gen.py soak30) on Windows and on Linux (Xvfb, lavapipe),
+      2026-10-26: both reach the end with no warning or error (jungle, inventory, pause
+      menu, Fashion, back to the beach)
 - [x] Actions: Z harvests bamboo; with two actions (coconut: Put in Inventory / Eat) the
       D-pad picks one instead of tilting the Nunchuk, Z does it (gen.py actions, actions_choice)
 - [x] HUD and pause menu (gen.py hud_click, plans_explore): Paused menu, Inventory, Switch
