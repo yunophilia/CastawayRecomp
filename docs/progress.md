@@ -13,7 +13,14 @@
       harvesting bamboo, the pause menu, Plans & Ideas, the island map dialog, tutorial tips
 - [x] Actions: Z harvests bamboo; with two actions (coconut: Put in Inventory / Eat) the
       D-pad picks one instead of tilting the Nunchuk, Z does it (gen.py actions, actions_choice)
-- [ ] The HUD buttons, the inventory, building
+- [x] HUD and pause menu (gen.py hud_click, plans_explore): Paused menu, Inventory, Switch
+      Sim, Plans & Ideas, Personal Info, Island Map, Game Options, Collectibles, Fashion
+      (mirror). Goals does not open this early: the click only reaches
+      UISimulatorSupport::IsBookUnlocked / GoalUnlock::IsUnlocked (call-count diff,
+      gen.py counts_goals + tools/count_diff.py), so the book is still locked in the story
+- [x] Items: Inventory -> Use the sleeping mat -> Sleep on Ground; the night passes with
+      fast-forward and the day/night lighting (gen.py sleep_mat)
+- [ ] Building / crafting from Plans (needs gathered resources)
 - [x] Continue Game from a save (/dev/fs ReadDir of a file is EINVAL, not ENOENT: the game
       checks for its save that way)
 - [x] Gamepad-only play: the right stick moves a virtual pointer (the mouse takes over when it

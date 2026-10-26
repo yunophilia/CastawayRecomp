@@ -1,0 +1,146 @@
+# call counts (counts build): click empty sand, the Goals button, the Inventory button
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
+1586 point 0.033 0.545
+1606 press A
+1612 release A
+1686 point 0.033 0.545
+1706 press A
+1712 release A
+1786 point 0.033 0.545
+1806 press A
+1812 release A
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3490 point 0.692 0.846
+3530 press A
+3536 release A
+3656 point 0.033 0.039
+3676 press A
+3682 release A
+3756 point 0.033 0.039
+3776 press A
+3782 release A
+3856 point 0.033 0.039
+3876 press A
+3882 release A
+3956 point 0.033 0.218
+3976 press A
+3982 release A
+4056 point 0.033 0.218
+4076 press A
+4082 release A
+4136 nopoint
+4436 press A
+4442 release A
+4676 press A
+4682 release A
+4916 press A
+4922 release A
+5156 press A
+5162 release A
+5396 press A
+5402 release A
+5636 press A
+5642 release A
+5876 press A
+5882 release A
+6116 press A
+6122 release A
+6356 press A
+6362 release A
+6596 press A
+6602 release A
+6836 press A
+6842 release A
+7076 press A
+7082 release A
+7316 press A
+7322 release A
+7556 press A
+7562 release A
+7796 press A
+7802 release A
+8036 press A
+8042 release A
+8276 press A
+8282 release A
+8516 press A
+8522 release A
+8756 press A
+8762 release A
+9036 point 0.033 0.342
+9076 countsreset
+9078 press A
+9084 release A
+9196 counts cc_base.bin
+9197 shot cc_base
+9236 press B
+9242 release B
+9336 point 1.189 -0.264
+9376 countsreset
+9378 press A
+9384 release A
+9496 counts cc_goals.bin
+9497 shot cc_goals
+9536 press B
+9542 release B
+9636 point 1.189 -0.502
+9676 countsreset
+9678 press A
+9684 release A
+9796 counts cc_inv.bin
+9797 shot cc_inv
+9836 press B
+9842 release B
+9938 quit

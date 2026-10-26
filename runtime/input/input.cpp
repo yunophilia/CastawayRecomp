@@ -53,6 +53,9 @@ uint64_t s_ptrUsed = 0;   // SDL_GetTicks of the last mouse move/click or right-
 bool s_ptrEver = false;
 
 // ---------------------------------------------------------------- scripted input
+#ifdef BKR_CALL_COUNTS
+extern "C" uint32_t g_callCounts[0x200000] = {};
+#endif
 struct ScriptEvent
 {
     uint32_t frame;
@@ -110,6 +113,21 @@ void RunScript()
             s_scriptPointer.valid = false;
         else if (e.action == "shot")
             s_pendingShots.push_back(s_shotDir + "/" + (a.empty() ? "shot_" + std::to_string(frame) : a[0]) + ".bmp");
+#ifdef BKR_CALL_COUNTS
+        else if (e.action == "countsreset")
+            memset(g_callCounts, 0, sizeof(g_callCounts));
+        else if (e.action == "counts" && a.size() == 1)
+        {
+            // calls per game function since the last reset (index = (address - 0x80000000) / 4)
+            std::string path = s_shotDir + "/" + a[0];
+            if (FILE* f = fopen(path.c_str(), "wb"))
+            {
+                fwrite(g_callCounts, sizeof(g_callCounts), 1, f);
+                fclose(f);
+            }
+            LOG_INFO("script: frame {} wrote call counts {}", frame, path);
+        }
+#endif
         else if (e.action == "log")
         {
             std::string msg;

@@ -84,7 +84,11 @@ the shader compiler, and the build is `cmake --preset linux-clang && ninja -C bu
 `tools/run_test.ps1` runs the game minimized for a fixed time. Input scripts (`--script`)
 drive it frame by frame and take screenshots; `tools/scripts/gen.py` builds them, for example
 `boot_to_menu`, `cas_accept` (new game, create a Sim), `beach_move` (walk on the island) and
-`soak` (ten minutes of seeded random input). `tools/contact.py` tiles screenshots into one image.
+`soak` (ten minutes of seeded random input). Script frames are video fields (game time),
+so runs behave the same on fast and slow machines. With the call-counting build
+(`tools\dev_build.bat counts`), the script commands `countsreset` and `counts <file>` dump
+per-function call counts; `tools/count_diff.py` lists what one action called that another
+did not. `tools/contact.py` tiles screenshots into one image.
 
 ```
 python tools/scripts/gen.py beach_move

@@ -288,6 +288,107 @@ def dialog_park_low():
     s.save('dialog_park_low', f + 202)
 
 
+
+@script
+def hud_explore():
+    s = Script('beach: point at the screen, then sweep the pointer over the HUD (hover labels)')
+    f = to_beach(s)
+    x, y = game(0.5, 0.5)
+    s.at(f, f'point {x:.3f} {y:.3f}')
+    s.at(f + 60, 'shot hx_00_center')
+    f += 80
+    for row, v in enumerate((0.93, 0.85, 0.75)):
+        for i, u in enumerate((0.04, 0.09, 0.14, 0.19, 0.24, 0.30, 0.38, 0.62, 0.75, 0.85, 0.95)):
+            x, y = game(u, v)
+            s.at(f, f'point {x:.3f} {y:.3f}')
+            s.at(f + 30, f'shot hx_{row}{i:02d}')
+            f += 40
+    s.save('hud_explore', f + 2)
+
+
+@script
+def hud_click():
+    s = Script('beach: click each HUD button (right column, left panel), screenshots, back out with B')
+    f = to_beach(s)
+    targets = [('plumbob', 0.916, 0.12), ('hammer', 0.916, 0.23), ('book', 0.916, 0.34),
+               ('panel', 0.06, 0.72), ('relations', 0.14, 0.85), ('switch', 0.24, 0.85)]
+    for name, u, v in targets:
+        f = s.click(f, u, v)
+        s.shots(f + 30, f + 330, 100, f'hc_{name}')
+        x, y = game(0.5, 0.45)
+        s.at(f + 340, f'point {x:.3f} {y:.3f}')
+        s.tap(f + 360, 'B')
+        s.at(f + 420, f'shot hc_{name}_back')
+        f += 460
+    s.save('hud_click', f + 2)
+
+
+@script
+def hud_goals_inventory():
+    s = Script('beach: Goals button (held and repeated clicks), then Inventory -> Use the sleeping mat')
+    f = to_beach(s)
+    f = s.click(f, 0.916, 0.34)                  # Goals
+    s.shots(f + 20, f + 260, 40, 'hg_a')
+    x, y = game(0.916, 0.34)
+    s.at(f + 270, 'press A')                     # held click
+    s.at(f + 300, 'release A')
+    s.shots(f + 320, f + 560, 60, 'hg_b')
+    s.tap(f + 570, 'B')
+    f += 640
+    f = s.click(f, 0.916, 0.23)                  # Inventory
+    f = s.click(f + 60, 0.11, 0.33)              # sleeping mat slot
+    s.at(f + 30, 'shot hg_inv_sel')
+    f = s.click(f + 40, 0.425, 0.87)             # Use
+    s.shots(f + 30, f + 900, 90, 'hg_use')
+    s.save('hud_goals_inventory', f + 902)
+
+
+@script
+def sleep_mat():
+    s = Script('beach: Inventory -> Use the sleeping mat -> Z on Sleep on Ground, watch the night pass')
+    f = to_beach(s)
+    f = s.click(f, 0.916, 0.23)                  # Inventory
+    f = s.click(f + 60, 0.11, 0.33)              # sleeping mat
+    f = s.click(f + 40, 0.425, 0.87)             # Use
+    s.at(f + 60, 'nopoint')
+    s.at(f + 150, 'shot sm_00_menu')
+    s.tap(f + 160, 'Z')                          # the highlighted action: Sleep on Ground
+    s.shots(f + 220, f + 4200, 300, 'sm_1')
+    s.save('sleep_mat', f + 4202)
+
+
+@script
+def plans_explore():
+    s = Script('beach: pause menu -> each icon (Plans first), screenshots')
+    f = to_beach(s)
+    # icon grid of the pause menu (two rows), measured on its screenshot
+    icons = [(0.33, 0.36), (0.42, 0.36), (0.50, 0.36), (0.58, 0.36), (0.67, 0.36),
+             (0.37, 0.51), (0.46, 0.51), (0.54, 0.51), (0.63, 0.51)]
+    for i, (u, v) in enumerate(icons):
+        f = s.click(f, 0.916, 0.12)              # pause menu
+        f = s.click(f + 60, u, v)
+        s.shots(f + 40, f + 280, 120, f'pl_{i}')
+        s.tap(f + 300, 'B')
+        s.tap(f + 360, 'B')
+        f += 420
+    s.save('plans_explore', f + 2)
+
+
+@script
+def counts_goals():
+    s = Script('call counts (counts build): click empty sand, the Goals button, the Inventory button')
+    f = to_beach(s)
+    for name, u, v in (('base', 0.5, 0.62), ('goals', 0.916, 0.34), ('inv', 0.916, 0.23)):
+        x, y = game(u, v)
+        s.at(f, f'point {x:.3f} {y:.3f}')
+        s.at(f + 40, 'countsreset')
+        s.tap(f + 42)
+        s.at(f + 160, f'counts cc_{name}.bin')
+        s.at(f + 161, f'shot cc_{name}')
+        s.tap(f + 200, 'B')
+        f += 300
+    s.save('counts_goals', f + 2)
+
 if __name__ == '__main__':
     for name in sys.argv[1:]:
         SCRIPTS[name]()

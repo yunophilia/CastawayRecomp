@@ -1,0 +1,190 @@
+# beach: point at the screen, then sweep the pointer over the HUD (hover labels)
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
+1586 point 0.033 0.545
+1606 press A
+1612 release A
+1686 point 0.033 0.545
+1706 press A
+1712 release A
+1786 point 0.033 0.545
+1806 press A
+1812 release A
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3490 point 0.692 0.846
+3530 press A
+3536 release A
+3656 point 0.033 0.039
+3676 press A
+3682 release A
+3756 point 0.033 0.039
+3776 press A
+3782 release A
+3856 point 0.033 0.039
+3876 press A
+3882 release A
+3956 point 0.033 0.218
+3976 press A
+3982 release A
+4056 point 0.033 0.218
+4076 press A
+4082 release A
+4136 nopoint
+4436 press A
+4442 release A
+4676 press A
+4682 release A
+4916 press A
+4922 release A
+5156 press A
+5162 release A
+5396 press A
+5402 release A
+5636 press A
+5642 release A
+5876 press A
+5882 release A
+6116 press A
+6122 release A
+6356 press A
+6362 release A
+6596 press A
+6602 release A
+6836 press A
+6842 release A
+7076 press A
+7082 release A
+7316 press A
+7322 release A
+7556 press A
+7562 release A
+7796 press A
+7802 release A
+8036 press A
+8042 release A
+8276 press A
+8282 release A
+8516 press A
+8522 release A
+8756 press A
+8762 release A
+9036 point 0.033 0.082
+9096 shot hx_00_center
+9116 point -1.244 1.013
+9146 shot hx_000
+9156 point -1.106 1.013
+9186 shot hx_001
+9196 point -0.967 1.013
+9226 shot hx_002
+9236 point -0.828 1.013
+9266 shot hx_003
+9276 point -0.689 1.013
+9306 shot hx_004
+9316 point -0.522 1.013
+9346 shot hx_005
+9356 point -0.300 1.013
+9386 shot hx_006
+9396 point 0.367 1.013
+9426 shot hx_007
+9436 point 0.728 1.013
+9466 shot hx_008
+9476 point 1.006 1.013
+9506 shot hx_009
+9516 point 1.283 1.013
+9546 shot hx_010
+9556 point -1.244 0.840
+9586 shot hx_100
+9596 point -1.106 0.840
+9626 shot hx_101
+9636 point -0.967 0.840
+9666 shot hx_102
+9676 point -0.828 0.840
+9706 shot hx_103
+9716 point -0.689 0.840
+9746 shot hx_104
+9756 point -0.522 0.840
+9786 shot hx_105
+9796 point -0.300 0.840
+9826 shot hx_106
+9836 point 0.367 0.840
+9866 shot hx_107
+9876 point 0.728 0.840
+9906 shot hx_108
+9916 point 1.006 0.840
+9946 shot hx_109
+9956 point 1.283 0.840
+9986 shot hx_110
+9996 point -1.244 0.623
+10026 shot hx_200
+10036 point -1.106 0.623
+10066 shot hx_201
+10076 point -0.967 0.623
+10106 shot hx_202
+10116 point -0.828 0.623
+10146 shot hx_203
+10156 point -0.689 0.623
+10186 shot hx_204
+10196 point -0.522 0.623
+10226 shot hx_205
+10236 point -0.300 0.623
+10266 shot hx_206
+10276 point 0.367 0.623
+10306 shot hx_207
+10316 point 0.728 0.623
+10346 shot hx_208
+10356 point 1.006 0.623
+10386 shot hx_209
+10396 point 1.283 0.623
+10426 shot hx_210
+10438 quit
