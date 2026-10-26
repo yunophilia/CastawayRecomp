@@ -45,6 +45,8 @@ if(MSVC_FRONTEND)
         message(FATAL_ERROR "Visual Studio 2022 or newer is required (found MSVC ${VS_LIB_VERSION}); "
                             "install Visual Studio 2026 (Build Tools are enough) with the C++ workload")
     endif()
+    # executables name their PDB without the build directory
+    add_link_options(/PDBALTPATH:%_PDB%)
 endif()
 
 # ---------------------------------------------------------------- disc image installer

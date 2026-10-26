@@ -27,6 +27,16 @@ SDL 3.4.2).
 Linux builds put their binary, `config.ini`, shader cache and saves in `out/linux/`, so they
 don't mix with the Windows build in `out/`.
 
+## Packaging
+
+`sh tools/package_linux.sh` (needs `patchelf`) collects `dist/CastawayRecomp-linux`:
+- the game and `bkr_install`
+- DXVK, vkd3d and SDL3 in `lib/`, found through `RUNPATH $ORIGIN/lib`
+- a precompiled shader cache
+
+Debug info is stripped, so no build paths ship. The target system needs a Vulkan driver, and
+a glibc at least as new as the build machine's.
+
 ## Testing without a display
 
 With Xvfb and Mesa's lavapipe (CPU Vulkan; `sudo apt-get install xvfb mesa-vulkan-drivers`),
