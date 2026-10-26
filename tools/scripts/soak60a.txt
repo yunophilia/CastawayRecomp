@@ -1,0 +1,5696 @@
+# to the beach, then 60 minutes of random input (seed 4242)
+240 press A
+245 release A
+290 press A
+295 release A
+340 press A
+345 release A
+390 press A
+395 release A
+440 press A
+445 release A
+490 press A
+495 release A
+540 press A
+545 release A
+590 press A
+595 release A
+640 press A
+645 release A
+690 press A
+695 release A
+740 press A
+745 release A
+790 press A
+795 release A
+840 press A
+845 release A
+890 press A
+895 release A
+940 press A
+945 release A
+990 press A
+995 release A
+1040 press A
+1045 release A
+1090 press A
+1095 release A
+1450 point 0.308 0.804
+1490 press A
+1496 release A
+1586 point 0.033 0.545
+1606 press A
+1612 release A
+1686 point 0.033 0.545
+1706 press A
+1712 release A
+1786 point 0.033 0.545
+1806 press A
+1812 release A
+1886 point 0.033 0.545
+1906 press A
+1912 release A
+2646 point -0.050 0.840
+2686 press A
+2692 release A
+2842 point -0.506 0.861
+2882 press A
+2888 release A
+2998 point -0.747 -0.452
+3038 press A
+3044 release A
+3144 point -0.506 0.861
+3184 press A
+3190 release A
+3490 point 0.692 0.846
+3530 press A
+3536 release A
+3656 point 0.033 0.039
+3676 press A
+3682 release A
+3756 point 0.033 0.039
+3776 press A
+3782 release A
+3856 point 0.033 0.039
+3876 press A
+3882 release A
+3956 point 0.033 0.218
+3976 press A
+3982 release A
+4056 point 0.033 0.218
+4076 press A
+4082 release A
+4136 nopoint
+4436 press A
+4442 release A
+4676 press A
+4682 release A
+4916 press A
+4922 release A
+5156 press A
+5162 release A
+5396 press A
+5402 release A
+5636 press A
+5642 release A
+5876 press A
+5882 release A
+6116 press A
+6122 release A
+6356 press A
+6362 release A
+6596 press A
+6602 release A
+6836 press A
+6842 release A
+7076 press A
+7082 release A
+7316 press A
+7322 release A
+7556 press A
+7562 release A
+7796 press A
+7802 release A
+8036 press A
+8042 release A
+8276 press A
+8282 release A
+8516 press A
+8522 release A
+8756 press A
+8762 release A
+9036 press Z
+9044 release Z
+9059 point -0.269 -0.356
+9144 point 0.818 -0.585
+9237 press 1
+9244 release 1
+9260 stick -64 -54
+9376 stick 0 0
+9295 stick -40 76
+9470 stick 0 0
+9400 point 1.054 -0.773
+9455 stick -19 -57
+9617 stick 0 0
+9518 press PLUS
+9534 release PLUS
+9589 stick -22 -58
+9707 stick 0 0
+9685 point -0.547 -0.738
+9797 press B
+9806 release B
+9895 stick -28 23
+9996 stick 0 0
+9925 press UP
+9941 release UP
+10000 press 1
+10019 release 1
+10049 point -0.955 -0.021
+10138 press B
+10149 release B
+10204 press 2
+10220 release 2
+10234 press RIGHT
+10239 release RIGHT
+10322 stick 8 -98
+10358 stick 0 0
+10436 point 0.276 0.233
+10488 press Z
+10507 release Z
+10535 press C
+10546 release C
+10575 press LEFT
+10592 release LEFT
+10659 press 2
+10675 release 2
+10760 stick 24 56
+10846 stick 0 0
+10839 cstick -25 -72
+10927 cstick 0 0
+10928 press LEFT
+10932 release LEFT
+10951 press RIGHT
+10960 release RIGHT
+10977 point -0.894 -0.457
+11044 press C
+11051 release C
+11090 point 1.266 0.909
+11112 press B
+11123 release B
+11220 press A
+11229 release A
+11326 press A
+11334 release A
+11433 stick -81 46
+11558 stick 0 0
+11465 stick 12 -53
+11564 stick 0 0
+11537 stick 42 -57
+11615 stick 0 0
+11625 point -0.110 -0.629
+11706 stick -72 -39
+11803 stick 0 0
+11790 cstick 100 -85
+11849 cstick 0 0
+11859 point 0.987 -0.533
+11975 press B
+11983 release B
+11997 press MINUS
+12016 release MINUS
+12022 stick 18 42
+12154 stick 0 0
+12063 press A
+12077 release A
+12138 press B
+12149 release B
+12203 point -0.495 1.015
+12309 press DOWN
+12320 release DOWN
+12427 press UP
+12439 release UP
+12534 stick 88 -55
+12678 stick 0 0
+12564 point 0.580 0.502
+12593 press A
+12600 release A
+12644 stick 57 -99
+12757 stick 0 0
+12736 press 1
+12740 release 1
+12808 cstick 71 63
+12896 cstick 0 0
+12861 point 0.226 0.425
+12940 press A
+12948 release A
+13018 stick -34 -32
+13100 stick 0 0
+13124 cstick -21 28
+13145 cstick 0 0
+13174 stick 67 -69
+13352 stick 0 0
+13254 press LEFT
+13272 release LEFT
+13276 stick 68 -36
+13375 stick 0 0
+13326 cstick 14 -87
+13386 cstick 0 0
+13408 cstick -13 -65
+13450 cstick 0 0
+13513 stick 62 72
+13611 stick 0 0
+13605 press 1
+13609 release 1
+13627 stick -81 91
+13753 stick 0 0
+13662 stick 34 -68
+13837 stick 0 0
+13769 stick -69 -56
+13868 stick 0 0
+13856 stick -99 77
+13907 stick 0 0
+13943 press 1
+13950 release 1
+14054 point -0.627 0.021
+14145 point 0.891 -0.122
+14247 stick -50 38
+14303 stick 0 0
+14298 point 1.058 -0.594
+14363 stick -14 -99
+14543 stick 0 0
+14416 stick 13 23
+14490 stick 0 0
+14478 press LEFT
+14492 release LEFT
+14510 press 2
+14514 release 2
+14587 stick -70 -98
+14705 stick 0 0
+14661 cstick -93 17
+14709 cstick 0 0
+14724 press LEFT
+14736 release LEFT
+14824 cstick -41 16
+14858 cstick 0 0
+14922 press LEFT
+14930 release LEFT
+14980 point 0.007 0.707
+15093 press Z
+15111 release Z
+15122 press UP
+15128 release UP
+15224 press RIGHT
+15243 release RIGHT
+15296 press UP
+15316 release UP
+15416 press PLUS
+15421 release PLUS
+15481 point 1.003 -0.178
+15564 press DOWN
+15582 release DOWN
+15619 press 1
+15626 release 1
+15715 press MINUS
+15727 release MINUS
+15738 stick 2 7
+15837 stick 0 0
+15848 point -0.304 0.118
+15893 press 1
+15900 release 1
+16011 stick 70 -99
+16062 stick 0 0
+16122 point 0.032 -0.466
+16186 stick 8 92
+16233 stick 0 0
+16237 press A
+16252 release A
+16309 stick 34 -20
+16467 stick 0 0
+16339 stick -43 28
+16475 stick 0 0
+16366 press A
+16374 release A
+16464 stick -31 -32
+16524 stick 0 0
+16488 cstick 33 -10
+16560 cstick 0 0
+16528 stick -95 -75
+16663 stick 0 0
+16578 press B
+16596 release B
+16630 stick 80 90
+16675 stick 0 0
+16669 press RIGHT
+16675 release RIGHT
+16786 point -0.786 0.617
+16811 press Z
+16816 release Z
+16901 press RIGHT
+16917 release RIGHT
+16936 press DOWN
+16940 release DOWN
+17013 press UP
+17027 release UP
+17067 stick 50 -60
+17169 stick 0 0
+17139 stick 25 87
+17269 stick 0 0
+17255 stick 16 -8
+17413 stick 0 0
+17361 stick -75 -74
+17391 stick 0 0
+17382 stick -72 -36
+17468 stick 0 0
+17416 cstick -56 -40
+17449 cstick 0 0
+17492 press UP
+17508 release UP
+17555 cstick 39 79
+17599 cstick 0 0
+17622 stick -25 -43
+17686 stick 0 0
+17721 point -0.358 0.048
+17807 stick -44 -66
+17847 stick 0 0
+17864 point 0.608 -0.689
+17902 stick -57 12
+18045 stick 0 0
+18005 stick -87 -64
+18161 stick 0 0
+18031 press UP
+18039 release UP
+18090 point -0.040 0.497
+18157 press C
+18175 release C
+18260 stick 17 -24
+18422 stick 0 0
+18335 point -0.295 0.606
+18425 stick -95 -59
+18603 stick 0 0
+18543 point -0.328 -0.247
+18576 stick -83 -54
+18727 stick 0 0
+18637 stick -14 69
+18720 stick 0 0
+18697 cstick 100 14
+18730 cstick 0 0
+18753 stick -20 -25
+18826 stick 0 0
+18841 press DOWN
+18853 release DOWN
+18900 press RIGHT
+18905 release RIGHT
+18983 cstick 53 -19
+19031 cstick 0 0
+19096 stick 59 64
+19199 stick 0 0
+19187 press 1
+19193 release 1
+19241 point -0.066 0.746
+19356 cstick 69 -10
+19410 cstick 0 0
+19456 press LEFT
+19460 release LEFT
+19555 stick -42 61
+19717 stick 0 0
+19583 cstick -75 -90
+19668 cstick 0 0
+19698 point 0.548 -0.868
+19718 press A
+19722 release A
+19836 stick -99 -47
+19944 stick 0 0
+19895 point 1.274 -0.523
+19967 press LEFT
+19984 release LEFT
+20071 press 1
+20083 release 1
+20127 press C
+20146 release C
+20223 press 2
+20234 release 2
+20243 stick -6 -90
+20377 stick 0 0
+20321 stick -64 21
+20360 stick 0 0
+20432 point 0.195 0.183
+20459 stick -17 -47
+20508 stick 0 0
+20548 stick 28 -78
+20661 stick 0 0
+20659 press B
+20672 release B
+20753 point -0.607 -0.878
+20797 point -1.043 0.540
+20826 press C
+20832 release C
+20860 press A
+20865 release A
+20903 press LEFT
+20917 release LEFT
+20934 stick -87 57
+21043 stick 0 0
+21031 stick -43 1
+21193 stick 0 0
+21066 point 0.311 0.152
+21107 press Z
+21120 release Z
+21162 press DOWN
+21170 release DOWN
+21229 stick -57 -26
+21343 stick 0 0
+21285 stick -44 62
+21403 stick 0 0
+21350 cstick -25 -46
+21421 cstick 0 0
+21418 press 2
+21436 release 2
+21446 point 0.831 0.601
+21530 cstick 80 84
+21617 cstick 0 0
+21628 point -0.885 0.937
+21672 press A
+21681 release A
+21770 point -0.872 -0.630
+21791 press A
+21795 release A
+21886 cstick -5 21
+21938 cstick 0 0
+21975 stick -70 -48
+22148 stick 0 0
+22004 cstick -93 37
+22063 cstick 0 0
+22065 stick 30 -42
+22120 stick 0 0
+22104 stick 34 -16
+22174 stick 0 0
+22164 press B
+22173 release B
+22277 cstick -89 48
+22328 cstick 0 0
+22342 point 0.853 -0.174
+22448 stick -92 -31
+22550 stick 0 0
+22503 point 0.258 0.844
+22554 press C
+22570 release C
+22669 press PLUS
+22675 release PLUS
+22717 point -0.395 -0.024
+22800 point 0.505 0.302
+22869 press 2
+22873 release 2
+22902 point -0.346 -0.190
+23022 stick -36 54
+23164 stick 0 0
+23108 press LEFT
+23115 release LEFT
+23196 stick -16 -66
+23264 stick 0 0
+23234 stick -99 79
+23292 stick 0 0
+23288 cstick -92 67
+23340 cstick 0 0
+23317 press DOWN
+23329 release DOWN
+23420 stick 60 13
+23592 stick 0 0
+23451 press A
+23467 release A
+23529 press Z
+23543 release Z
+23630 cstick 55 -6
+23653 cstick 0 0
+23655 stick -12 -81
+23704 stick 0 0
+23770 press A
+23789 release A
+23814 stick 60 -33
+23908 stick 0 0
+23912 point 0.738 -0.357
+23974 cstick 98 -36
+24064 cstick 0 0
+24079 stick -3 -34
+24259 stick 0 0
+24104 press 2
+24123 release 2
+24192 press PLUS
+24209 release PLUS
+24232 press A
+24249 release A
+24307 stick -3 10
+24486 stick 0 0
+24378 press 1
+24382 release 1
+24465 press A
+24472 release A
+24502 stick -86 24
+24576 stick 0 0
+24560 point 0.678 -0.624
+24617 stick 68 -55
+24757 stick 0 0
+24705 cstick 63 -88
+24774 cstick 0 0
+24768 press A
+24788 release A
+24795 point -0.856 0.833
+24870 point -0.149 -0.456
+24891 press Z
+24906 release Z
+24923 press MINUS
+24935 release MINUS
+25040 press UP
+25044 release UP
+25157 press A
+25170 release A
+25265 point 0.350 -0.714
+25367 stick -21 90
+25422 stick 0 0
+25416 point 0.207 -0.002
+25461 press 1
+25477 release 1
+25580 stick 32 24
+25642 stick 0 0
+25662 press RIGHT
+25682 release RIGHT
+25706 press MINUS
+25723 release MINUS
+25777 press A
+25789 release A
+25853 point -0.133 -0.868
+25925 press Z
+25934 release Z
+25994 press PLUS
+26005 release PLUS
+26066 stick 24 -93
+26149 stick 0 0
+26099 press A
+26112 release A
+26143 point 0.471 0.960
+26258 point 0.335 -0.855
+26290 press LEFT
+26300 release LEFT
+26338 stick -90 -13
+26414 stick 0 0
+26423 cstick 42 22
+26496 cstick 0 0
+26469 press 2
+26477 release 2
+26507 stick 18 -76
+26574 stick 0 0
+26585 stick 21 45
+26740 stick 0 0
+26696 stick -98 -68
+26835 stick 0 0
+26756 stick -66 85
+26810 stick 0 0
+26863 point -1.112 0.218
+26920 stick -11 -57
+27046 stick 0 0
+26941 stick -38 -40
+27085 stick 0 0
+27011 point 1.080 0.840
+27101 point -0.171 0.906
+27129 press A
+27136 release A
+27221 point -0.041 0.889
+27254 press UP
+27261 release UP
+27341 stick -63 -24
+27380 stick 0 0
+27365 stick 49 -78
+27528 stick 0 0
+27484 cstick 1 -52
+27561 cstick 0 0
+27535 press A
+27545 release A
+27598 cstick 47 62
+27645 cstick 0 0
+27704 stick 99 78
+27789 stick 0 0
+27781 point -0.087 0.914
+27857 cstick 64 62
+27918 cstick 0 0
+27924 stick 74 -17
+27974 stick 0 0
+28016 press Z
+28026 release Z
+28110 stick -53 -71
+28214 stick 0 0
+28161 press 1
+28170 release 1
+28252 stick 60 32
+28372 stick 0 0
+28310 stick 53 -50
+28439 stick 0 0
+28419 stick -98 -94
+28533 stick 0 0
+28465 press UP
+28480 release UP
+28485 stick 13 -95
+28537 stick 0 0
+28588 press B
+28598 release B
+28639 press 1
+28657 release 1
+28697 cstick 51 92
+28774 cstick 0 0
+28781 stick 92 100
+28877 stick 0 0
+28864 cstick 68 5
+28904 cstick 0 0
+28903 stick -97 -83
+29064 stick 0 0
+28970 press 2
+28982 release 2
+29042 stick -25 -77
+29112 stick 0 0
+29125 press B
+29144 release B
+29240 stick -71 47
+29307 stick 0 0
+29353 stick 67 -69
+29467 stick 0 0
+29417 press Z
+29435 release Z
+29440 point -0.726 0.539
+29529 press Z
+29549 release Z
+29622 point 0.443 0.695
+29741 press LEFT
+29749 release LEFT
+29827 cstick 91 8
+29900 cstick 0 0
+29849 stick -5 61
+29883 stick 0 0
+29902 press A
+29915 release A
+29996 point 0.495 -0.441
+30058 press UP
+30073 release UP
+30079 cstick 95 -30
+30155 cstick 0 0
+30144 point 0.965 -0.460
+30203 stick -87 -80
+30313 stick 0 0
+30270 stick 34 -45
+30313 stick 0 0
+30362 point -1.208 -0.052
+30446 press B
+30452 release B
+30513 press A
+30529 release A
+30556 press 1
+30560 release 1
+30663 point -1.169 -0.657
+30777 press C
+30797 release C
+30895 press RIGHT
+30908 release RIGHT
+30967 stick 21 -65
+31031 stick 0 0
+31041 stick -7 -37
+31163 stick 0 0
+31118 stick -85 -40
+31242 stick 0 0
+31220 press Z
+31228 release Z
+31301 stick 33 -37
+31375 stick 0 0
+31366 cstick -2 -100
+31407 cstick 0 0
+31433 press UP
+31438 release UP
+31473 press RIGHT
+31487 release RIGHT
+31522 press UP
+31540 release UP
+31596 stick 28 33
+31693 stick 0 0
+31639 press RIGHT
+31649 release RIGHT
+31685 press C
+31689 release C
+31745 cstick -67 -88
+31825 cstick 0 0
+31788 point 0.799 0.012
+31850 stick -37 -68
+31969 stick 0 0
+31874 stick 52 -86
+31941 stick 0 0
+31926 stick 68 -68
+32063 stick 0 0
+32043 press DOWN
+32055 release DOWN
+32113 stick -29 81
+32240 stick 0 0
+32233 press B
+32251 release B
+32321 point 0.403 -0.806
+32354 press A
+32368 release A
+32393 cstick 29 80
+32462 cstick 0 0
+32432 stick -39 62
+32560 stick 0 0
+32498 point -0.283 -0.452
+32615 press DOWN
+32627 release DOWN
+32651 point -0.613 0.078
+32704 stick 40 -7
+32838 stick 0 0
+32780 point -0.814 -0.397
+32809 point 0.712 -0.122
+32916 point 0.486 -0.546
+32976 point -0.467 1.034
+33004 stick -58 -28
+33093 stick 0 0
+33080 press Z
+33099 release Z
+33159 stick -81 -37
+33302 stick 0 0
+33229 stick -14 -96
+33331 stick 0 0
+33314 press MINUS
+33320 release MINUS
+33335 press A
+33344 release A
+33383 press UP
+33397 release UP
+33455 point -1.146 -0.257
+33507 point 0.715 0.167
+33527 stick 35 -69
+33644 stick 0 0
+33645 press RIGHT
+33662 release RIGHT
+33744 stick -5 -37
+33910 stick 0 0
+33857 press B
+33874 release B
+33971 stick -69 -98
+34117 stick 0 0
+34087 stick -31 90
+34201 stick 0 0
+34148 stick 13 67
+34303 stick 0 0
+34182 press MINUS
+34194 release MINUS
+34254 press PLUS
+34264 release PLUS
+34355 press UP
+34372 release UP
+34400 point -0.488 0.726
+34444 point -0.898 0.151
+34499 stick 0 33
+34607 stick 0 0
+34618 point 0.355 -0.887
+34644 point -0.553 -0.128
+34720 press 2
+34738 release 2
+34838 stick -40 -33
+34915 stick 0 0
+34952 point -0.181 0.031
+35071 press MINUS
+35084 release MINUS
+35100 stick 31 -68
+35155 stick 0 0
+35148 point -0.974 0.915
+35238 stick -20 41
+35329 stick 0 0
+35324 press PLUS
+35332 release PLUS
+35387 press B
+35401 release B
+35447 point 0.742 0.892
+35509 stick -72 39
+35606 stick 0 0
+35591 point -0.496 -0.437
+35698 press B
+35713 release B
+35757 point 0.868 -0.032
+35785 cstick 89 16
+35828 cstick 0 0
+35905 point -0.753 0.773
+35925 stick -39 -62
+36071 stick 0 0
+35964 point -0.968 0.085
+36076 point 0.905 -0.708
+36124 press B
+36129 release B
+36196 stick 65 -48
+36304 stick 0 0
+36217 stick -67 5
+36394 stick 0 0
+36311 stick 94 -61
+36388 stick 0 0
+36337 cstick -4 28
+36410 cstick 0 0
+36362 cstick -10 -17
+36413 cstick 0 0
+36480 stick -85 -17
+36629 stick 0 0
+36512 press C
+36526 release C
+36594 point 1.270 0.737
+36622 point -1.086 0.282
+36667 press A
+36685 release A
+36694 stick 44 15
+36852 stick 0 0
+36747 stick 100 8
+36912 stick 0 0
+36779 point -0.855 -0.254
+36889 point -0.209 0.241
+36980 stick -8 19
+37029 stick 0 0
+37000 press B
+37016 release B
+37083 stick -51 2
+37166 stick 0 0
+37173 press A
+37188 release A
+37250 stick -46 -6
+37308 stick 0 0
+37361 cstick 7 -88
+37424 cstick 0 0
+37424 point 1.144 -0.857
+37513 stick -42 -94
+37690 stick 0 0
+37569 stick -67 26
+37713 stick 0 0
+37681 press DOWN
+37691 release DOWN
+37719 cstick -44 -85
+37764 cstick 0 0
+37815 point 1.037 -0.090
+37903 press B
+37912 release B
+37933 point -0.006 -0.473
+37985 cstick -85 -36
+38037 cstick 0 0
+38075 stick 49 66
+38228 stick 0 0
+38096 cstick 39 53
+38118 cstick 0 0
+38165 press LEFT
+38172 release LEFT
+38262 stick 80 29
+38389 stick 0 0
+38347 press UP
+38356 release UP
+38367 stick 80 -10
+38419 stick 0 0
+38432 stick 4 41
+38508 stick 0 0
+38462 press C
+38470 release C
+38485 cstick -67 -58
+38544 cstick 0 0
+38557 stick -33 49
+38609 stick 0 0
+38670 press 1
+38685 release 1
+38729 point -0.598 0.692
+38830 press A
+38844 release A
+38919 press B
+38928 release B
+38971 press 2
+38988 release 2
+39047 point 1.251 0.496
+39092 stick 83 84
+39164 stick 0 0
+39206 press B
+39212 release B
+39233 press UP
+39245 release UP
+39328 stick 11 -17
+39380 stick 0 0
+39368 stick 98 -97
+39441 stick 0 0
+39470 stick 20 30
+39584 stick 0 0
+39519 stick -84 25
+39568 stick 0 0
+39550 press A
+39562 release A
+39654 stick -51 -33
+39769 stick 0 0
+39683 press C
+39695 release C
+39747 stick -60 -36
+39877 stick 0 0
+39833 stick -11 25
+40011 stick 0 0
+39938 stick -12 -86
+40086 stick 0 0
+40007 press Z
+40019 release Z
+40052 point -0.641 -0.084
+40086 stick -45 -82
+40265 stick 0 0
+40158 point 0.802 -0.009
+40246 stick 8 -10
+40309 stick 0 0
+40304 stick 52 -93
+40424 stick 0 0
+40383 point -0.135 -0.633
+40484 stick 96 -44
+40631 stick 0 0
+40589 cstick 92 -64
+40668 cstick 0 0
+40615 press 2
+40633 release 2
+40648 point -0.391 0.825
+40699 press PLUS
+40709 release PLUS
+40814 stick 2 -14
+40921 stick 0 0
+40931 press B
+40939 release B
+41010 point 1.108 0.717
+41036 stick -79 -51
+41104 stick 0 0
+41075 press A
+41093 release A
+41157 press Z
+41161 release Z
+41206 point 0.769 0.247
+41257 point -1.179 0.492
+41361 press PLUS
+41371 release PLUS
+41449 stick 73 -19
+41545 stick 0 0
+41484 stick -88 -66
+41632 stick 0 0
+41580 press UP
+41592 release UP
+41682 stick -29 -10
+41821 stick 0 0
+41771 stick 58 -70
+41825 stick 0 0
+41865 press PLUS
+41874 release PLUS
+41917 press B
+41927 release B
+42026 cstick -71 20
+42103 cstick 0 0
+42106 point -0.760 -0.844
+42166 press 1
+42172 release 1
+42235 press LEFT
+42254 release LEFT
+42307 stick 39 -31
+42432 stick 0 0
+42337 press Z
+42352 release Z
+42404 stick -26 44
+42456 stick 0 0
+42424 press RIGHT
+42434 release RIGHT
+42528 press PLUS
+42533 release PLUS
+42641 press A
+42658 release A
+42698 stick -89 2
+42844 stick 0 0
+42817 stick 3 69
+42896 stick 0 0
+42861 press B
+42870 release B
+42968 stick 92 -53
+42999 stick 0 0
+43012 point 0.810 -0.139
+43113 stick 20 10
+43152 stick 0 0
+43182 cstick -14 72
+43212 cstick 0 0
+43264 stick 83 -47
+43366 stick 0 0
+43335 cstick 46 11
+43359 cstick 0 0
+43365 press DOWN
+43378 release DOWN
+43457 press C
+43473 release C
+43488 stick -19 -2
+43644 stick 0 0
+43602 press LEFT
+43613 release LEFT
+43639 cstick 62 -89
+43668 cstick 0 0
+43702 stick -49 -16
+43776 stick 0 0
+43729 cstick -13 -15
+43815 cstick 0 0
+43753 point -0.013 -0.392
+43850 press B
+43858 release B
+43968 stick 26 17
+44081 stick 0 0
+43993 stick -33 89
+44139 stick 0 0
+44098 stick -91 -53
+44202 stick 0 0
+44140 stick 40 45
+44314 stick 0 0
+44173 press A
+44187 release A
+44277 cstick -30 77
+44315 cstick 0 0
+44338 point -0.538 0.121
+44382 point 0.314 -0.174
+44444 cstick 31 -14
+44533 cstick 0 0
+44518 stick 77 56
+44627 stick 0 0
+44600 point -0.604 0.314
+44699 press A
+44706 release A
+44754 stick -65 29
+44797 stick 0 0
+44818 press 1
+44830 release 1
+44900 cstick 9 -40
+44955 cstick 0 0
+45010 point 1.211 -0.344
+45079 stick 68 23
+45235 stick 0 0
+45159 stick -53 81
+45222 stick 0 0
+45221 press Z
+45239 release Z
+45293 point -0.773 -0.152
+45340 stick -64 31
+45448 stick 0 0
+45411 point -0.658 0.410
+45440 press 2
+45456 release 2
+45464 press LEFT
+45474 release LEFT
+45547 point 0.286 0.478
+45653 stick -18 14
+45760 stick 0 0
+45673 point 0.599 -0.047
+45757 point -0.919 0.557
+45845 stick -5 99
+45889 stick 0 0
+45905 point 0.549 0.883
+45988 cstick 92 18
+46045 cstick 0 0
+46101 press DOWN
+46108 release DOWN
+46191 stick 94 -45
+46294 stick 0 0
+46281 cstick 31 -68
+46340 cstick 0 0
+46330 stick -94 21
+46495 stick 0 0
+46414 stick -62 -60
+46510 stick 0 0
+46471 point 0.680 0.049
+46588 press RIGHT
+46596 release RIGHT
+46648 stick 90 59
+46828 stick 0 0
+46674 press UP
+46680 release UP
+46749 cstick 93 38
+46782 cstick 0 0
+46855 cstick -99 75
+46923 cstick 0 0
+46923 cstick 9 5
+47010 cstick 0 0
+47001 press LEFT
+47015 release LEFT
+47102 cstick 9 67
+47187 cstick 0 0
+47212 stick 64 -84
+47369 stick 0 0
+47233 stick -10 78
+47350 stick 0 0
+47345 press PLUS
+47349 release PLUS
+47390 stick -72 -27
+47425 stick 0 0
+47493 point 0.436 0.153
+47518 press B
+47533 release B
+47568 point -0.995 0.380
+47670 stick 54 -100
+47827 stick 0 0
+47738 cstick 88 -94
+47798 cstick 0 0
+47852 stick 8 -83
+47907 stick 0 0
+47942 stick 29 -17
+48093 stick 0 0
+47981 stick -56 -72
+48141 stick 0 0
+48084 press A
+48104 release A
+48105 press C
+48123 release C
+48136 press MINUS
+48144 release MINUS
+48220 point 0.004 0.159
+48315 stick 45 18
+48395 stick 0 0
+48400 press UP
+48417 release UP
+48442 stick -28 -95
+48582 stick 0 0
+48507 press 1
+48526 release 1
+48607 point 0.743 0.602
+48717 press RIGHT
+48726 release RIGHT
+48760 stick -73 88
+48897 stick 0 0
+48846 press A
+48862 release A
+48888 press PLUS
+48897 release PLUS
+48927 press 1
+48937 release 1
+48964 cstick -8 90
+49023 cstick 0 0
+48996 point 0.440 -0.062
+49068 point -0.919 -0.218
+49133 press B
+49147 release B
+49176 press DOWN
+49191 release DOWN
+49267 press B
+49287 release B
+49373 press A
+49393 release A
+49430 press A
+49437 release A
+49484 stick -35 56
+49532 stick 0 0
+49603 stick 29 4
+49762 stick 0 0
+49665 point 0.971 0.769
+49766 stick -50 -28
+49941 stick 0 0
+49804 stick 83 23
+49921 stick 0 0
+49824 stick -79 99
+49998 stick 0 0
+49876 cstick 71 -42
+49951 cstick 0 0
+49955 point 1.241 0.656
+50004 press A
+50016 release A
+50059 cstick 87 57
+50129 cstick 0 0
+50145 point -0.139 -0.717
+50229 press LEFT
+50247 release LEFT
+50299 stick -62 29
+50458 stick 0 0
+50388 stick -10 94
+50458 stick 0 0
+50475 press B
+50479 release B
+50576 press LEFT
+50593 release LEFT
+50645 stick 54 -99
+50697 stick 0 0
+50756 stick -80 39
+50908 stick 0 0
+50796 stick -74 -55
+50958 stick 0 0
+50846 stick 28 -97
+50974 stick 0 0
+50908 cstick 16 -87
+50934 cstick 0 0
+50937 cstick -38 -33
+50996 cstick 0 0
+51026 press LEFT
+51036 release LEFT
+51110 press PLUS
+51129 release PLUS
+51186 stick -61 -57
+51344 stick 0 0
+51305 stick 100 58
+51458 stick 0 0
+51392 point -0.970 0.248
+51446 stick -93 -20
+51612 stick 0 0
+51529 stick 75 60
+51563 stick 0 0
+51559 point -0.435 -0.269
+51579 press 1
+51594 release 1
+51639 stick 71 91
+51715 stick 0 0
+51672 press B
+51682 release B
+51722 press UP
+51730 release UP
+51838 stick -8 22
+51915 stick 0 0
+51936 press DOWN
+51944 release DOWN
+52005 press 1
+52013 release 1
+52047 stick 16 -11
+52150 stick 0 0
+52091 press A
+52103 release A
+52211 point -0.943 0.776
+52283 point 0.594 0.405
+52368 point -0.230 0.288
+52403 stick -8 -18
+52455 stick 0 0
+52466 point -1.077 0.414
+52494 stick -65 51
+52584 stick 0 0
+52566 stick -86 38
+52628 stick 0 0
+52635 stick -79 -89
+52728 stick 0 0
+52752 stick 11 -46
+52897 stick 0 0
+52813 point -0.296 -0.073
+52917 cstick 91 37
+52938 cstick 0 0
+52970 point 0.047 -0.823
+53028 press LEFT
+53048 release LEFT
+53131 stick 73 -3
+53296 stick 0 0
+53219 cstick 89 -80
+53286 cstick 0 0
+53309 stick -79 6
+53483 stick 0 0
+53366 point 0.917 0.918
+53464 press DOWN
+53473 release DOWN
+53519 point 0.519 0.571
+53614 press A
+53619 release A
+53723 point 1.047 -0.079
+53743 press B
+53759 release B
+53849 stick -30 -70
+53888 stick 0 0
+53908 press Z
+53919 release Z
+53933 press 1
+53951 release 1
+54026 press PLUS
+54037 release PLUS
+54086 stick 23 -79
+54178 stick 0 0
+54172 press A
+54178 release A
+54218 point 0.200 -0.115
+54245 stick 35 26
+54347 stick 0 0
+54279 cstick -15 49
+54346 cstick 0 0
+54381 stick 53 76
+54551 stick 0 0
+54460 stick -87 -43
+54499 stick 0 0
+54552 press Z
+54560 release Z
+54616 stick 12 5
+54667 stick 0 0
+54703 stick 75 -31
+54782 stick 0 0
+54726 stick -85 -38
+54869 stick 0 0
+54754 press B
+54760 release B
+54870 stick 90 24
+54943 stick 0 0
+54967 stick 5 32
+55041 stick 0 0
+55051 press PLUS
+55058 release PLUS
+55149 stick 72 93
+55223 stick 0 0
+55239 stick -55 -54
+55331 stick 0 0
+55266 stick -11 35
+55414 stick 0 0
+55349 point 0.729 -0.617
+55393 press A
+55406 release A
+55437 cstick 24 55
+55492 cstick 0 0
+55539 point 0.143 0.996
+55620 stick -34 -94
+55710 stick 0 0
+55674 cstick 13 -77
+55701 cstick 0 0
+55787 stick 20 42
+55856 stick 0 0
+55903 stick 27 76
+56066 stick 0 0
+55981 press B
+55991 release B
+56067 stick 23 -46
+56236 stick 0 0
+56105 press DOWN
+56124 release DOWN
+56172 stick 77 74
+56311 stick 0 0
+56202 cstick -37 -99
+56284 cstick 0 0
+56283 stick -69 8
+56433 stick 0 0
+56322 point -1.193 0.681
+56440 cstick 93 87
+56479 cstick 0 0
+56477 cstick -20 -47
+56505 cstick 0 0
+56519 cstick -97 19
+56566 cstick 0 0
+56587 press 1
+56594 release 1
+56665 stick 83 -71
+56705 stick 0 0
+56714 stick -18 68
+56819 stick 0 0
+56791 stick 31 -54
+56893 stick 0 0
+56840 point 0.586 0.388
+56912 point 0.659 0.534
+57027 press UP
+57046 release UP
+57069 press PLUS
+57081 release PLUS
+57180 press 2
+57196 release 2
+57299 cstick -15 33
+57376 cstick 0 0
+57333 stick -23 -67
+57474 stick 0 0
+57355 point -0.179 0.676
+57416 stick -71 -24
+57473 stick 0 0
+57535 point -0.065 0.493
+57655 press UP
+57668 release UP
+57733 point -0.723 0.288
+57794 stick -44 38
+57858 stick 0 0
+57909 cstick 14 50
+57955 cstick 0 0
+57952 press A
+57961 release A
+57983 point 0.700 0.426
+58050 stick -70 71
+58208 stick 0 0
+58154 press B
+58164 release B
+58238 point -0.665 -0.868
+58304 cstick -75 66
+58357 cstick 0 0
+58375 press B
+58381 release B
+58429 point 0.951 -0.114
+58513 stick -57 69
+58602 stick 0 0
+58603 stick 73 10
+58644 stick 0 0
+58675 point -0.410 -0.807
+58788 press UP
+58805 release UP
+58863 cstick 41 -8
+58919 cstick 0 0
+58962 press A
+58971 release A
+59013 point 1.249 -0.087
+59127 press LEFT
+59145 release LEFT
+59189 stick -89 -96
+59274 stick 0 0
+59278 stick 44 94
+59355 stick 0 0
+59327 stick 80 -74
+59429 stick 0 0
+59402 stick 96 -20
+59504 stick 0 0
+59509 stick 32 51
+59616 stick 0 0
+59628 point 0.821 -0.840
+59659 stick 96 -73
+59810 stick 0 0
+59733 press Z
+59748 release Z
+59829 stick 38 35
+60006 stick 0 0
+59852 stick -53 69
+60018 stick 0 0
+59899 stick -51 -48
+59967 stick 0 0
+60005 cstick -30 -34
+60077 cstick 0 0
+60036 press 2
+60051 release 2
+60111 stick -35 -47
+60220 stick 0 0
+60193 point -1.100 -0.177
+60275 point 1.015 0.728
+60318 point 1.261 -0.205
+60438 cstick 5 62
+60514 cstick 0 0
+60548 stick 26 -36
+60727 stick 0 0
+60598 stick -81 15
+60675 stick 0 0
+60655 stick 9 -4
+60728 stick 0 0
+60758 press B
+60777 release B
+60811 stick 87 -96
+60911 stick 0 0
+60896 point 0.643 0.182
+60962 stick -67 -29
+61002 stick 0 0
+61005 press MINUS
+61012 release MINUS
+61038 point -0.781 -0.103
+61132 stick -62 -20
+61241 stick 0 0
+61173 cstick -37 -31
+61198 cstick 0 0
+61229 stick 19 -57
+61383 stick 0 0
+61294 press 2
+61301 release 2
+61383 press A
+61399 release A
+61486 press C
+61491 release C
+61514 press C
+61525 release C
+61592 press RIGHT
+61607 release RIGHT
+61654 press A
+61667 release A
+61768 press A
+61773 release A
+61860 point -0.806 -0.006
+61900 press MINUS
+61912 release MINUS
+61973 press MINUS
+61991 release MINUS
+62044 stick -7 -62
+62101 stick 0 0
+62095 point -0.054 0.820
+62127 press LEFT
+62140 release LEFT
+62190 press LEFT
+62202 release LEFT
+62211 press PLUS
+62222 release PLUS
+62302 press LEFT
+62318 release LEFT
+62322 stick 85 -83
+62412 stick 0 0
+62379 press 2
+62398 release 2
+62489 press A
+62502 release A
+62520 point 0.552 0.124
+62600 point 0.919 0.066
+62638 stick 15 -9
+62794 stick 0 0
+62703 point -0.311 -0.797
+62821 stick 50 -58
+62851 stick 0 0
+62941 press C
+62959 release C
+63020 point -0.250 0.261
+63124 stick -79 -10
+63171 stick 0 0
+63167 point 0.065 -0.696
+63273 press PLUS
+63289 release PLUS
+63310 stick -13 -58
+63425 stick 0 0
+63361 stick 44 26
+63445 stick 0 0
+63443 press 2
+63448 release 2
+63501 point 1.211 -0.661
+63547 stick 71 -89
+63590 stick 0 0
+63628 press LEFT
+63644 release LEFT
+63715 stick 93 35
+63790 stick 0 0
+63739 stick 48 81
+63889 stick 0 0
+63790 point -0.235 0.401
+63882 press 1
+63896 release 1
+63963 stick -67 47
+64041 stick 0 0
+64033 point -0.865 -0.606
+64131 press 2
+64141 release 2
+64162 cstick 69 71
+64245 cstick 0 0
+64220 stick 39 -56
+64290 stick 0 0
+64311 press 2
+64330 release 2
+64357 press UP
+64372 release UP
+64433 stick 26 44
+64514 stick 0 0
+64461 press RIGHT
+64481 release RIGHT
+64516 point -0.752 0.242
+64546 stick -23 1
+64586 stick 0 0
+64608 press B
+64627 release B
+64639 point 1.184 -0.105
+64698 press LEFT
+64711 release LEFT
+64740 point -0.615 0.217
+64774 stick -57 44
+64807 stick 0 0
+64883 point 0.639 -0.433
+64908 stick 14 29
+64962 stick 0 0
+64953 point -0.260 -0.669
+65053 point -0.286 -0.500
+65151 press DOWN
+65157 release DOWN
+65227 press PLUS
+65244 release PLUS
+65254 stick -4 -68
+65361 stick 0 0
+65363 stick 67 29
+65463 stick 0 0
+65402 stick -32 77
+65499 stick 0 0
+65505 stick 40 43
+65542 stick 0 0
+65597 cstick -14 -42
+65672 cstick 0 0
+65702 stick -42 36
+65845 stick 0 0
+65765 point -1.066 0.773
+65850 point -0.367 -0.002
+65888 press Z
+65899 release Z
+65959 cstick 52 -34
+66011 cstick 0 0
+66061 press 1
+66077 release 1
+66172 point -1.014 0.888
+66221 point -1.146 -0.539
+66337 stick 91 -91
+66501 stick 0 0
+66429 point 0.566 -0.308
+66528 press Z
+66540 release Z
+66645 press MINUS
+66658 release MINUS
+66718 point 0.710 0.530
+66789 stick 81 -67
+66831 stick 0 0
+66870 press RIGHT
+66883 release RIGHT
+66962 point -0.616 -0.301
+67022 press UP
+67034 release UP
+67049 point -1.206 0.517
+67162 press PLUS
+67181 release PLUS
+67202 stick 14 -39
+67302 stick 0 0
+67251 stick -63 48
+67350 stick 0 0
+67342 press 2
+67356 release 2
+67393 stick 53 26
+67561 stick 0 0
+67471 press B
+67486 release B
+67571 point -0.077 0.009
+67654 point 0.385 -0.735
+67745 cstick 42 -74
+67792 cstick 0 0
+67769 cstick 36 26
+67834 cstick 0 0
+67877 stick 37 -28
+67986 stick 0 0
+67974 stick 3 -98
+68153 stick 0 0
+68036 stick 84 -35
+68148 stick 0 0
+68110 press Z
+68127 release Z
+68197 press C
+68204 release C
+68233 stick -23 -23
+68343 stick 0 0
+68257 press DOWN
+68275 release DOWN
+68326 stick -55 20
+68460 stick 0 0
+68402 point -0.365 0.348
+68477 press A
+68496 release A
+68565 press 1
+68580 release 1
+68681 press Z
+68696 release Z
+68777 point -0.828 -0.611
+68892 press LEFT
+68902 release LEFT
+68981 stick 92 64
+69030 stick 0 0
+69051 point 0.234 -0.701
+69148 point 0.114 -0.417
+69206 stick 42 71
+69301 stick 0 0
+69236 cstick -60 -13
+69287 cstick 0 0
+69340 cstick -5 73
+69382 cstick 0 0
+69396 stick 54 6
+69509 stick 0 0
+69481 press RIGHT
+69497 release RIGHT
+69558 stick -93 89
+69700 stick 0 0
+69622 press 1
+69636 release 1
+69670 stick -59 -50
+69716 stick 0 0
+69766 stick 88 64
+69803 stick 0 0
+69796 press C
+69804 release C
+69880 point -1.163 0.550
+69964 point 0.905 -0.185
+70018 press DOWN
+70022 release DOWN
+70069 point -1.006 0.873
+70131 cstick 61 -58
+70194 cstick 0 0
+70234 stick -31 -17
+70376 stick 0 0
+70328 point 0.360 0.181
+70406 press RIGHT
+70421 release RIGHT
+70521 point -0.790 -0.392
+70596 stick 43 -53
+70714 stick 0 0
+70635 stick -7 85
+70720 stick 0 0
+70709 stick 23 -12
+70769 stick 0 0
+70786 press 1
+70803 release 1
+70847 press PLUS
+70862 release PLUS
+70898 cstick 63 -43
+70924 cstick 0 0
+71002 press DOWN
+71020 release DOWN
+71046 stick -55 61
+71217 stick 0 0
+71124 stick -15 -11
+71219 stick 0 0
+71243 stick 33 -87
+71296 stick 0 0
+71290 stick -35 18
+71357 stick 0 0
+71335 stick -5 -39
+71455 stick 0 0
+71381 press Z
+71394 release Z
+71432 press A
+71439 release A
+71460 press MINUS
+71476 release MINUS
+71512 cstick 51 40
+71540 cstick 0 0
+71562 stick 94 43
+71663 stick 0 0
+71594 cstick -7 -92
+71616 cstick 0 0
+71674 stick 28 -39
+71822 stick 0 0
+71713 stick 32 -65
+71773 stick 0 0
+71784 cstick -8 54
+71864 cstick 0 0
+71902 press MINUS
+71920 release MINUS
+71983 stick -96 20
+72014 stick 0 0
+72019 press 1
+72036 release 1
+72130 point 0.454 0.956
+72173 stick -20 -93
+72244 stick 0 0
+72284 stick -86 14
+72403 stick 0 0
+72356 stick -97 51
+72518 stick 0 0
+72415 point 0.479 0.599
+72473 point 0.337 -0.547
+72546 point -1.156 -0.653
+72620 stick 41 -62
+72735 stick 0 0
+72649 press LEFT
+72657 release LEFT
+72698 point -1.082 -0.450
+72773 stick 3 64
+72857 stick 0 0
+72883 cstick 45 -17
+72962 cstick 0 0
+72916 stick -24 65
+72948 stick 0 0
+72965 stick -6 -91
+73058 stick 0 0
+73074 stick 14 -73
+73125 stick 0 0
+73155 stick -68 -1
+73302 stick 0 0
+73227 stick 58 -12
+73392 stick 0 0
+73290 stick -81 74
+73460 stick 0 0
+73336 stick 21 67
+73428 stick 0 0
+73452 point -1.128 -0.419
+73563 point 0.775 0.992
+73636 stick 65 83
+73797 stick 0 0
+73736 point -1.136 -0.318
+73842 stick -5 -78
+73930 stick 0 0
+73865 stick -99 63
+74023 stick 0 0
+73963 stick 87 70
+74070 stick 0 0
+73989 press Z
+73998 release Z
+74062 press RIGHT
+74081 release RIGHT
+74181 point -0.378 0.348
+74258 press LEFT
+74268 release LEFT
+74282 stick 77 -50
+74399 stick 0 0
+74379 press DOWN
+74390 release DOWN
+74494 press RIGHT
+74501 release RIGHT
+74549 stick 77 86
+74668 stick 0 0
+74646 press MINUS
+74658 release MINUS
+74700 point 1.248 0.937
+74795 press Z
+74814 release Z
+74834 stick -41 61
+74957 stick 0 0
+74928 point -0.859 -0.649
+75026 stick -45 -2
+75126 stick 0 0
+75102 stick 85 -52
+75156 stick 0 0
+75192 press 2
+75211 release 2
+75256 stick -94 -39
+75412 stick 0 0
+75354 point -0.149 -0.443
+75457 press Z
+75467 release Z
+75489 cstick -20 31
+75516 cstick 0 0
+75563 stick 80 -33
+75607 stick 0 0
+75678 point -0.409 -0.525
+75699 press A
+75718 release A
+75802 point -0.115 0.986
+75842 stick -77 -33
+76010 stick 0 0
+75870 cstick -16 -85
+75902 cstick 0 0
+75942 press RIGHT
+75961 release RIGHT
+76024 stick -77 1
+76198 stick 0 0
+76094 stick -33 -61
+76188 stick 0 0
+76178 stick 70 17
+76327 stick 0 0
+76254 press B
+76271 release B
+76306 press 1
+76321 release 1
+76426 point -0.899 -0.463
+76462 cstick -62 -13
+76485 cstick 0 0
+76546 press Z
+76553 release Z
+76652 cstick 99 -12
+76720 cstick 0 0
+76719 cstick -4 18
+76766 cstick 0 0
+76749 cstick -76 55
+76830 cstick 0 0
+76835 press PLUS
+76849 release PLUS
+76924 cstick -4 43
+77009 cstick 0 0
+76993 press MINUS
+76999 release MINUS
+77087 press B
+77091 release B
+77107 point 0.178 0.628
+77145 stick -27 79
+77312 stick 0 0
+77219 stick 36 4
+77348 stick 0 0
+77300 stick -68 2
+77478 stick 0 0
+77391 point -0.422 -0.088
+77462 stick 72 30
+77569 stick 0 0
+77580 stick -76 71
+77684 stick 0 0
+77612 point -0.092 -0.714
+77712 point 0.911 -0.697
+77770 stick -37 -52
+77807 stick 0 0
+77811 press A
+77827 release A
+77862 press A
+77879 release A
+77958 press C
+77962 release C
+78074 press A
+78090 release A
+78141 stick -7 -74
+78238 stick 0 0
+78256 point -1.140 0.095
+78344 press B
+78357 release B
+78391 point -0.093 -0.416
+78475 cstick 2 -79
+78516 cstick 0 0
+78512 cstick 34 70
+78584 cstick 0 0
+78574 press A
+78581 release A
+78595 point -0.388 1.054
+78672 press 1
+78682 release 1
+78769 press UP
+78780 release UP
+78859 press B
+78870 release B
+78957 press DOWN
+78970 release DOWN
+79055 stick 63 30
+79137 stick 0 0
+79117 press B
+79131 release B
+79138 point -0.799 -0.663
+79223 point -1.168 -0.197
+79247 stick 84 -31
+79348 stick 0 0
+79291 point 0.991 0.145
+79384 press A
+79401 release A
+79416 point -0.406 0.083
+79458 stick 64 -73
+79545 stick 0 0
+79560 press UP
+79577 release UP
+79616 stick 73 -81
+79656 stick 0 0
+79702 press MINUS
+79719 release MINUS
+79753 point 1.112 -0.095
+79834 press B
+79853 release B
+79905 press MINUS
+79912 release MINUS
+79966 cstick 39 0
+80027 cstick 0 0
+80061 press UP
+80081 release UP
+80168 point 0.157 1.000
+80190 point -0.017 0.802
+80226 press 1
+80231 release 1
+80276 stick -53 -2
+80406 stick 0 0
+80395 stick 4 -91
+80462 stick 0 0
+80473 cstick -20 34
+80562 cstick 0 0
+80588 stick -75 89
+80670 stick 0 0
+80621 press B
+80625 release B
+80684 point 0.718 0.961
+80732 press B
+80737 release B
+80783 press DOWN
+80800 release DOWN
+80838 stick 77 -47
+80978 stick 0 0
+80880 stick -48 -1
+81046 stick 0 0
+80934 stick 38 83
+81060 stick 0 0
+81048 press PLUS
+81063 release PLUS
+81146 point 0.571 0.436
+81203 stick -8 48
+81317 stick 0 0
+81299 press B
+81313 release B
+81398 press C
+81410 release C
+81467 point 1.253 0.546
+81496 stick 6 -24
+81657 stick 0 0
+81583 point 0.136 -0.117
+81626 stick 53 91
+81746 stick 0 0
+81694 point -0.980 -0.290
+81812 press Z
+81831 release Z
+81899 press C
+81910 release C
+82005 point 0.765 0.630
+82087 cstick -2 58
+82109 cstick 0 0
+82108 point -0.534 0.741
+82138 stick 3 14
+82267 stick 0 0
+82171 point 0.936 -0.789
+82204 point -0.937 -0.097
+82264 stick 75 27
+82332 stick 0 0
+82293 press A
+82310 release A
+82392 cstick 19 -98
+82428 cstick 0 0
+82477 cstick -64 93
+82498 cstick 0 0
+82594 point -0.892 -0.337
+82684 press PLUS
+82689 release PLUS
+82721 press MINUS
+82733 release MINUS
+82749 point 0.902 -0.369
+82789 stick 80 81
+82929 stick 0 0
+82854 point -0.916 -0.313
+82880 stick 87 96
+83033 stick 0 0
+82906 cstick 51 57
+82952 cstick 0 0
+82987 point -0.072 0.793
+83107 stick -30 -94
+83151 stick 0 0
+83218 stick 35 28
+83279 stick 0 0
+83241 point 0.191 0.945
+83317 cstick -8 -30
+83377 cstick 0 0
+83435 stick -100 -60
+83596 stick 0 0
+83466 press B
+83476 release B
+83583 stick -100 -94
+83662 stick 0 0
+83631 stick -59 16
+83769 stick 0 0
+83725 point 0.502 -0.669
+83760 press Z
+83771 release Z
+83821 press A
+83828 release A
+83844 press Z
+83859 release Z
+83934 press RIGHT
+83950 release RIGHT
+83981 cstick 48 95
+84062 cstick 0 0
+84050 point -0.801 0.104
+84142 point -1.135 -0.267
+84257 stick -34 18
+84415 stick 0 0
+84326 press B
+84337 release B
+84384 press A
+84390 release A
+84408 point -0.687 0.912
+84446 cstick 93 91
+84499 cstick 0 0
+84482 press Z
+84490 release Z
+84578 press MINUS
+84596 release MINUS
+84610 stick 16 50
+84773 stick 0 0
+84709 press DOWN
+84715 release DOWN
+84752 stick 78 59
+84909 stick 0 0
+84800 point 0.279 0.322
+84829 press 1
+84849 release 1
+84869 press B
+84878 release B
+84978 point 0.986 0.745
+85075 stick -98 -2
+85122 stick 0 0
+85120 press MINUS
+85135 release MINUS
+85235 stick -60 68
+85321 stick 0 0
+85307 press A
+85315 release A
+85409 stick 56 -86
+85463 stick 0 0
+85509 press A
+85528 release A
+85563 point 1.162 -0.288
+85646 stick -48 50
+85691 stick 0 0
+85691 point 1.051 -0.681
+85759 press A
+85773 release A
+85787 cstick 74 91
+85826 cstick 0 0
+85877 point -0.712 0.375
+85919 stick 73 89
+86069 stick 0 0
+86001 press 2
+86019 release 2
+86102 stick 40 71
+86251 stick 0 0
+86149 cstick -24 -14
+86189 cstick 0 0
+86215 cstick 39 -99
+86244 cstick 0 0
+86277 point 0.600 0.990
+86384 stick 71 99
+86428 stick 0 0
+86468 point -0.690 -0.648
+86582 stick 36 13
+86689 stick 0 0
+86696 stick -95 -62
+86850 stick 0 0
+86780 press RIGHT
+86795 release RIGHT
+86810 point 0.390 0.560
+86895 cstick -5 -75
+86932 cstick 0 0
+86919 point 0.042 -0.221
+86967 press A
+86980 release A
+87031 point 0.876 -0.619
+87148 point -0.711 -0.774
+87200 press A
+87206 release A
+87314 stick 79 -66
+87345 stick 0 0
+87403 press A
+87415 release A
+87457 stick 42 68
+87501 stick 0 0
+87557 press A
+87576 release A
+87668 press 1
+87677 release 1
+87744 cstick 99 0
+87770 cstick 0 0
+87809 press B
+87820 release B
+87911 stick -91 35
+88029 stick 0 0
+87997 press DOWN
+88011 release DOWN
+88046 press B
+88054 release B
+88083 stick -3 -58
+88172 stick 0 0
+88185 stick -33 -73
+88307 stick 0 0
+88269 press 2
+88281 release 2
+88311 press B
+88322 release B
+88362 stick 20 -11
+88504 stick 0 0
+88461 stick -37 99
+88564 stick 0 0
+88527 cstick -39 7
+88599 cstick 0 0
+88616 press Z
+88627 release Z
+88718 point -0.729 -0.653
+88822 point -0.120 0.883
+88898 stick -33 -89
+89037 stick 0 0
+88933 stick -60 -57
+89009 stick 0 0
+89012 stick 18 -27
+89129 stick 0 0
+89050 point 0.682 0.480
+89132 stick -75 -11
+89190 stick 0 0
+89166 stick -22 -80
+89247 stick 0 0
+89283 press A
+89291 release A
+89369 press MINUS
+89377 release MINUS
+89419 press A
+89436 release A
+89467 point 0.889 0.225
+89531 stick -24 85
+89618 stick 0 0
+89579 stick -72 -82
+89619 stick 0 0
+89676 press PLUS
+89680 release PLUS
+89731 stick -65 -54
+89790 stick 0 0
+89794 press 2
+89798 release 2
+89851 press 2
+89862 release 2
+89927 stick -37 -54
+90015 stick 0 0
+89973 press RIGHT
+89985 release RIGHT
+90027 stick 54 -99
+90193 stick 0 0
+90048 point -0.581 0.425
+90075 cstick 38 72
+90114 cstick 0 0
+90148 press B
+90155 release B
+90202 point 0.910 1.022
+90234 press B
+90246 release B
+90267 press 1
+90272 release 1
+90381 press PLUS
+90394 release PLUS
+90403 point -0.288 -0.441
+90488 stick 19 90
+90597 stick 0 0
+90564 point -1.008 0.148
+90587 cstick 38 33
+90620 cstick 0 0
+90612 press LEFT
+90619 release LEFT
+90682 stick -29 71
+90824 stick 0 0
+90757 stick 7 -30
+90822 stick 0 0
+90820 stick 83 -16
+90899 stick 0 0
+90914 cstick -82 80
+90935 cstick 0 0
+90945 stick -65 69
+91048 stick 0 0
+90996 press C
+91008 release C
+91100 point 1.102 -0.698
+91166 stick -97 -64
+91200 stick 0 0
+91254 stick -57 -81
+91377 stick 0 0
+91324 stick -53 -82
+91488 stick 0 0
+91391 press DOWN
+91411 release DOWN
+91418 stick 7 -46
+91452 stick 0 0
+91498 press A
+91512 release A
+91535 stick 20 -97
+91686 stick 0 0
+91617 point -0.132 0.643
+91732 stick -85 91
+91815 stick 0 0
+91778 cstick -100 -78
+91833 cstick 0 0
+91897 press PLUS
+91917 release PLUS
+92012 press A
+92027 release A
+92067 press C
+92086 release C
+92107 stick 71 74
+92248 stick 0 0
+92198 cstick 52 -28
+92246 cstick 0 0
+92255 stick -17 -92
+92286 stick 0 0
+92312 stick 46 25
+92385 stick 0 0
+92369 point -0.442 0.136
+92409 point -0.634 0.776
+92528 stick 4 63
+92560 stick 0 0
+92598 press 2
+92616 release 2
+92671 point -0.257 0.892
+92711 stick -37 88
+92788 stick 0 0
+92821 press B
+92835 release B
+92867 point -0.438 -0.630
+92970 point -0.028 0.537
+93075 stick -4 83
+93199 stick 0 0
+93164 press 1
+93170 release 1
+93210 point -1.115 0.304
+93280 stick 6 50
+93422 stick 0 0
+93362 stick -16 15
+93532 stick 0 0
+93428 point 0.781 0.192
+93541 press Z
+93554 release Z
+93609 press B
+93620 release B
+93656 stick 81 -99
+93778 stick 0 0
+93732 stick 2 -12
+93831 stick 0 0
+93785 point 0.915 0.518
+93857 stick -61 -68
+94031 stick 0 0
+93947 point 0.278 1.054
+94005 cstick -26 97
+94067 cstick 0 0
+94046 stick 16 63
+94186 stick 0 0
+94090 press Z
+94100 release Z
+94138 press MINUS
+94146 release MINUS
+94205 point 0.166 -0.538
+94281 stick 47 -55
+94385 stick 0 0
+94375 press C
+94388 release C
+94407 stick 2 -78
+94485 stick 0 0
+94457 stick 55 8
+94490 stick 0 0
+94488 press C
+94504 release C
+94597 stick -77 78
+94716 stick 0 0
+94665 stick -52 -45
+94826 stick 0 0
+94755 point -1.203 0.288
+94827 stick 2 -39
+94935 stick 0 0
+94942 cstick -73 21
+95019 cstick 0 0
+95027 press B
+95041 release B
+95126 cstick -48 -5
+95176 cstick 0 0
+95237 stick 96 63
+95300 stick 0 0
+95326 stick -14 -59
+95443 stick 0 0
+95399 press MINUS
+95408 release MINUS
+95468 press A
+95483 release A
+95525 point 0.527 0.726
+95589 press 2
+95602 release 2
+95695 point -1.189 0.857
+95754 press Z
+95768 release Z
+95816 stick 24 41
+95919 stick 0 0
+95892 press UP
+95907 release UP
+95931 stick -93 -43
+96063 stick 0 0
+95951 press A
+95971 release A
+96063 stick 89 -4
+96116 stick 0 0
+96128 press UP
+96133 release UP
+96164 stick -12 6
+96213 stick 0 0
+96215 press Z
+96228 release Z
+96264 press UP
+96275 release UP
+96381 cstick -70 -30
+96462 cstick 0 0
+96403 cstick 12 -37
+96478 cstick 0 0
+96513 press C
+96519 release C
+96603 stick 38 -73
+96692 stick 0 0
+96658 point 0.166 -0.723
+96737 stick -83 -2
+96843 stick 0 0
+96769 press RIGHT
+96774 release RIGHT
+96835 press Z
+96842 release Z
+96930 stick 72 55
+97086 stick 0 0
+97012 stick 1 37
+97122 stick 0 0
+97061 press A
+97068 release A
+97159 stick -71 82
+97302 stick 0 0
+97187 stick -86 45
+97259 stick 0 0
+97306 stick -70 81
+97462 stick 0 0
+97426 stick -11 10
+97567 stick 0 0
+97515 press A
+97523 release A
+97577 point -0.283 0.724
+97648 press A
+97658 release A
+97722 cstick -86 65
+97806 cstick 0 0
+97756 point 0.731 -0.590
+97803 stick 38 73
+97970 stick 0 0
+97827 cstick 95 -2
+97868 cstick 0 0
+97932 stick -71 -3
+97999 stick 0 0
+98006 press B
+98014 release B
+98068 point -0.215 0.459
+98108 stick -97 -58
+98213 stick 0 0
+98154 point 0.018 0.112
+98252 press A
+98262 release A
+98299 point 0.170 -0.637
+98402 stick 16 -84
+98559 stick 0 0
+98518 point 0.722 0.810
+98632 press RIGHT
+98637 release RIGHT
+98714 stick 12 39
+98848 stick 0 0
+98756 press RIGHT
+98769 release RIGHT
+98820 stick -65 -74
+98998 stick 0 0
+98841 point 0.821 -0.330
+98946 point 1.265 0.482
+98971 cstick -57 97
+99016 cstick 0 0
+99080 stick -58 24
+99214 stick 0 0
+99171 cstick -39 -49
+99252 cstick 0 0
+99212 press C
+99229 release C
+99311 point 0.811 -0.738
+99429 press Z
+99436 release Z
+99508 stick -17 -27
+99593 stick 0 0
+99537 point 0.868 -0.668
+99618 stick 86 21
+99728 stick 0 0
+99657 stick 87 -96
+99687 stick 0 0
+99729 stick 10 70
+99881 stick 0 0
+99785 press B
+99801 release B
+99816 cstick 91 99
+99870 cstick 0 0
+99890 press RIGHT
+99898 release RIGHT
+99989 cstick 93 -12
+100039 cstick 0 0
+100026 press A
+100040 release A
+100128 point -0.735 0.376
+100233 stick 74 97
+100413 stick 0 0
+100333 point 0.852 0.255
+100372 press A
+100380 release A
+100462 point 0.339 0.706
+100541 cstick 26 3
+100577 cstick 0 0
+100612 stick 75 -50
+100771 stick 0 0
+100683 cstick -53 22
+100721 cstick 0 0
+100744 point -0.041 0.630
+100840 cstick 32 -78
+100876 cstick 0 0
+100949 cstick 0 -57
+101023 cstick 0 0
+101044 press 1
+101063 release 1
+101098 press 2
+101104 release 2
+101160 stick -79 -68
+101250 stick 0 0
+101242 press C
+101254 release C
+101360 point 1.241 0.451
+101381 press A
+101400 release A
+101414 press C
+101422 release C
+101461 stick -89 99
+101513 stick 0 0
+101489 press A
+101500 release A
+101595 press A
+101610 release A
+101658 stick 51 26
+101760 stick 0 0
+101718 cstick -12 90
+101774 cstick 0 0
+101801 press MINUS
+101812 release MINUS
+101909 cstick 43 -82
+101960 cstick 0 0
+101956 press Z
+101969 release Z
+102016 point -0.422 0.124
+102040 press Z
+102048 release Z
+102097 press LEFT
+102107 release LEFT
+102191 point -0.024 0.756
+102212 press Z
+102228 release Z
+102292 point 0.573 0.234
+102399 press B
+102413 release B
+102438 press LEFT
+102451 release LEFT
+102495 point 0.042 -0.325
+102578 stick 74 -38
+102757 stick 0 0
+102625 press A
+102643 release A
+102708 point -0.238 -0.576
+102807 point 0.409 0.803
+102838 point 0.363 -0.527
+102902 stick -72 -21
+102996 stick 0 0
+102924 press PLUS
+102938 release PLUS
+103038 stick -43 -95
+103083 stick 0 0
+103142 press RIGHT
+103147 release RIGHT
+103231 stick 33 20
+103343 stick 0 0
+103277 point -0.188 0.551
+103298 press RIGHT
+103304 release RIGHT
+103323 point -0.769 -0.125
+103375 stick 6 -99
+103494 stick 0 0
+103442 cstick -22 -10
+103506 cstick 0 0
+103527 press LEFT
+103538 release LEFT
+103551 press RIGHT
+103561 release RIGHT
+103645 stick -22 -89
+103686 stick 0 0
+103753 press DOWN
+103760 release DOWN
+103862 stick -75 -20
+103902 stick 0 0
+103913 stick -32 -79
+104055 stick 0 0
+104008 stick 19 29
+104106 stick 0 0
+104074 stick 77 -83
+104154 stick 0 0
+104112 stick 49 -72
+104246 stick 0 0
+104145 stick -51 -50
+104317 stick 0 0
+104175 stick -49 43
+104281 stick 0 0
+104214 stick 86 -78
+104262 stick 0 0
+104262 point -0.250 0.721
+104297 cstick -11 -72
+104355 cstick 0 0
+104411 cstick -10 51
+104481 cstick 0 0
+104497 press Z
+104514 release Z
+104617 stick 39 25
+104671 stick 0 0
+104707 press B
+104716 release B
+104797 press DOWN
+104812 release DOWN
+104857 cstick -61 0
+104917 cstick 0 0
+104919 press UP
+104926 release UP
+105008 stick 52 87
+105050 stick 0 0
+105128 point -1.155 -0.243
+105179 press PLUS
+105183 release PLUS
+105257 press MINUS
+105269 release MINUS
+105335 press RIGHT
+105340 release RIGHT
+105412 point -0.059 -0.417
+105528 press PLUS
+105543 release PLUS
+105590 stick -73 1
+105707 stick 0 0
+105688 stick -21 86
+105777 stick 0 0
+105771 press MINUS
+105790 release MINUS
+105839 press Z
+105851 release Z
+105920 cstick 26 -44
+105953 cstick 0 0
+106007 cstick 92 42
+106086 cstick 0 0
+106078 press B
+106084 release B
+106152 stick 7 -72
+106283 stick 0 0
+106176 stick -42 -17
+106356 stick 0 0
+106271 cstick -88 -64
+106329 cstick 0 0
+106347 stick 14 49
+106420 stick 0 0
+106404 point 0.222 0.528
+106440 stick 2 -46
+106601 stick 0 0
+106471 stick 75 -54
+106647 stick 0 0
+106561 point 0.330 -0.444
+106676 press A
+106682 release A
+106713 stick -22 8
+106817 stick 0 0
+106787 press RIGHT
+106796 release RIGHT
+106855 stick -36 -76
+106930 stick 0 0
+106915 press A
+106934 release A
+107014 press LEFT
+107034 release LEFT
+107077 point 1.120 0.330
+107178 cstick -40 59
+107255 cstick 0 0
+107270 press B
+107275 release B
+107349 point 1.101 0.097
+107449 point 1.133 -0.641
+107534 point 0.467 0.585
+107646 press A
+107656 release A
+107740 point 0.146 1.042
+107769 cstick 61 85
+107829 cstick 0 0
+107851 stick -3 -45
+107920 stick 0 0
+107948 press LEFT
+107953 release LEFT
+108004 cstick -20 -23
+108039 cstick 0 0
+108122 point -0.943 -0.307
+108164 stick 24 23
+108332 stick 0 0
+108248 stick 42 84
+108347 stick 0 0
+108282 stick -32 -13
+108445 stick 0 0
+108339 stick -1 90
+108447 stick 0 0
+108360 stick 19 -90
+108490 stick 0 0
+108475 stick -19 -43
+108559 stick 0 0
+108520 point -1.092 -0.210
+108584 point -1.177 0.384
+108645 cstick -13 87
+108722 cstick 0 0
+108674 point -0.010 0.712
+108764 press RIGHT
+108769 release RIGHT
+108824 press PLUS
+108844 release PLUS
+108905 press MINUS
+108911 release MINUS
+109001 stick -44 -43
+109145 stick 0 0
+109119 stick 41 68
+109284 stick 0 0
+109184 stick 91 -70
+109332 stick 0 0
+109265 stick -32 37
+109297 stick 0 0
+109309 stick 94 -17
+109388 stick 0 0
+109329 press A
+109346 release A
+109403 press B
+109419 release B
+109465 cstick -16 5
+109499 cstick 0 0
+109492 press A
+109506 release A
+109588 stick 72 16
+109762 stick 0 0
+109688 press C
+109703 release C
+109781 stick -88 -56
+109921 stick 0 0
+109812 stick 59 95
+109845 stick 0 0
+109902 stick 15 -75
+109990 stick 0 0
+110002 press A
+110020 release A
+110096 press Z
+110101 release Z
+110170 stick 71 75
+110280 stick 0 0
+110287 stick -1 8
+110429 stick 0 0
+110404 cstick -38 -2
+110457 cstick 0 0
+110475 press A
+110487 release A
+110571 stick -58 -47
+110608 stick 0 0
+110682 press RIGHT
+110694 release RIGHT
+110722 press DOWN
+110739 release DOWN
+110779 point -0.288 0.869
+110842 stick -60 -30
+110987 stick 0 0
+110893 point 0.080 -0.141
+110944 point -0.917 -0.207
+111054 point 0.078 0.368
+111173 point 1.177 0.917
+111229 press A
+111244 release A
+111249 stick 6 -73
+111396 stick 0 0
+111301 stick 7 -14
+111397 stick 0 0
+111357 stick -86 -4
+111519 stick 0 0
+111454 press A
+111467 release A
+111502 point -0.732 0.269
+111601 press RIGHT
+111613 release RIGHT
+111693 point 0.005 -0.175
+111731 press LEFT
+111738 release LEFT
+111779 point -0.649 -0.437
+111898 point -0.298 0.280
+112005 press Z
+112015 release Z
+112055 press A
+112071 release A
+112136 stick -54 -22
+112228 stick 0 0
+112224 stick -77 -65
+112383 stick 0 0
+112332 point -0.723 0.149
+112435 press C
+112445 release C
+112501 stick 30 -33
+112626 stick 0 0
+112597 press PLUS
+112614 release PLUS
+112641 point -0.820 -0.758
+112703 press Z
+112711 release Z
+112778 press B
+112789 release B
+112888 stick -59 -11
+113043 stick 0 0
+112922 press A
+112935 release A
+113004 stick 19 92
+113048 stick 0 0
+113097 press UP
+113108 release UP
+113202 stick 22 8
+113260 stick 0 0
+113277 stick 81 -22
+113323 stick 0 0
+113304 stick -20 93
+113471 stick 0 0
+113421 stick -74 -41
+113576 stick 0 0
+113445 cstick -78 10
+113533 cstick 0 0
+113468 stick -85 -97
+113632 stick 0 0
+113574 point -0.079 -0.813
+113611 cstick 10 6
+113664 cstick 0 0
+113670 press Z
+113681 release Z
+113722 stick -76 -48
+113762 stick 0 0
+113749 press A
+113757 release A
+113847 point -0.359 -0.216
+113919 stick 70 21
+114040 stick 0 0
+114018 point -0.552 0.633
+114099 press 2
+114114 release 2
+114144 stick 91 -100
+114291 stick 0 0
+114181 point 0.056 -0.397
+114258 press A
+114267 release A
+114300 press 2
+114304 release 2
+114404 stick -6 -47
+114568 stick 0 0
+114450 press RIGHT
+114457 release RIGHT
+114493 stick -99 57
+114561 stick 0 0
+114521 press RIGHT
+114532 release RIGHT
+114592 stick 100 33
+114696 stick 0 0
+114711 stick -34 -66
+114769 stick 0 0
+114734 press B
+114744 release B
+114832 press UP
+114837 release UP
+114945 stick -52 -59
+115013 stick 0 0
+114967 point -0.082 0.851
+115029 stick 80 42
+115111 stick 0 0
+115109 press 2
+115115 release 2
+115137 point -0.433 0.602
+115234 stick 39 26
+115312 stick 0 0
+115337 press B
+115354 release B
+115381 press RIGHT
+115387 release RIGHT
+115443 stick 52 -86
+115547 stick 0 0
+115475 point -0.831 -0.351
+115587 point 0.246 -0.657
+115682 stick 28 -25
+115742 stick 0 0
+115739 point -0.271 0.096
+115802 point -0.078 -0.298
+115865 press DOWN
+115871 release DOWN
+115966 press B
+115973 release B
+115990 press C
+115997 release C
+116091 stick 49 90
+116260 stick 0 0
+116125 point 0.688 1.033
+116196 stick -40 -47
+116288 stick 0 0
+116307 point -0.894 0.372
+116391 stick -27 -14
+116487 stick 0 0
+116435 press MINUS
+116447 release MINUS
+116470 point 0.233 -0.317
+116560 press LEFT
+116579 release LEFT
+116643 press 1
+116662 release 1
+116702 point -0.757 0.205
+116767 stick 90 -66
+116888 stick 0 0
+116834 stick -92 -41
+117008 stick 0 0
+116862 point 0.702 -0.584
+116964 press 2
+116969 release 2
+117010 stick 33 63
+117089 stick 0 0
+117125 stick 43 -22
+117242 stick 0 0
+117157 stick -3 14
+117206 stick 0 0
+117189 stick 18 51
+117338 stick 0 0
+117247 point -0.151 0.392
+117302 press 1
+117308 release 1
+117322 stick 43 -55
+117456 stick 0 0
+117384 press LEFT
+117393 release LEFT
+117469 stick -41 -16
+117605 stick 0 0
+117551 press B
+117556 release B
+117626 press A
+117642 release A
+117649 point -0.028 0.430
+117679 stick 7 54
+117826 stick 0 0
+117706 press A
+117714 release A
+117774 press DOWN
+117783 release DOWN
+117857 press DOWN
+117873 release DOWN
+117965 stick 88 -41
+118103 stick 0 0
+118025 stick -33 -71
+118117 stick 0 0
+118069 point -0.780 0.466
+118123 press 2
+118142 release 2
+118190 stick -14 36
+118255 stick 0 0
+118293 stick -90 20
+118442 stick 0 0
+118402 press A
+118415 release A
+118442 stick 41 -70
+118516 stick 0 0
+118498 stick 20 87
+118542 stick 0 0
+118589 stick -3 90
+118764 stick 0 0
+118631 stick 90 6
+118741 stick 0 0
+118746 point 0.945 -0.797
+118835 stick -46 88
+119007 stick 0 0
+118941 stick 8 27
+119009 stick 0 0
+119022 stick 7 66
+119102 stick 0 0
+119111 stick 9 -15
+119252 stick 0 0
+119204 press A
+119208 release A
+119309 stick 10 -8
+119349 stick 0 0
+119375 press UP
+119385 release UP
+119455 cstick 50 79
+119544 cstick 0 0
+119501 press B
+119511 release B
+119592 point 0.586 0.736
+119684 press A
+119696 release A
+119710 point 0.252 0.755
+119826 point 1.059 -0.576
+119932 stick -69 1
+120043 stick 0 0
+120028 press B
+120037 release B
+120120 point -0.002 0.949
+120238 stick 61 -80
+120361 stick 0 0
+120358 point 0.953 0.400
+120388 press A
+120403 release A
+120417 point 1.121 -0.291
+120506 point -0.397 -0.186
+120560 cstick -31 24
+120637 cstick 0 0
+120636 press A
+120648 release A
+120723 point -0.860 -0.088
+120804 point 0.557 -0.089
+120893 press 2
+120907 release 2
+121009 press DOWN
+121029 release DOWN
+121088 press A
+121092 release A
+121119 press A
+121123 release A
+121217 press B
+121228 release B
+121335 press RIGHT
+121341 release RIGHT
+121430 stick 5 -61
+121600 stick 0 0
+121502 stick 88 36
+121586 stick 0 0
+121531 cstick -8 -73
+121611 cstick 0 0
+121579 point -0.517 0.564
+121629 press PLUS
+121633 release PLUS
+121736 point -0.238 -0.834
+121851 stick -35 -50
+122003 stick 0 0
+121881 point 0.585 0.619
+121930 press LEFT
+121935 release LEFT
+121965 press PLUS
+121983 release PLUS
+122017 stick 23 -6
+122145 stick 0 0
+122102 point -1.014 0.888
+122135 stick -26 80
+122221 stick 0 0
+122187 stick 38 -22
+122306 stick 0 0
+122266 press RIGHT
+122282 release RIGHT
+122318 cstick -98 -39
+122374 cstick 0 0
+122438 point 0.870 -0.648
+122533 stick -27 -23
+122566 stick 0 0
+122610 stick -44 -27
+122713 stick 0 0
+122714 point -1.127 0.888
+122794 stick -32 87
+122941 stick 0 0
+122906 press B
+122916 release B
+123020 press DOWN
+123037 release DOWN
+123097 stick 10 13
+123269 stick 0 0
+123171 press 2
+123185 release 2
+123282 cstick -72 71
+123332 cstick 0 0
+123316 press 1
+123326 release 1
+123373 press LEFT
+123386 release LEFT
+123471 point 0.188 -0.352
+123536 point 0.116 0.340
+123583 stick -98 -46
+123706 stick 0 0
+123631 stick 26 37
+123690 stick 0 0
+123662 press C
+123669 release C
+123732 stick 10 71
+123861 stick 0 0
+123781 stick 27 -25
+123842 stick 0 0
+123868 point 0.338 0.812
+123891 stick -69 -47
+123998 stick 0 0
+123938 press B
+123946 release B
+124029 stick 3 -31
+124206 stick 0 0
+124061 cstick -77 99
+124089 cstick 0 0
+124119 stick 6 -19
+124246 stick 0 0
+124231 stick 10 -69
+124406 stick 0 0
+124283 stick 2 29
+124334 stick 0 0
+124308 press 2
+124319 release 2
+124344 press A
+124348 release A
+124436 point -0.029 -0.194
+124551 stick 60 5
+124643 stick 0 0
+124667 point 0.441 0.930
+124783 stick -96 -16
+124854 stick 0 0
+124889 press A
+124896 release A
+124943 stick -59 48
+125089 stick 0 0
+124967 press 1
+124986 release 1
+125052 press A
+125069 release A
+125113 cstick 71 -36
+125134 cstick 0 0
+125168 point -0.272 -0.222
+125241 stick 48 32
+125312 stick 0 0
+125333 cstick 91 15
+125389 cstick 0 0
+125419 press RIGHT
+125438 release RIGHT
+125481 stick 1 93
+125575 stick 0 0
+125521 press UP
+125531 release UP
+125627 stick -98 34
+125778 stick 0 0
+125741 stick -19 47
+125846 stick 0 0
+125849 point 0.056 -0.019
+125950 press A
+125966 release A
+126056 point 0.524 0.174
+126150 stick -52 -81
+126302 stick 0 0
+126254 point 0.337 0.969
+126345 press B
+126358 release B
+126399 stick 94 65
+126534 stick 0 0
+126426 point -0.335 0.472
+126530 point -0.081 0.249
+126617 stick 29 -53
+126743 stick 0 0
+126638 press B
+126648 release B
+126741 stick 41 20
+126808 stick 0 0
+126829 stick -89 -41
+126980 stick 0 0
+126904 stick -32 -60
+127043 stick 0 0
+126929 press A
+126944 release A
+126951 stick 72 -85
+127127 stick 0 0
+127033 stick 28 -65
+127082 stick 0 0
+127144 point 0.561 0.239
+127216 stick 61 3
+127387 stick 0 0
+127319 press C
+127332 release C
+127411 stick -86 16
+127552 stick 0 0
+127498 stick -32 -42
+127667 stick 0 0
+127589 press LEFT
+127600 release LEFT
+127671 stick -79 -36
+127796 stick 0 0
+127788 stick -88 64
+127950 stick 0 0
+127822 press A
+127833 release A
+127850 point -0.014 1.022
+127951 stick -47 14
+127991 stick 0 0
+128009 point -0.980 0.566
+128092 press A
+128109 release A
+128209 stick 65 13
+128329 stick 0 0
+128229 press 1
+128235 release 1
+128287 point -0.639 0.027
+128325 stick -5 56
+128465 stick 0 0
+128419 point 0.210 -0.320
+128466 stick 83 -40
+128547 stick 0 0
+128545 stick 34 -2
+128725 stick 0 0
+128663 stick 86 -45
+128719 stick 0 0
+128748 point 0.667 0.668
+128780 press 1
+128800 release 1
+128822 stick -90 16
+128906 stick 0 0
+128890 press DOWN
+128901 release DOWN
+128920 point -0.705 -0.754
+128955 press 2
+128971 release 2
+129034 press A
+129044 release A
+129140 press A
+129155 release A
+129223 press C
+129237 release C
+129288 point 0.647 0.475
+129403 point 0.257 0.278
+129465 stick -82 9
+129645 stick 0 0
+129539 press A
+129556 release A
+129603 press DOWN
+129614 release DOWN
+129679 cstick -23 -40
+129755 cstick 0 0
+129786 stick -58 -78
+129959 stick 0 0
+129866 press MINUS
+129875 release MINUS
+129921 stick -32 11
+130099 stick 0 0
+129996 press B
+130013 release B
+130107 stick -69 -68
+130259 stick 0 0
+130208 point -1.162 -0.078
+130251 stick 13 48
+130302 stick 0 0
+130306 press RIGHT
+130311 release RIGHT
+130362 stick 87 62
+130403 stick 0 0
+130471 stick -38 19
+130591 stick 0 0
+130521 cstick -81 8
+130574 cstick 0 0
+130542 cstick -69 46
+130607 cstick 0 0
+130563 press 1
+130567 release 1
+130634 stick 66 -17
+130791 stick 0 0
+130675 stick 82 -67
+130816 stick 0 0
+130703 point -0.291 -0.807
+130733 stick 15 -69
+130831 stick 0 0
+130798 point 0.300 -0.191
+130899 press A
+130915 release A
+131013 stick 91 -34
+131074 stick 0 0
+131109 press MINUS
+131129 release MINUS
+131208 press LEFT
+131227 release LEFT
+131239 cstick -94 95
+131281 cstick 0 0
+131271 stick -5 -94
+131385 stick 0 0
+131391 point -0.023 -0.809
+131442 point 0.990 0.378
+131552 press MINUS
+131559 release MINUS
+131592 press UP
+131596 release UP
+131619 stick -21 75
+131759 stick 0 0
+131685 stick 27 -56
+131777 stick 0 0
+131745 cstick 52 -31
+131782 cstick 0 0
+131833 press 1
+131853 release 1
+131861 stick -47 -75
+132018 stick 0 0
+131908 stick 69 -66
+132081 stick 0 0
+131945 point 0.662 -0.530
+132053 cstick 92 -35
+132134 cstick 0 0
+132102 stick -62 -92
+132151 stick 0 0
+132163 press PLUS
+132176 release PLUS
+132183 press MINUS
+132187 release MINUS
+132243 stick 80 -43
+132307 stick 0 0
+132346 press Z
+132365 release Z
+132405 press PLUS
+132424 release PLUS
+132468 stick -38 -100
+132552 stick 0 0
+132499 press DOWN
+132508 release DOWN
+132612 stick -19 -62
+132759 stick 0 0
+132662 press Z
+132682 release Z
+132768 stick 14 25
+132854 stick 0 0
+132795 point 0.933 0.156
+132875 press RIGHT
+132886 release RIGHT
+132899 press LEFT
+132917 release LEFT
+132950 press RIGHT
+132969 release RIGHT
+133052 stick -85 -49
+133164 stick 0 0
+133126 press A
+133146 release A
+133173 cstick 92 -47
+133219 cstick 0 0
+133208 press LEFT
+133228 release LEFT
+133267 press UP
+133277 release UP
+133332 stick 64 7
+133374 stick 0 0
+133368 stick -92 -91
+133521 stick 0 0
+133432 stick -48 -69
+133570 stick 0 0
+133524 point -0.609 -0.784
+133611 stick 77 -44
+133728 stick 0 0
+133653 cstick 31 -34
+133677 cstick 0 0
+133699 stick 79 -16
+133787 stick 0 0
+133748 point -1.189 0.298
+133798 point 1.069 0.765
+133914 point 0.913 0.820
+133986 point 1.154 0.231
+134068 point -0.309 -0.581
+134130 stick -49 -10
+134222 stick 0 0
+134153 press PLUS
+134172 release PLUS
+134264 stick -88 41
+134392 stick 0 0
+134381 point 0.288 -0.491
+134463 cstick -6 64
+134509 cstick 0 0
+134576 stick 28 -75
+134654 stick 0 0
+134672 cstick 7 -31
+134709 cstick 0 0
+134769 point 0.003 -0.289
+134881 press B
+134894 release B
+134942 stick -25 -70
+135065 stick 0 0
+134989 stick 71 23
+135032 stick 0 0
+135040 press LEFT
+135052 release LEFT
+135073 press B
+135089 release B
+135095 stick 40 -58
+135193 stick 0 0
+135206 stick 89 43
+135271 stick 0 0
+135283 press 2
+135294 release 2
+135391 press B
+135398 release B
+135430 press B
+135440 release B
+135466 cstick 13 -18
+135505 cstick 0 0
+135527 stick -30 -70
+135652 stick 0 0
+135547 cstick -92 -13
+135603 cstick 0 0
+135573 point 0.218 -0.735
+135632 point 0.052 -0.284
+135729 point -1.051 0.648
+135818 stick 20 -36
+135877 stick 0 0
+135851 stick 91 59
+135906 stick 0 0
+135929 stick -70 -8
+135993 stick 0 0
+135957 point 0.050 0.718
+136048 stick 74 -20
+136150 stick 0 0
+136134 stick 76 -38
+136181 stick 0 0
+136172 stick -77 31
+136256 stick 0 0
+136265 press 2
+136273 release 2
+136349 stick -53 75
+136436 stick 0 0
+136397 stick -49 74
+136478 stick 0 0
+136424 stick 98 -82
+136562 stick 0 0
+136491 stick 57 82
+136533 stick 0 0
+136577 press Z
+136597 release Z
+136669 cstick -1 52
+136751 cstick 0 0
+136722 point 0.628 -0.167
+136753 stick 92 61
+136932 stick 0 0
+136828 stick 86 -90
+136879 stick 0 0
+136857 press MINUS
+136873 release MINUS
+136900 press 2
+136908 release 2
+137009 stick 87 38
+137167 stick 0 0
+137033 cstick -77 65
+137061 cstick 0 0
+137140 point -0.862 0.906
+137218 press B
+137222 release B
+137333 press A
+137353 release A
+137410 stick -98 -62
+137510 stick 0 0
+137482 stick -24 89
+137586 stick 0 0
+137544 point 0.454 -0.188
+137600 press RIGHT
+137613 release RIGHT
+137642 cstick 41 25
+137689 cstick 0 0
+137755 point -0.007 0.015
+137856 cstick -98 -71
+137921 cstick 0 0
+137947 point -0.376 -0.295
+138040 press B
+138058 release B
+138091 press B
+138096 release B
+138197 stick 11 20
+138376 stick 0 0
+138254 press B
+138272 release B
+138333 cstick -98 4
+138413 cstick 0 0
+138447 cstick 9 80
+138474 cstick 0 0
+138484 press A
+138496 release A
+138543 stick 73 -54
+138658 stick 0 0
+138583 stick -45 62
+138698 stick 0 0
+138697 stick 65 31
+138866 stick 0 0
+138750 press LEFT
+138763 release LEFT
+138863 cstick -61 -100
+138901 cstick 0 0
+138951 press 2
+138966 release 2
+138977 press 2
+138995 release 2
+139023 point -0.794 -0.194
+139046 press A
+139064 release A
+139095 stick -97 -95
+139181 stick 0 0
+139189 stick -95 28
+139341 stick 0 0
+139224 cstick 23 30
+139271 cstick 0 0
+139341 press A
+139354 release A
+139411 press B
+139429 release B
+139514 press B
+139527 release B
+139606 stick 71 -85
+139752 stick 0 0
+139721 cstick 5 -25
+139785 cstick 0 0
+139810 stick -90 78
+139936 stick 0 0
+139913 point -0.307 1.003
+139991 cstick 81 -77
+140035 cstick 0 0
+140055 stick -22 -81
+140102 stick 0 0
+140154 press B
+140163 release B
+140194 press RIGHT
+140213 release RIGHT
+140225 stick 28 -75
+140403 stick 0 0
+140320 stick -24 -100
+140367 stick 0 0
+140384 point -0.348 -0.708
+140448 stick -97 -4
+140624 stick 0 0
+140519 stick -83 22
+140579 stick 0 0
+140619 stick -14 -85
+140760 stick 0 0
+140696 stick -65 -100
+140757 stick 0 0
+140758 stick -91 80
+140817 stick 0 0
+140829 point -0.239 0.289
+140916 press B
+140933 release B
+141011 stick -76 75
+141067 stick 0 0
+141069 stick -5 25
+141247 stick 0 0
+141169 press PLUS
+141178 release PLUS
+141206 press MINUS
+141223 release MINUS
+141257 point 1.180 0.836
+141375 press B
+141379 release B
+141428 press A
+141441 release A
+141496 point -0.687 -0.712
+141517 stick -27 15
+141569 stick 0 0
+141546 point -0.233 -0.520
+141646 press C
+141658 release C
+141717 stick -82 -12
+141793 stick 0 0
+141821 point -0.361 0.249
+141882 point -0.295 0.540
+141935 point -0.869 0.388
+141956 stick -1 -7
+142041 stick 0 0
+142050 press B
+142070 release B
+142078 stick 69 33
+142169 stick 0 0
+142119 stick 0 7
+142217 stick 0 0
+142184 stick 59 26
+142270 stick 0 0
+142274 point 0.942 -0.736
+142327 stick 93 31
+142457 stick 0 0
+142441 point 0.773 -0.298
+142473 press Z
+142477 release Z
+142533 point 0.228 0.166
+142585 stick -85 -67
+142697 stick 0 0
+142676 cstick 19 91
+142763 cstick 0 0
+142697 point 0.753 -0.797
+142808 point -0.638 0.074
+142880 point -0.954 -0.703
+142997 stick 39 -27
+143056 stick 0 0
+143059 stick 31 34
+143188 stick 0 0
+143125 point -0.581 0.146
+143240 stick 100 36
+143402 stick 0 0
+143351 press A
+143368 release A
+143441 stick -84 8
+143573 stick 0 0
+143478 stick 56 -75
+143656 stick 0 0
+143563 press A
+143568 release A
+143677 point 0.343 0.952
+143744 stick 45 37
+143846 stick 0 0
+143838 stick 65 48
+143873 stick 0 0
+143885 press DOWN
+143897 release DOWN
+143962 stick -75 -14
+144061 stick 0 0
+144074 stick -8 2
+144161 stick 0 0
+144193 press Z
+144200 release Z
+144228 stick 76 -8
+144407 stick 0 0
+144316 press C
+144323 release C
+144341 point 0.853 -0.540
+144411 press MINUS
+144423 release MINUS
+144527 press MINUS
+144542 release MINUS
+144584 stick 58 -47
+144682 stick 0 0
+144633 point 0.945 -0.589
+144715 point 1.152 -0.074
+144791 stick 71 47
+144869 stick 0 0
+144817 stick 26 -59
+144864 stick 0 0
+144935 point -0.588 1.033
+145017 cstick -50 6
+145078 cstick 0 0
+145120 point -0.524 0.677
+145147 point -0.191 0.131
+145226 press RIGHT
+145244 release RIGHT
+145246 point 0.095 -0.696
+145273 press 1
+145283 release 1
+145339 point -0.430 0.601
+145422 stick 29 28
+145589 stick 0 0
+145539 cstick 76 55
+145593 cstick 0 0
+145559 stick 6 -23
+145606 stick 0 0
+145592 point 0.202 -0.157
+145695 press B
+145710 release B
+145729 press Z
+145743 release Z
+145809 point -0.780 0.926
+145852 press A
+145859 release A
+145892 stick -70 27
+145961 stick 0 0
+145915 press UP
+145924 release UP
+146032 cstick 1 -27
+146087 cstick 0 0
+146101 press MINUS
+146120 release MINUS
+146154 stick 38 82
+146319 stick 0 0
+146247 point 1.051 -0.879
+146318 press C
+146329 release C
+146345 press A
+146357 release A
+146365 point 0.151 -0.677
+146445 press C
+146452 release C
+146472 stick 42 49
+146516 stick 0 0
+146544 press B
+146563 release B
+146656 press DOWN
+146671 release DOWN
+146691 point 0.255 -0.086
+146748 point -0.457 0.895
+146826 press UP
+146837 release UP
+146940 press A
+146958 release A
+147034 stick -44 -13
+147180 stick 0 0
+147125 stick -54 -4
+147255 stick 0 0
+147210 stick 61 28
+147323 stick 0 0
+147237 press Z
+147245 release Z
+147275 stick -78 16
+147366 stick 0 0
+147386 point 0.494 -0.453
+147412 press UP
+147423 release UP
+147489 stick -47 87
+147578 stick 0 0
+147545 point -0.804 -0.140
+147608 stick -60 -33
+147710 stick 0 0
+147637 press Z
+147641 release Z
+147683 stick 76 -53
+147821 stick 0 0
+147736 point -0.315 -0.037
+147759 stick 100 -34
+147924 stick 0 0
+147823 press RIGHT
+147836 release RIGHT
+147913 stick 53 91
+148070 stick 0 0
+148023 stick 33 65
+148155 stick 0 0
+148054 point 0.107 0.329
+148129 stick -80 -12
+148237 stick 0 0
+148174 stick 75 19
+148254 stick 0 0
+148256 press Z
+148274 release Z
+148329 press A
+148338 release A
+148396 stick 85 -63
+148444 stick 0 0
+148434 stick 0 43
+148480 stick 0 0
+148540 stick -14 -64
+148581 stick 0 0
+148573 point 1.229 -0.158
+148669 cstick -42 50
+148692 cstick 0 0
+148699 point -0.107 0.071
+148731 point -0.878 0.165
+148768 press UP
+148780 release UP
+148873 point 1.213 0.910
+148940 stick 43 -63
+149061 stick 0 0
+148973 stick 63 -28
+149116 stick 0 0
+149021 press RIGHT
+149037 release RIGHT
+149110 cstick 63 -49
+149142 cstick 0 0
+149134 stick -94 63
+149286 stick 0 0
+149248 press A
+149263 release A
+149337 point 0.747 -0.576
+149457 cstick 75 9
+149491 cstick 0 0
+149495 stick -48 -59
+149527 stick 0 0
+149556 stick -52 -89
+149727 stick 0 0
+149626 point -0.025 0.857
+149676 press LEFT
+149694 release LEFT
+149706 stick 91 -62
+149835 stick 0 0
+149793 stick -32 -52
+149915 stick 0 0
+149847 stick -22 -15
+150013 stick 0 0
+149965 stick -80 51
+150056 stick 0 0
+150030 press 2
+150040 release 2
+150142 stick -13 -66
+150209 stick 0 0
+150232 press A
+150238 release A
+150291 press UP
+150305 release UP
+150317 cstick 91 -17
+150343 cstick 0 0
+150392 stick -43 73
+150450 stick 0 0
+150479 stick 75 47
+150626 stick 0 0
+150509 press PLUS
+150525 release PLUS
+150540 press RIGHT
+150560 release RIGHT
+150613 point 0.963 0.239
+150696 press LEFT
+150712 release LEFT
+150773 point -0.239 -0.161
+150872 stick -20 2
+151041 stick 0 0
+150901 point 0.365 -0.390
+150975 stick 18 49
+151013 stick 0 0
+151037 press A
+151047 release A
+151117 stick 67 84
+151150 stick 0 0
+151205 stick -36 -35
+151317 stick 0 0
+151260 point -1.019 -0.297
+151287 press A
+151302 release A
+151323 stick 41 -34
+151473 stick 0 0
+151413 stick 71 80
+151503 stick 0 0
+151464 cstick -67 40
+151527 cstick 0 0
+151502 press 1
+151510 release 1
+151551 press C
+151569 release C
+151594 press B
+151612 release B
+151704 stick -72 49
+151837 stick 0 0
+151774 stick 52 -27
+151894 stick 0 0
+151828 stick -38 28
+151963 stick 0 0
+151904 point -0.896 0.276
+152012 point -0.906 -0.182
+152086 press B
+152095 release B
+152186 stick -23 16
+152362 stick 0 0
+152289 cstick -49 -20
+152319 cstick 0 0
+152401 stick 22 50
+152500 stick 0 0
+152484 press A
+152495 release A
+152550 stick -99 -17
+152587 stick 0 0
+152660 press B
+152668 release B
+152694 press 2
+152706 release 2
+152813 stick 20 -45
+152990 stick 0 0
+152851 stick 99 15
+152881 stick 0 0
+152959 stick -15 3
+153051 stick 0 0
+152981 stick -52 5
+153023 stick 0 0
+153012 point -0.170 0.242
+153041 press A
+153061 release A
+153085 press 2
+153094 release 2
+153193 stick -62 -32
+153282 stick 0 0
+153246 press DOWN
+153258 release DOWN
+153299 point 0.869 0.148
+153377 cstick -44 25
+153401 cstick 0 0
+153402 cstick -22 -78
+153437 cstick 0 0
+153521 point -0.353 0.236
+153641 point -0.029 -0.780
+153661 stick -15 -4
+153697 stick 0 0
+153688 stick -57 78
+153727 stick 0 0
+153771 press 1
+153778 release 1
+153833 point -0.024 0.521
+153943 point -1.102 0.915
+154054 stick 39 -9
+154119 stick 0 0
+154089 press Z
+154104 release Z
+154117 stick -45 -51
+154188 stick 0 0
+154192 press LEFT
+154206 release LEFT
+154255 press 2
+154265 release 2
+154336 point 0.009 0.355
+154439 cstick -57 -99
+154511 cstick 0 0
+154524 press 2
+154532 release 2
+154544 stick -12 29
+154607 stick 0 0
+154640 press A
+154657 release A
+154708 stick 62 -84
+154779 stick 0 0
+154798 press RIGHT
+154818 release RIGHT
+154821 stick -86 100
+154966 stick 0 0
+154927 press RIGHT
+154936 release RIGHT
+155001 press PLUS
+155011 release PLUS
+155043 stick 25 -25
+155133 stick 0 0
+155075 cstick -69 -91
+155122 cstick 0 0
+155160 press A
+155167 release A
+155207 stick 1 74
+155370 stick 0 0
+155309 stick 81 93
+155340 stick 0 0
+155393 press UP
+155404 release UP
+155460 stick -64 100
+155547 stick 0 0
+155563 stick 78 -67
+155620 stick 0 0
+155612 point -0.230 -0.742
+155699 stick 7 -12
+155868 stick 0 0
+155785 press Z
+155794 release Z
+155879 cstick 21 -69
+155911 cstick 0 0
+155940 point 0.621 -0.175
+156059 cstick -37 68
+156091 cstick 0 0
+156148 point -1.078 0.766
+156237 press UP
+156249 release UP
+156311 stick 21 10
+156431 stick 0 0
+156426 stick -23 95
+156528 stick 0 0
+156506 point -0.965 -0.354
+156542 press B
+156561 release B
+156586 point 0.352 -0.452
+156633 stick -23 -8
+156713 stick 0 0
+156741 press B
+156746 release B
+156850 press Z
+156868 release Z
+156956 press B
+156967 release B
+157064 point 0.711 -0.723
+157130 press LEFT
+157139 release LEFT
+157157 point 0.374 -0.776
+157231 stick 69 71
+157318 stick 0 0
+157298 cstick -87 76
+157328 cstick 0 0
+157359 point 0.153 -0.852
+157477 stick 96 -32
+157578 stick 0 0
+157559 press B
+157578 release B
+157589 press PLUS
+157594 release PLUS
+157636 press PLUS
+157654 release PLUS
+157727 press C
+157735 release C
+157768 stick -56 8
+157876 stick 0 0
+157794 stick -51 59
+157944 stick 0 0
+157868 press LEFT
+157881 release LEFT
+157934 press 1
+157951 release 1
+157977 point -1.090 -0.000
+158081 stick -70 21
+158243 stick 0 0
+158153 press MINUS
+158160 release MINUS
+158254 stick -53 7
+158360 stick 0 0
+158291 stick -94 18
+158432 stick 0 0
+158382 press A
+158387 release A
+158489 cstick 8 -10
+158553 cstick 0 0
+158575 press C
+158584 release C
+158604 press A
+158610 release A
+158697 point -0.450 0.665
+158780 cstick 1 76
+158840 cstick 0 0
+158838 point -0.497 0.715
+158864 point -1.126 -0.095
+158931 press A
+158942 release A
+158972 stick -7 -34
+159050 stick 0 0
+159044 point -0.078 -0.086
+159124 press UP
+159141 release UP
+159166 press 1
+159176 release 1
+159210 press MINUS
+159228 release MINUS
+159308 cstick -88 42
+159358 cstick 0 0
+159413 stick -10 -94
+159490 stick 0 0
+159467 press A
+159474 release A
+159508 stick 98 -75
+159598 stick 0 0
+159606 point -0.356 -0.278
+159672 press MINUS
+159692 release MINUS
+159768 stick 54 -34
+159900 stick 0 0
+159860 press MINUS
+159872 release MINUS
+159958 stick -50 -28
+160109 stick 0 0
+160064 press DOWN
+160076 release DOWN
+160113 stick 82 -22
+160207 stick 0 0
+160188 press A
+160206 release A
+160306 point -0.672 0.981
+160406 stick 56 -3
+160535 stick 0 0
+160506 stick -5 84
+160683 stick 0 0
+160543 press LEFT
+160563 release LEFT
+160641 stick -59 97
+160773 stick 0 0
+160690 cstick -95 -11
+160737 cstick 0 0
+160740 stick -46 32
+160824 stick 0 0
+160815 press RIGHT
+160827 release RIGHT
+160932 point 1.247 -0.083
+161018 stick 98 4
+161168 stick 0 0
+161073 press Z
+161083 release Z
+161165 stick 66 -44
+161332 stick 0 0
+161241 point 0.987 -0.826
+161296 stick -67 88
+161349 stick 0 0
+161345 stick 64 60
+161473 stick 0 0
+161461 press A
+161469 release A
+161502 press A
+161508 release A
+161591 cstick -16 -74
+161611 cstick 0 0
+161611 press LEFT
+161628 release LEFT
+161679 point 1.221 -0.869
+161756 press MINUS
+161773 release MINUS
+161825 stick 46 -41
+161862 stick 0 0
+161875 stick -44 -76
+162053 stick 0 0
+161924 press 2
+161932 release 2
+161968 press UP
+161975 release UP
+162010 press A
+162026 release A
+162047 point 0.171 0.621
+162132 cstick 83 65
+162165 cstick 0 0
+162166 stick 71 13
+162334 stick 0 0
+162195 stick -84 1
+162291 stick 0 0
+162254 stick 32 17
+162326 stick 0 0
+162339 cstick 51 38
+162399 cstick 0 0
+162365 stick -70 69
+162522 stick 0 0
+162481 point 0.847 -0.302
+162598 press RIGHT
+162612 release RIGHT
+162644 stick 31 -64
+162737 stick 0 0
+162703 press RIGHT
+162710 release RIGHT
+162805 press C
+162816 release C
+162826 point 0.936 0.424
+162892 press B
+162906 release B
+162981 point -0.027 0.992
+163073 stick -28 -42
+163147 stick 0 0
+163103 stick -26 -7
+163151 stick 0 0
+163186 point 0.980 0.100
+163223 point -0.232 0.235
+163243 stick 70 -16
+163410 stick 0 0
+163274 stick 12 -71
+163344 stick 0 0
+163384 stick -97 -40
+163504 stick 0 0
+163449 point -0.346 1.028
+163514 stick 44 3
+163671 stick 0 0
+163554 press B
+163573 release B
+163583 press RIGHT
+163593 release RIGHT
+163644 press DOWN
+163658 release DOWN
+163745 press B
+163750 release B
+163776 press Z
+163788 release Z
+163801 stick -50 -89
+163930 stick 0 0
+163842 stick 38 38
+163959 stick 0 0
+163884 press 1
+163891 release 1
+163979 press 1
+163999 release 1
+164076 cstick 64 -7
+164138 cstick 0 0
+164098 point -0.344 -0.457
+164195 point -1.060 -0.658
+164245 point 0.029 0.534
+164289 press LEFT
+164299 release LEFT
+164324 stick 46 -38
+164374 stick 0 0
+164413 press A
+164425 release A
+164510 press Z
+164515 release Z
+164579 stick -49 -64
+164742 stick 0 0
+164634 press LEFT
+164644 release LEFT
+164682 stick -13 15
+164814 stick 0 0
+164708 press PLUS
+164727 release PLUS
+164744 press A
+164752 release A
+164860 press 1
+164870 release 1
+164936 press PLUS
+164946 release PLUS
+165012 cstick 35 -70
+165090 cstick 0 0
+165072 stick -2 -61
+165109 stick 0 0
+165185 stick 99 -33
+165312 stick 0 0
+165214 press A
+165228 release A
+165316 point 1.197 0.205
+165353 stick -32 78
+165389 stick 0 0
+165413 point 0.204 0.521
+165476 cstick 44 92
+165566 cstick 0 0
+165550 point -0.053 -0.673
+165631 stick 1 74
+165712 stick 0 0
+165687 press PLUS
+165703 release PLUS
+165798 stick 65 58
+165930 stick 0 0
+165851 press A
+165860 release A
+165878 press B
+165883 release B
+165965 point 0.084 -0.570
+165985 press 2
+165995 release 2
+166090 cstick -92 -78
+166139 cstick 0 0
+166119 stick 46 -15
+166154 stick 0 0
+166215 press Z
+166219 release Z
+166278 stick 74 84
+166352 stick 0 0
+166317 press LEFT
+166327 release LEFT
+166390 press A
+166396 release A
+166437 cstick -19 20
+166488 cstick 0 0
+166462 stick 34 78
+166518 stick 0 0
+166582 stick -67 -61
+166747 stick 0 0
+166607 stick 6 -21
+166642 stick 0 0
+166629 press B
+166644 release B
+166674 point 0.061 -0.202
+166722 press LEFT
+166732 release LEFT
+166803 stick 22 72
+166913 stick 0 0
+166886 press B
+166903 release B
+166920 stick 47 63
+167013 stick 0 0
+167038 stick 65 -2
+167178 stick 0 0
+167141 stick 69 81
+167242 stick 0 0
+167256 cstick -11 -48
+167328 cstick 0 0
+167336 point 0.446 -0.160
+167446 stick 27 38
+167511 stick 0 0
+167509 press A
+167519 release A
+167556 stick -20 -45
+167635 stick 0 0
+167617 press A
+167635 release A
+167660 stick -88 34
+167809 stick 0 0
+167742 press B
+167750 release B
+167772 stick 94 -50
+167846 stick 0 0
+167886 press PLUS
+167891 release PLUS
+167926 press A
+167946 release A
+167993 press DOWN
+168013 release DOWN
+168088 cstick -68 -29
+168146 cstick 0 0
+168145 press 2
+168153 release 2
+168259 press 1
+168268 release 1
+168283 stick 50 63
+168439 stick 0 0
+168315 cstick -79 11
+168392 cstick 0 0
+168382 point 0.847 -0.818
+168447 press Z
+168463 release Z
+168495 press C
+168513 release C
+168573 stick -57 -50
+168733 stick 0 0
+168622 stick 4 -87
+168752 stick 0 0
+168655 point -0.553 0.086
+168751 cstick -36 55
+168834 cstick 0 0
+168801 stick 91 75
+168931 stick 0 0
+168876 press B
+168886 release B
+168915 point 1.275 0.462
+168981 press PLUS
+168986 release PLUS
+169099 stick -94 -94
+169218 stick 0 0
+169136 press 2
+169146 release 2
+169228 point -0.094 0.109
+169330 stick 1 -93
+169439 stick 0 0
+169419 cstick 1 -78
+169492 cstick 0 0
+169467 press A
+169474 release A
+169528 press MINUS
+169532 release MINUS
+169635 point 0.228 -0.772
+169663 point 0.536 0.461
+169734 press Z
+169740 release Z
+169806 point -0.328 0.547
+169852 press C
+169868 release C
+169894 press 2
+169913 release 2
+169959 point -0.864 -0.765
+169997 press A
+170006 release A
+170104 cstick -14 69
+170161 cstick 0 0
+170128 point 0.001 -0.527
+170183 point 0.133 0.656
+170302 point -0.576 -0.787
+170407 stick -46 -21
+170448 stick 0 0
+170517 press B
+170536 release B
+170610 press C
+170615 release C
+170699 stick -11 -52
+170759 stick 0 0
+170773 press A
+170792 release A
+170857 point 0.469 -0.154
+170951 stick 89 -99
+171077 stick 0 0
+171057 press RIGHT
+171065 release RIGHT
+171120 point -0.329 -0.681
+171210 point 1.250 -0.293
+171322 stick -49 -72
+171353 stick 0 0
+171408 point 0.098 0.589
+171444 cstick -56 -85
+171533 cstick 0 0
+171548 stick -82 -28
+171598 stick 0 0
+171640 stick -94 -60
+171732 stick 0 0
+171715 press C
+171726 release C
+171756 cstick 81 -99
+171813 cstick 0 0
+171853 stick 49 -31
+171895 stick 0 0
+171968 cstick 82 -96
+171992 cstick 0 0
+172030 press B
+172042 release B
+172095 stick 96 -53
+172205 stick 0 0
+172156 stick 3 -77
+172205 stick 0 0
+172261 press A
+172268 release A
+172282 stick 2 -44
+172346 stick 0 0
+172330 press A
+172335 release A
+172377 stick 60 -3
+172552 stick 0 0
+172455 stick -7 90
+172527 stick 0 0
+172535 cstick -32 -4
+172616 cstick 0 0
+172563 stick -49 -43
+172618 stick 0 0
+172585 press A
+172591 release A
+172658 press B
+172669 release B
+172741 cstick 58 68
+172813 cstick 0 0
+172837 press DOWN
+172850 release DOWN
+172920 press PLUS
+172936 release PLUS
+173035 press A
+173045 release A
+173082 stick -18 -26
+173245 stick 0 0
+173194 press MINUS
+173206 release MINUS
+173297 press A
+173317 release A
+173389 press Z
+173396 release Z
+173419 stick -27 -81
+173525 stick 0 0
+173464 press UP
+173472 release UP
+173576 press A
+173587 release A
+173601 point -0.645 -0.549
+173706 point -0.944 -0.756
+173787 press B
+173807 release B
+173813 stick -69 43
+173908 stick 0 0
+173860 press A
+173866 release A
+173922 stick -55 43
+173999 stick 0 0
+173995 cstick -51 -9
+174059 cstick 0 0
+174040 point 0.148 0.460
+174090 press UP
+174097 release UP
+174182 stick -9 29
+174217 stick 0 0
+174226 cstick 88 53
+174254 cstick 0 0
+174275 press MINUS
+174282 release MINUS
+174382 stick -86 -47
+174416 stick 0 0
+174454 stick -33 -81
+174586 stick 0 0
+174494 stick 8 74
+174580 stick 0 0
+174529 press LEFT
+174540 release LEFT
+174585 stick 41 -34
+174676 stick 0 0
+174686 cstick 70 41
+174736 cstick 0 0
+174777 press 2
+174797 release 2
+174807 point -0.823 -0.794
+174885 press RIGHT
+174894 release RIGHT
+174974 press A
+174993 release A
+175080 press 1
+175098 release 1
+175187 stick 15 31
+175335 stick 0 0
+175213 stick -4 68
+175252 stick 0 0
+175319 press LEFT
+175332 release LEFT
+175409 stick 91 49
+175530 stick 0 0
+175451 stick -100 -82
+175513 stick 0 0
+175496 cstick 39 92
+175535 cstick 0 0
+175592 press MINUS
+175608 release MINUS
+175632 press Z
+175647 release Z
+175667 point 0.243 -0.526
+175702 press DOWN
+175718 release DOWN
+175797 stick 65 -75
+175870 stick 0 0
+175829 stick 61 53
+175978 stick 0 0
+175889 press A
+175895 release A
+175945 stick 46 -45
+176114 stick 0 0
+175974 cstick -91 89
+176023 cstick 0 0
+176012 point 0.375 -0.194
+176057 stick 76 -34
+176125 stick 0 0
+176131 stick 0 -19
+176308 stick 0 0
+176200 press UP
+176220 release UP
+176265 press LEFT
+176276 release LEFT
+176339 press A
+176354 release A
+176444 press A
+176459 release A
+176550 press MINUS
+176563 release MINUS
+176645 point -0.383 0.273
+176665 press A
+176674 release A
+176755 stick -13 19
+176848 stick 0 0
+176795 point 0.793 0.875
+176819 press RIGHT
+176828 release RIGHT
+176862 stick 41 -25
+176975 stick 0 0
+176889 point 1.009 0.909
+177000 press Z
+177012 release Z
+177110 press 2
+177114 release 2
+177227 press A
+177247 release A
+177253 point 0.708 -0.399
+177300 press B
+177310 release B
+177320 press DOWN
+177331 release DOWN
+177374 press Z
+177379 release Z
+177418 cstick -81 90
+177475 cstick 0 0
+177520 stick -62 -91
+177560 stick 0 0
+177585 press B
+177590 release B
+177651 press C
+177661 release C
+177684 press Z
+177694 release Z
+177771 point 0.342 0.019
+177852 press PLUS
+177871 release PLUS
+177929 cstick 93 -10
+177965 cstick 0 0
+178013 point 1.086 -0.256
+178049 point -0.466 -0.661
+178104 press 1
+178110 release 1
+178150 press PLUS
+178158 release PLUS
+178210 press B
+178219 release B
+178322 stick 80 -70
+178375 stick 0 0
+178394 press B
+178410 release B
+178492 press RIGHT
+178507 release RIGHT
+178553 stick 74 -26
+178716 stick 0 0
+178614 stick -1 21
+178763 stick 0 0
+178678 press LEFT
+178697 release LEFT
+178778 stick 31 -30
+178811 stick 0 0
+178878 stick 19 89
+178969 stick 0 0
+178975 press Z
+178987 release Z
+179074 stick -9 -78
+179158 stick 0 0
+179121 stick -2 -70
+179200 stick 0 0
+179205 stick 16 18
+179338 stick 0 0
+179321 point -0.926 -0.214
+179344 stick -68 74
+179398 stick 0 0
+179411 point 1.076 -0.000
+179471 press 1
+179477 release 1
+179539 stick 10 40
+179654 stick 0 0
+179587 stick -14 80
+179716 stick 0 0
+179651 point -0.341 -0.141
+179707 stick -29 -67
+179780 stick 0 0
+179788 stick 100 -49
+179861 stick 0 0
+179810 press B
+179828 release B
+179929 stick 32 -83
+180102 stick 0 0
+180030 stick 39 11
+180172 stick 0 0
+180062 point -0.884 -0.447
+180151 press PLUS
+180155 release PLUS
+180260 point 0.565 -0.509
+180346 press 2
+180357 release 2
+180377 point 1.061 -0.698
+180477 press RIGHT
+180492 release RIGHT
+180519 press DOWN
+180536 release DOWN
+180567 stick -96 -80
+180662 stick 0 0
+180647 stick 76 3
+180786 stick 0 0
+180672 press PLUS
+180689 release PLUS
+180762 point 0.407 0.239
+180824 stick 29 70
+180864 stick 0 0
+180916 press MINUS
+180933 release MINUS
+180962 stick -100 -10
+181042 stick 0 0
+181012 stick 87 -47
+181070 stick 0 0
+181104 point -0.329 -0.553
+181145 stick 31 -76
+181217 stick 0 0
+181262 point -0.249 -0.290
+181361 point -0.880 0.706
+181439 press LEFT
+181445 release LEFT
+181499 cstick 53 -50
+181582 cstick 0 0
+181529 point -1.187 0.295
+181607 cstick -98 31
+181674 cstick 0 0
+181685 press LEFT
+181690 release LEFT
+181760 press B
+181777 release B
+181814 point 0.237 0.629
+181843 stick 99 -100
+182006 stick 0 0
+181935 stick 98 31
+182097 stick 0 0
+181974 cstick 93 -26
+182028 cstick 0 0
+182011 stick 49 -70
+182173 stick 0 0
+182048 press UP
+182056 release UP
+182108 stick 54 -2
+182209 stick 0 0
+182188 stick 19 -48
+182226 stick 0 0
+182280 press Z
+182290 release Z
+182339 point 0.269 0.589
+182360 press LEFT
+182364 release LEFT
+182466 point -0.641 0.654
+182501 cstick -82 -34
+182562 cstick 0 0
+182587 stick -35 -91
+182716 stick 0 0
+182669 stick 58 32
+182701 stick 0 0
+182769 stick 7 28
+182928 stick 0 0
+182834 press 2
+182853 release 2
+182894 point -0.570 -0.714
+182960 press PLUS
+182980 release PLUS
+183066 stick 27 -40
+183131 stick 0 0
+183154 press UP
+183173 release UP
+183261 stick -8 0
+183348 stick 0 0
+183307 point 0.085 -0.077
+183400 stick -50 23
+183565 stick 0 0
+183473 cstick -50 -62
+183546 cstick 0 0
+183571 stick 89 -28
+183643 stick 0 0
+183641 stick -74 50
+183761 stick 0 0
+183741 point 0.355 -0.760
+183818 stick 86 26
+183930 stick 0 0
+183925 point 0.062 -0.253
+183989 stick -78 73
+184031 stick 0 0
+184106 press A
+184123 release A
+184226 press Z
+184230 release Z
+184290 point -1.147 0.986
+184355 press RIGHT
+184359 release RIGHT
+184419 point -0.113 0.757
+184536 press A
+184550 release A
+184596 stick 58 -87
+184647 stick 0 0
+184624 point -1.167 0.644
+184679 point -0.447 -0.207
+184739 cstick -65 17
+184780 cstick 0 0
+184854 stick -37 90
+184915 stick 0 0
+184879 press 1
+184886 release 1
+184943 stick -47 -22
+185117 stick 0 0
+185019 point 1.148 0.594
+185137 stick 78 6
+185292 stick 0 0
+185195 stick 24 -100
+185298 stick 0 0
+185247 stick 26 65
+185379 stick 0 0
+185344 point 0.835 0.067
+185420 stick -81 -12
+185526 stick 0 0
+185482 press PLUS
+185501 release PLUS
+185599 stick 58 69
+185773 stick 0 0
+185655 press C
+185663 release C
+185765 point -0.817 -0.444
+185856 press LEFT
+185870 release LEFT
+185970 point 0.481 -0.788
+186090 press PLUS
+186109 release PLUS
+186111 point -0.874 0.759
+186201 stick -91 65
+186272 stick 0 0
+186259 stick -41 -57
+186405 stick 0 0
+186311 press A
+186319 release A
+186369 stick 77 -98
+186420 stick 0 0
+186452 point -0.363 -0.345
+186472 stick -83 80
+186535 stick 0 0
+186511 stick -30 11
+186609 stick 0 0
+186577 stick -81 -23
+186633 stick 0 0
+186658 press RIGHT
+186671 release RIGHT
+186683 stick 88 -5
+186744 stick 0 0
+186744 press LEFT
+186761 release LEFT
+186864 stick 84 30
+186949 stick 0 0
+186936 press 2
+186951 release 2
+187041 stick -55 16
+187188 stick 0 0
+187120 press B
+187138 release B
+187151 stick 7 4
+187229 stick 0 0
+187213 stick -80 52
+187363 stick 0 0
+187307 point -0.946 -0.528
+187360 stick 42 -21
+187435 stick 0 0
+187421 press A
+187439 release A
+187446 point -0.619 -0.056
+187492 cstick 39 99
+187572 cstick 0 0
+187548 point -0.157 -0.525
+187571 stick -81 45
+187727 stick 0 0
+187619 stick 62 -40
+187657 stick 0 0
+187699 press 2
+187719 release 2
+187776 stick -28 64
+187836 stick 0 0
+187822 stick 4 42
+188001 stick 0 0
+187896 point 0.195 -0.344
+187923 cstick 90 34
+187970 cstick 0 0
+188038 point 0.126 -0.257
+188115 stick 2 51
+188169 stick 0 0
+188234 stick 97 -13
+188327 stick 0 0
+188290 point 1.119 -0.787
+188352 cstick -64 81
+188388 cstick 0 0
+188428 press C
+188441 release C
+188506 press A
+188511 release A
+188606 point -0.897 -0.805
+188676 press 2
+188689 release 2
+188751 press A
+188771 release A
+188820 stick -95 69
+188993 stick 0 0
+188940 press A
+188948 release A
+188986 point 0.827 0.581
+189055 press MINUS
+189067 release MINUS
+189143 press MINUS
+189162 release MINUS
+189167 press MINUS
+189180 release MINUS
+189233 stick 37 -47
+189346 stick 0 0
+189309 point -0.142 0.340
+189338 stick -11 40
+189370 stick 0 0
+189458 point 0.907 -0.205
+189569 cstick 71 9
+189611 cstick 0 0
+189662 point -0.218 1.049
+189746 press B
+189752 release B
+189781 point -0.111 -0.471
+189841 stick -39 -49
+189937 stick 0 0
+189918 press C
+189926 release C
+189983 stick 59 56
+190128 stick 0 0
+190091 stick -61 -79
+190128 stick 0 0
+190206 point -0.994 0.406
+190287 cstick -25 24
+190371 cstick 0 0
+190336 stick -26 -73
+190500 stick 0 0
+190438 point -0.894 0.323
+190464 point -1.188 0.135
+190535 stick 48 -7
+190694 stick 0 0
+190599 press A
+190607 release A
+190640 stick 66 -42
+190737 stick 0 0
+190699 stick -41 90
+190806 stick 0 0
+190757 point 0.056 -0.589
+190857 stick -85 -98
+191008 stick 0 0
+190973 stick 3 -35
+191129 stick 0 0
+191040 point 0.348 0.155
+191066 press A
+191079 release A
+191141 point 0.567 -0.069
+191230 stick 85 -14
+191263 stick 0 0
+191332 press B
+191345 release B
+191379 press B
+191397 release B
+191485 press LEFT
+191496 release LEFT
+191505 stick 48 94
+191611 stick 0 0
+191569 press LEFT
+191575 release LEFT
+191637 stick 47 -48
+191718 stick 0 0
+191696 stick 9 92
+191741 stick 0 0
+191722 stick 50 10
+191873 stick 0 0
+191810 press B
+191821 release B
+191914 press PLUS
+191925 release PLUS
+192003 press LEFT
+192010 release LEFT
+192123 press B
+192135 release B
+192186 press A
+192196 release A
+192215 cstick -98 88
+192261 cstick 0 0
+192285 point -0.126 -0.042
+192364 stick -29 46
+192480 stick 0 0
+192438 stick -43 -87
+192593 stick 0 0
+192515 stick 2 9
+192656 stick 0 0
+192593 stick -28 -21
+192763 stick 0 0
+192638 press A
+192644 release A
+192675 point -0.364 0.755
+192745 press RIGHT
+192758 release RIGHT
+192765 press A
+192771 release A
+192816 cstick -61 70
+192901 cstick 0 0
+192914 stick -61 -44
+192952 stick 0 0
+192938 press RIGHT
+192950 release RIGHT
+193005 cstick -32 -71
+193042 cstick 0 0
+193043 stick 28 -23
+193210 stick 0 0
+193078 stick -56 35
+193151 stick 0 0
+193116 cstick -95 -80
+193159 cstick 0 0
+193222 cstick 58 72
+193273 cstick 0 0
+193259 press A
+193266 release A
+193299 stick 74 73
+193331 stick 0 0
+193327 point -0.552 -0.129
+193357 stick -82 -81
+193533 stick 0 0
+193469 stick 56 1
+193649 stick 0 0
+193554 stick 52 46
+193673 stick 0 0
+193601 press DOWN
+193606 release DOWN
+193706 cstick 61 73
+193749 cstick 0 0
+193777 point -0.379 -0.452
+193805 stick 92 28
+193955 stick 0 0
+193839 point -0.834 0.694
+193959 stick -38 29
+194112 stick 0 0
+194021 cstick -9 95
+194107 cstick 0 0
+194111 press LEFT
+194119 release LEFT
+194171 stick -81 3
+194310 stick 0 0
+194221 cstick 36 -77
+194272 cstick 0 0
+194251 stick -71 64
+194337 stick 0 0
+194325 point 0.781 -0.889
+194385 cstick -13 -1
+194444 cstick 0 0
+194409 point -0.215 0.467
+194521 point -0.029 0.464
+194573 point 0.345 -0.595
+194671 press MINUS
+194690 release MINUS
+194718 point 0.717 -0.669
+194766 stick 24 -67
+194848 stick 0 0
+194817 press LEFT
+194832 release LEFT
+194870 press A
+194881 release A
+194949 point 1.143 -0.034
+195022 point 0.223 -0.650
+195084 point -1.109 -0.252
+195133 press MINUS
+195139 release MINUS
+195204 cstick 6 73
+195262 cstick 0 0
+195290 stick 98 -5
+195374 stick 0 0
+195353 press C
+195369 release C
+195450 point -0.496 -0.445
+195554 press B
+195565 release B
+195593 press 1
+195608 release 1
+195632 press LEFT
+195644 release LEFT
+195746 stick 45 9
+195863 stick 0 0
+195832 stick -22 -64
+195969 stick 0 0
+195869 stick 34 79
+195955 stick 0 0
+195934 stick -31 -36
+196083 stick 0 0
+195981 point 0.574 0.006
+196097 point 0.071 -0.843
+196144 press MINUS
+196156 release MINUS
+196204 point 0.281 0.271
+196230 stick 90 76
+196338 stick 0 0
+196262 point -0.350 -0.572
+196365 stick -94 -19
+196462 stick 0 0
+196477 press 1
+196484 release 1
+196506 stick 90 28
+196668 stick 0 0
+196566 point -0.005 0.340
+196635 press 1
+196643 release 1
+196700 press UP
+196713 release UP
+196815 cstick -51 84
+196839 cstick 0 0
+196918 cstick 85 -92
+196981 cstick 0 0
+197014 stick 47 -50
+197055 stick 0 0
+197127 press B
+197143 release B
+197176 press LEFT
+197192 release LEFT
+197221 stick -69 20
+197271 stick 0 0
+197276 press 2
+197296 release 2
+197307 press 2
+197315 release 2
+197389 stick 71 51
+197431 stick 0 0
+197500 press B
+197511 release B
+197551 point -1.155 0.024
+197603 press 1
+197614 release 1
+197649 stick -57 98
+197753 stick 0 0
+197680 point 0.015 0.987
+197779 point 1.269 0.545
+197834 stick -40 1
+197988 stick 0 0
+197873 stick 35 -32
+198051 stick 0 0
+197992 point -0.583 -0.005
+198081 point 0.467 -0.387
+198116 stick -39 -100
+198273 stick 0 0
+198174 press RIGHT
+198185 release RIGHT
+198209 cstick -33 -49
+198230 cstick 0 0
+198242 stick 86 -94
+198279 stick 0 0
+198276 press Z
+198282 release Z
+198313 cstick 100 6
+198373 cstick 0 0
+198406 point 0.917 -0.862
+198438 stick -17 -57
+198546 stick 0 0
+198511 press LEFT
+198528 release LEFT
+198556 stick 64 69
+198625 stick 0 0
+198619 press UP
+198628 release UP
+198678 stick -15 84
+198807 stick 0 0
+198769 press LEFT
+198782 release LEFT
+198790 press PLUS
+198797 release PLUS
+198829 press RIGHT
+198835 release RIGHT
+198883 point -0.639 -0.442
+198974 press UP
+198986 release UP
+199017 point 0.774 0.487
+199090 press A
+199100 release A
+199111 point -1.051 -0.472
+199149 point -0.663 0.229
+199197 cstick 68 -71
+199236 cstick 0 0
+199308 press DOWN
+199314 release DOWN
+199355 press RIGHT
+199371 release RIGHT
+199419 stick -89 -20
+199484 stick 0 0
+199520 stick -7 10
+199667 stick 0 0
+199638 stick -27 15
+199721 stick 0 0
+199695 point 0.813 0.600
+199784 point 0.067 -0.698
+199855 press DOWN
+199861 release DOWN
+199921 press B
+199929 release B
+200039 stick 64 -60
+200142 stick 0 0
+200126 stick -19 -6
+200198 stick 0 0
+200219 stick -79 80
+200283 stick 0 0
+200293 point -0.058 0.008
+200323 point -0.477 -0.792
+200381 stick -63 -38
+200550 stick 0 0
+200493 press B
+200505 release B
+200523 press A
+200534 release A
+200620 stick 37 43
+200686 stick 0 0
+200725 stick 14 -47
+200822 stick 0 0
+200761 point 0.205 1.017
+200848 stick 25 -58
+200890 stick 0 0
+200876 press PLUS
+200892 release PLUS
+200970 stick 65 -55
+201074 stick 0 0
+201078 point -0.611 -0.100
+201163 press C
+201172 release C
+201209 press UP
+201224 release UP
+201293 point 1.113 0.055
+201360 point 1.119 -0.529
+201463 point 0.014 -0.511
+201487 point 1.238 -0.037
+201540 point -0.071 -0.096
+201645 point -0.959 -0.059
+201742 stick -77 -55
+201859 stick 0 0
+201837 stick -1 -7
+201896 stick 0 0
+201867 press 2
+201885 release 2
+201956 point 0.151 -0.828
+202020 point -0.578 -0.030
+202084 point -0.922 0.451
+202202 point 1.099 0.415
+202302 press RIGHT
+202321 release RIGHT
+202376 stick -85 -4
+202427 stick 0 0
+202457 press LEFT
+202461 release LEFT
+202564 point -0.223 -0.762
+202675 stick -76 -94
+202803 stick 0 0
+202759 cstick -1 53
+202785 cstick 0 0
+202803 press 2
+202816 release 2
+202906 stick 4 76
+203045 stick 0 0
+202981 cstick -52 13
+203065 cstick 0 0
+203082 point 0.765 0.664
+203106 press Z
+203118 release Z
+203134 stick -54 -29
+203179 stick 0 0
+203174 press DOWN
+203193 release DOWN
+203196 stick -35 -40
+203267 stick 0 0
+203256 point 0.402 0.827
+203301 point -0.605 0.384
+203419 stick -27 86
+203552 stick 0 0
+203499 point -0.878 -0.321
+203619 point -0.870 -0.826
+203735 point -0.597 -0.864
+203761 cstick -3 -25
+203793 cstick 0 0
+203830 press 2
+203848 release 2
+203907 stick 14 -35
+204053 stick 0 0
+203980 stick 57 61
+204069 stick 0 0
+204067 point -0.560 0.266
+204127 stick -13 -77
+204248 stick 0 0
+204242 point 0.064 0.923
+204268 cstick -45 1
+204327 cstick 0 0
+204307 stick -26 -50
+204348 stick 0 0
+204374 stick -80 50
+204425 stick 0 0
+204470 press Z
+204475 release Z
+204586 stick 96 -39
+204739 stick 0 0
+204690 point -0.479 0.500
+204801 stick 10 17
+204871 stick 0 0
+204837 point 0.105 0.735
+204864 press B
+204879 release B
+204929 stick -88 -56
+205001 stick 0 0
+205047 cstick -11 -80
+205118 cstick 0 0
+205116 stick -35 12
+205220 stick 0 0
+205148 stick -88 -25
+205185 stick 0 0
+205267 stick -18 53
+205383 stick 0 0
+205301 stick -17 -10
+205476 stick 0 0
+205375 stick 65 -87
+205480 stick 0 0
+205480 point -1.042 -0.813
+205598 press MINUS
+205608 release MINUS
+205646 press 2
+205662 release 2
+205736 point 0.451 1.049
+205828 press 2
+205844 release 2
+205932 stick 39 27
+205989 stick 0 0
+206040 press 1
+206045 release 1
+206143 stick 46 -81
+206320 stick 0 0
+206254 stick -82 60
+206294 stick 0 0
+206327 press Z
+206345 release Z
+206430 press A
+206435 release A
+206512 press B
+206528 release B
+206538 press UP
+206550 release UP
+206569 stick -23 76
+206704 stick 0 0
+206682 press MINUS
+206700 release MINUS
+206712 press B
+206724 release B
+206732 cstick -70 -72
+206763 cstick 0 0
+206816 press C
+206831 release C
+206915 stick 46 17
+207040 stick 0 0
+207031 press A
+207048 release A
+207063 cstick 0 3
+207112 cstick 0 0
+207180 press 1
+207193 release 1
+207256 press UP
+207268 release UP
+207278 stick 27 26
+207367 stick 0 0
+207331 stick 96 86
+207407 stick 0 0
+207427 point -0.792 -0.583
+207464 stick 83 -18
+207575 stick 0 0
+207565 stick 55 39
+207644 stick 0 0
+207633 stick 97 -19
+207704 stick 0 0
+207751 press MINUS
+207760 release MINUS
+207852 stick 11 32
+207909 stick 0 0
+207939 press DOWN
+207946 release DOWN
+208017 press RIGHT
+208026 release RIGHT
+208058 press RIGHT
+208077 release RIGHT
+208093 point -0.727 0.481
+208137 point -0.236 0.111
+208201 cstick -33 -27
+208257 cstick 0 0
+208232 stick 18 5
+208357 stick 0 0
+208281 press Z
+208295 release Z
+208368 point -0.810 0.565
+208404 press A
+208420 release A
+208489 press UP
+208507 release UP
+208524 cstick 21 -20
+208550 cstick 0 0
+208573 stick -66 -36
+208649 stick 0 0
+208600 press RIGHT
+208609 release RIGHT
+208702 press DOWN
+208709 release DOWN
+208751 point 0.358 1.016
+208796 point 1.182 0.270
+208894 stick 43 -26
+208947 stick 0 0
+208942 point -0.880 -0.570
+208990 press A
+208994 release A
+209044 press A
+209060 release A
+209113 press Z
+209129 release Z
+209156 cstick -56 56
+209246 cstick 0 0
+209190 press MINUS
+209202 release MINUS
+209213 stick 17 -44
+209352 stick 0 0
+209326 point -0.626 0.121
+209435 press B
+209440 release B
+209516 stick -43 -86
+209665 stick 0 0
+209565 press B
+209571 release B
+209591 cstick -54 -60
+209660 cstick 0 0
+209645 stick 78 -4
+209713 stick 0 0
+209677 stick 35 27
+209762 stick 0 0
+209748 press RIGHT
+209753 release RIGHT
+209768 press PLUS
+209784 release PLUS
+209845 point -0.988 0.208
+209944 stick -99 -92
+209987 stick 0 0
+210004 press LEFT
+210011 release LEFT
+210112 stick -6 -59
+210217 stick 0 0
+210169 stick 63 26
+210278 stick 0 0
+210196 stick 69 -98
+210308 stick 0 0
+210219 cstick -6 78
+210286 cstick 0 0
+210285 stick -85 86
+210389 stick 0 0
+210394 stick -94 25
+210505 stick 0 0
+210497 press MINUS
+210513 release MINUS
+210602 point 0.876 0.320
+210696 stick -30 -34
+210740 stick 0 0
+210754 press C
+210768 release C
+210777 stick -2 26
+210940 stick 0 0
+210829 cstick 45 -23
+210919 cstick 0 0
+210886 stick -54 -50
+211049 stick 0 0
+210924 stick -59 -23
+211089 stick 0 0
+211002 press 2
+211020 release 2
+211092 press 1
+211103 release 1
+211163 cstick 63 65
+211251 cstick 0 0
+211190 press A
+211200 release A
+211214 point 0.577 -0.241
+211321 stick 66 -89
+211497 stick 0 0
+211415 stick -4 90
+211515 stick 0 0
+211480 press DOWN
+211498 release DOWN
+211592 point 0.042 -0.217
+211701 press C
+211714 release C
+211757 press A
+211769 release A
+211822 stick -71 -20
+211853 stick 0 0
+211917 point 0.216 0.013
+211985 press B
+212001 release B
+212103 cstick 20 27
+212158 cstick 0 0
+212128 cstick 6 97
+212205 cstick 0 0
+212174 stick -77 -84
+212308 stick 0 0
+212195 stick 43 54
+212318 stick 0 0
+212311 press B
+212317 release B
+212370 point -0.031 0.540
+212434 press LEFT
+212447 release LEFT
+212498 point 0.440 0.960
+212533 press LEFT
+212537 release LEFT
+212568 press LEFT
+212572 release LEFT
+212609 stick -40 45
+212724 stick 0 0
+212664 press A
+212682 release A
+212773 cstick -85 -56
+212826 cstick 0 0
+212800 point -0.307 -0.242
+212876 stick 21 22
+213037 stick 0 0
+212983 stick 91 -69
+213137 stick 0 0
+213082 stick 37 -73
+213160 stick 0 0
+213152 press RIGHT
+213164 release RIGHT
+213223 press B
+213235 release B
+213255 stick 4 31
+213407 stick 0 0
+213314 press Z
+213323 release Z
+213381 press A
+213385 release A
+213492 press RIGHT
+213501 release RIGHT
+213522 press PLUS
+213527 release PLUS
+213637 stick 6 74
+213801 stick 0 0
+213755 press A
+213769 release A
+213821 press 1
+213831 release 1
+213878 point -0.466 -0.130
+213969 stick 85 -46
+214000 stick 0 0
+214052 cstick 41 -32
+214102 cstick 0 0
+214131 stick -54 -71
+214264 stick 0 0
+214215 point 1.078 0.715
+214326 press LEFT
+214345 release LEFT
+214362 stick 66 -65
+214405 stick 0 0
+214462 point -0.340 -0.024
+214541 point -0.026 -0.596
+214563 press DOWN
+214576 release DOWN
+214682 press 2
+214693 release 2
+214749 point -0.297 -0.439
+214843 point -0.825 0.052
+214899 press C
+214915 release C
+214953 point 0.307 -0.020
+214984 point -0.367 -0.299
+215075 stick -84 72
+215127 stick 0 0
+215138 press A
+215157 release A
+215189 stick 25 45
+215258 stick 0 0
+215309 stick -55 70
+215457 stick 0 0
+215380 press A
+215393 release A
+215444 press Z
+215455 release Z
+215504 cstick 83 -33
+215568 cstick 0 0
+215555 point -1.007 -0.025
+215632 stick -11 -5
+215701 stick 0 0
+215708 press C
+215728 release C
+215785 press 2
+215802 release 2
+215869 press B
+215879 release B
+215951 press B
+215955 release B
+216058 point 0.290 0.566
+216145 stick 1 -59
+216253 stick 0 0
+216171 press A
+216187 release A
+216232 press 2
+216239 release 2
+216296 cstick -4 -30
+216368 cstick 0 0
+216351 cstick -78 59
+216419 cstick 0 0
+216461 press B
+216476 release B
+216501 point 0.467 -0.757
+216581 press C
+216589 release C
+216639 stick 41 -84
+216795 stick 0 0
+216736 stick -39 -69
+216834 stick 0 0
+216788 point 0.562 0.883
+216847 stick 5 65
+217007 stick 0 0
+216896 press A
+216910 release A
+216918 stick -10 -99
+217047 stick 0 0
+216968 stick -72 0
+217003 stick 0 0
+216998 point 0.807 -0.646
+217109 point -0.380 0.001
+217148 press Z
+217165 release Z
+217234 press LEFT
+217241 release LEFT
+217276 stick -43 11
+217385 stick 0 0
+217313 stick -79 -24
+217364 stick 0 0
+217348 stick -59 94
+217479 stick 0 0
+217452 stick -14 -64
+217483 stick 0 0
+217513 press B
+217523 release B
+217580 point -0.112 -0.527
+217653 point -0.907 -0.679
+217733 cstick -42 -46
+217801 cstick 0 0
+217815 point -0.230 -0.566
+217892 stick 13 -35
+218042 stick 0 0
+218004 stick -78 26
+218051 stick 0 0
+218049 press UP
+218055 release UP
+218150 press MINUS
+218156 release MINUS
+218256 press MINUS
+218263 release MINUS
+218286 point 0.356 1.025
+218399 cstick -27 -68
+218450 cstick 0 0
+218469 cstick -57 -90
+218555 cstick 0 0
+218544 press B
+218551 release B
+218569 press A
+218587 release A
+218595 stick 98 92
+218731 stick 0 0
+218619 press A
+218631 release A
+218666 press C
+218670 release C
+218708 press A
+218727 release A
+218745 stick -48 -92
+218835 stick 0 0
+218851 stick -3 -69
+218964 stick 0 0
+218891 stick 22 -61
+218978 stick 0 0
+219000 stick -63 -60
+219141 stick 0 0
+219101 stick 71 -68
+219158 stick 0 0
+219197 stick 45 -77
+219369 stick 0 0
+219231 stick 92 23
+219288 stick 0 0
+219253 point -1.191 -0.674
+219282 cstick 46 -19
+219354 cstick 0 0
+219397 press B
+219405 release B
+219441 stick 95 43
+219491 stick 0 0
+219471 press 1
+219490 release 1
+219566 stick -35 -66
+219647 stick 0 0
+219684 cstick -76 81
+219755 cstick 0 0
+219742 press A
+219760 release A
+219855 press LEFT
+219866 release LEFT
+219975 stick 33 45
+220140 stick 0 0
+220005 point -0.408 -0.457
+220082 cstick 37 -72
+220167 cstick 0 0
+220187 cstick 34 -27
+220246 cstick 0 0
+220304 press C
+220312 release C
+220347 point 0.369 -0.592
+220406 point 0.089 -0.179
+220489 stick 15 -51
+220606 stick 0 0
+220533 press DOWN
+220545 release DOWN
+220574 stick -81 4
+220710 stick 0 0
+220666 stick -94 -55
+220770 stick 0 0
+220732 press A
+220736 release A
+220764 stick 12 53
+220867 stick 0 0
+220875 press A
+220885 release A
+220940 press RIGHT
+220959 release RIGHT
+221025 point -0.467 -0.523
+221143 press 2
+221156 release 2
+221203 stick -5 56
+221281 stick 0 0
+221305 press 2
+221317 release 2
+221359 cstick 93 -57
+221443 cstick 0 0
+221381 press DOWN
+221390 release DOWN
+221437 press A
+221444 release A
+221473 stick 64 -81
+221560 stick 0 0
+221493 point -0.277 -0.021
+221519 stick 100 -67
+221672 stick 0 0
+221584 stick -17 27
+221740 stick 0 0
+221676 press B
+221684 release B
+221754 point -0.974 -0.721
+221843 stick 100 -27
+222010 stick 0 0
+221867 press 2
+221873 release 2
+221972 point 0.127 0.891
+222014 press B
+222029 release B
+222091 press C
+222110 release C
+222146 point 1.122 -0.705
+222211 point 0.526 -0.798
+222263 press B
+222272 release B
+222317 press UP
+222323 release UP
+222377 press DOWN
+222392 release DOWN
+222492 press RIGHT
+222511 release RIGHT
+222532 press A
+222541 release A
+222552 press C
+222566 release C
+222607 press PLUS
+222613 release PLUS
+222709 stick 20 -46
+222824 stick 0 0
+222810 point -1.131 0.011
+222839 cstick 72 43
+222897 cstick 0 0
+222908 stick -32 22
+222951 stick 0 0
+222967 press 2
+222976 release 2
+223033 stick -55 93
+223101 stick 0 0
+223064 stick -72 34
+223188 stick 0 0
+223090 stick 93 1
+223208 stick 0 0
+223153 stick 2 -65
+223289 stick 0 0
+223264 press B
+223274 release B
+223341 stick 53 -98
+223389 stick 0 0
+223455 cstick -37 28
+223527 cstick 0 0
+223500 point 0.098 0.744
+223536 stick -11 49
+223586 stick 0 0
+223568 press RIGHT
+223583 release RIGHT
+223652 press A
+223658 release A
+223744 stick 20 47
+223918 stick 0 0
+223786 press DOWN
+223801 release DOWN
+223836 press 1
+223847 release 1
+223920 stick 8 100
+224059 stick 0 0
+223950 point 0.549 0.778
+223978 press B
+223989 release B
+224055 stick -81 53
+224198 stick 0 0
+224089 press C
+224101 release C
+224145 point 0.216 0.783
+224198 press C
+224211 release C
+224297 point 0.872 -0.013
+224337 stick 68 -83
+224447 stick 0 0
+224431 stick -26 -3
+224596 stick 0 0
+224544 cstick 70 -42
+224613 cstick 0 0
+224608 cstick -8 0
+224633 cstick 0 0
+224692 stick 22 23
+224803 stick 0 0
+224790 stick -87 66
+224931 stick 0 0
+224815 point 0.978 0.429
+224868 stick -55 -32
+224916 stick 0 0
+224986 press RIGHT
+224997 release RIGHT
+225027 stick 96 75
+225199 stick 0 0
+9036 shot sk_00
+16236 shot sk_01
+23436 shot sk_02
+30636 shot sk_03
+37836 shot sk_04
+45036 shot sk_05
+52236 shot sk_06
+59436 shot sk_07
+66636 shot sk_08
+73836 shot sk_09
+81036 shot sk_10
+88236 shot sk_11
+95436 shot sk_12
+102636 shot sk_13
+109836 shot sk_14
+117036 shot sk_15
+124236 shot sk_16
+131436 shot sk_17
+138636 shot sk_18
+145836 shot sk_19
+153036 shot sk_20
+160236 shot sk_21
+167436 shot sk_22
+174636 shot sk_23
+181836 shot sk_24
+189036 shot sk_25
+196236 shot sk_26
+203436 shot sk_27
+210636 shot sk_28
+217836 shot sk_29
+225038 quit

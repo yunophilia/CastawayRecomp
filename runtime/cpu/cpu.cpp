@@ -126,6 +126,27 @@ extern "C" void ppc_call_indirect(PPCContext& ctx, uint8_t* base, uint32_t addr)
     f(ctx, base);
 }
 
+// Logs the caller and the guest call chain (stack back chain: [sp] = caller's frame,
+// [frame + 4] = return address); tools/addr2sym.py names the addresses.
+void Cpu_LogGuestStack(const PPCContext& ctx, uint32_t lr)
+{
+    LOG_ERROR("guest: lr {:08x} r3 {:08x} r4 {:08x} r5 {:08x} r31 {:08x} sp {:08x}", lr, ctx.r[3], ctx.r[4], ctx.r[5],
+              ctx.r[31], ctx.r[1]);
+    if (ctx.r[3] >= 0x80000000 && ctx.r[3] < 0x817FFFF0)
+        LOG_ERROR("guest: [r3] {:08x} {:08x} {:08x} {:08x}", Read32(ctx.r[3]), Read32(ctx.r[3] + 4), Read32(ctx.r[3] + 8),
+                  Read32(ctx.r[3] + 12));
+    uint32_t sp = ctx.r[1];
+    std::string chain;
+    for (int i = 0; i < 16 && sp >= 0x80000000 && sp < 0x817FFFF0 && !(sp & 3); i++)
+    {
+        uint32_t next = Read32(sp);
+        if (next <= sp || next >= 0x817FFFF0) break;
+        chain += std::format(" {:08x}", Read32(next + 4));
+        sp = next;
+    }
+    LOG_ERROR("guest: call chain{}", chain);
+}
+
 // ---------------------------------------------------------------- timebase
 // Wii timebase ticks at bus clock / 4 = 243 MHz / 4.
 static uint64_t s_counterFreq, s_counterStart;

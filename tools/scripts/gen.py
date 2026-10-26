@@ -194,6 +194,16 @@ def soak30():
 
 
 @script
+def soak60a():
+    soak(60, 4242, 'soak60a')
+
+
+@script
+def soak60b():
+    soak(60, 9001, 'soak60b')
+
+
+@script
 def continue_game():
     s = Script('main menu -> Continue Game (needs a save from an earlier run)')
     f = boot_to_menu(s)
