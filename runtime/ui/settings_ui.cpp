@@ -230,7 +230,9 @@ void InputTab(SettingsHost host)
 void AudioTab(SettingsHost host)
 {
     ImGui::SeparatorText("Audio");
-    ImGui::TextDisabled("No audio settings yet.");
+    Check(host, "Music from the front (fix)", g_config.musicFront, true,
+          "The Wii version mixes its music into the rear surround channel, so on stereo it sounds "
+          "hollow and cancels out in mono. On: the music plays from the front like the sound effects.");
 }
 
 void SystemTab(SettingsHost host)
@@ -306,9 +308,12 @@ bool SettingsUI_TakeRestartRequest()
 
 void SettingsUI_DrawVersion()
 {
+    // right-aligned after the footer's last item; left out when it does not fit (font widths
+    // differ between systems; the log and the launcher show it too)
     ImGui::SameLine();
     float pad = ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize(g_version).x;
-    if (pad > 0) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + pad);
+    if (pad < 0) return;
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + pad);
     ImGui::TextDisabled("%s", g_version);
 }
 
