@@ -1,10 +1,13 @@
-// Custom texture packs in Dolphin's format (see hires.h).
-#ifdef _WIN32
+// Custom texture packs in Dolphin's format (see hires.h). PNG files go through SDL's
+// loader and writer, DDS through the small reader below.
 #include "hires.h"
 #include "video.h"
 #include "texture_decode.h"
+#include "../kernel/host.h"
 #include "../log.h"
 #include "../region.h"
+
+#include <SDL3/SDL.h>
 
 #include <algorithm>
 #include <cstring>
@@ -13,9 +16,6 @@
 #include <fstream>
 #include <unordered_map>
 #include <vector>
-#include <windows.h>
-#include <wincodec.h>
-#pragma comment(lib, "windowscodecs.lib")
 
 namespace fs = std::filesystem;
 
@@ -60,7 +60,6 @@ uint64_t XXH64(const uint8_t* p, size_t len, uint64_t seed = 0)
 
 std::unordered_map<std::string, fs::path> s_files;                    // lowercase name -> file
 std::unordered_map<std::string, ID3D11ShaderResourceView*> s_loaded;   // name -> texture (nullptr = failed)
-IWICImagingFactory* s_wic = nullptr;
 
 std::string Lower(std::string s)
 {
@@ -120,26 +119,17 @@ ID3D11ShaderResourceView* MakeTexture(uint32_t w, uint32_t h, DXGI_FORMAT fmt, c
 
 ID3D11ShaderResourceView* LoadPNG(const fs::path& path, bool mipmapped)
 {
-    if (!s_wic) return nullptr;
-    IWICBitmapDecoder* dec = nullptr;
-    if (FAILED(s_wic->CreateDecoderFromFilename(path.wstring().c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &dec)))
-        return nullptr;
-    ID3D11ShaderResourceView* srv = nullptr;
-    IWICBitmapFrameDecode* frame = nullptr;
-    IWICFormatConverter* conv = nullptr;
-    UINT w = 0, h = 0;
-    if (SUCCEEDED(dec->GetFrame(0, &frame)) && SUCCEEDED(s_wic->CreateFormatConverter(&conv)) &&
-        SUCCEEDED(conv->Initialize(frame, GUID_WICPixelFormat32bppRGBA, WICBitmapDitherTypeNone, nullptr, 0.0, WICBitmapPaletteTypeCustom)) &&
-        SUCCEEDED(conv->GetSize(&w, &h)) && w && h)
-    {
-        std::vector<std::vector<uint8_t>> lv(1, std::vector<uint8_t>((size_t)w * h * 4));
-        if (SUCCEEDED(conv->CopyPixels(nullptr, w * 4, (UINT)lv[0].size(), lv[0].data())))
-            srv = MakeTexture(w, h, DXGI_FORMAT_R8G8B8A8_UNORM, lv, { w * 4 }, mipmapped);
-    }
-    if (conv) conv->Release();
-    if (frame) frame->Release();
-    dec->Release();
-    return srv;
+    SDL_Surface* png = SDL_LoadPNG((const char*)path.u8string().c_str());
+    if (!png) return nullptr;
+    SDL_Surface* rgba = SDL_ConvertSurface(png, SDL_PIXELFORMAT_RGBA32);
+    SDL_DestroySurface(png);
+    if (!rgba) return nullptr;
+    uint32_t w = (uint32_t)rgba->w, h = (uint32_t)rgba->h;
+    std::vector<std::vector<uint8_t>> lv(1, std::vector<uint8_t>((size_t)w * h * 4));
+    for (uint32_t y = 0; y < h; y++)
+        memcpy(lv[0].data() + (size_t)y * w * 4, (const uint8_t*)rgba->pixels + (size_t)y * rgba->pitch, (size_t)w * 4);
+    SDL_DestroySurface(rgba);
+    return w && h ? MakeTexture(w, h, DXGI_FORMAT_R8G8B8A8_UNORM, lv, { w * 4 }, mipmapped) : nullptr;
 }
 
 // Minimal DDS reader: BC1/BC2/BC3/BC7 (FourCC or DX10 header) and RGBA8, with mips.
@@ -203,14 +193,24 @@ void HiRes_Init(const std::string& configuredDir)
         roots.push_back(configuredDir);
     else
     {
-        wchar_t buf[MAX_PATH];
-        GetModuleFileNameW(nullptr, buf, MAX_PATH);
-        fs::path exe = fs::path(buf).parent_path();
+        fs::path exe = Host_ExePath().parent_path();
         roots.push_back(exe / "textures");
         roots.push_back(exe / "game" / "textures");
         roots.push_back(exe / ".." / "game" / "textures");
+        roots.push_back(exe / ".." / ".." / "game" / "textures");
+        // Dolphin's user folder
+#ifdef _WIN32
         if (const char* up = getenv("USERPROFILE"))
             roots.push_back(fs::path(up) / "Documents" / "Dolphin Emulator" / "Load" / "Textures");
+#else
+        if (const char* xdg = getenv("XDG_DATA_HOME"); xdg && *xdg)
+            roots.push_back(fs::path(xdg) / "dolphin-emu" / "Load" / "Textures");
+        if (const char* home = getenv("HOME"))
+        {
+            roots.push_back(fs::path(home) / ".local" / "share" / "dolphin-emu" / "Load" / "Textures");
+            roots.push_back(fs::path(home) / ".dolphin-emu" / "Load" / "Textures");
+        }
+#endif
     }
     // the installed release's pack (Dolphin's folder names: game ID, its first four or three
     // characters); else another release's: the textures are the same
@@ -223,8 +223,6 @@ void HiRes_Init(const std::string& configuredDir)
         for (auto& r : roots)
             if (fs::is_directory(r / ids[i], ec)) Scan(r / ids[i]);
     if (s_files.empty()) return;
-    CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-    CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&s_wic));
     LOG_INFO("texture pack: {} replacement textures", s_files.size());
 }
 
@@ -297,47 +295,18 @@ void HiRes_Dump(const uint8_t* data, uint32_t dataSize, const uint8_t* tlut, uin
     static fs::path dir;
     if (dir.empty())
     {
-        wchar_t buf[MAX_PATH];
-        GetModuleFileNameW(nullptr, buf, MAX_PATH);
-        dir = fs::path(buf).parent_path() / "dump" / "textures" / Region_Current().gameId;
+        dir = Host_ExePath().parent_path() / "dump" / "textures" / Region_Current().gameId;
         std::error_code ec;
         fs::create_directories(dir, ec);
-        CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-        if (!s_wic) CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&s_wic));
     }
     std::string names[2];
     MakeNames(data, dataSize, tlut, tlutSize, fmt, w, h, mipmapped, names);
-    if (names[0].empty() || done[names[0]] || !s_wic) return;
+    if (names[0].empty() || done[names[0]]) return;
     done[names[0]] = true;
     fs::path path = dir / (names[0] + ".png");
-    IWICStream* stream = nullptr;
-    IWICBitmapEncoder* enc = nullptr;
-    IWICBitmapFrameEncode* frame = nullptr;
-    if (SUCCEEDED(s_wic->CreateStream(&stream)) && SUCCEEDED(stream->InitializeFromFilename(path.wstring().c_str(), GENERIC_WRITE)) &&
-        SUCCEEDED(s_wic->CreateEncoder(GUID_ContainerFormatPng, nullptr, &enc)) && SUCCEEDED(enc->Initialize(stream, WICBitmapEncoderNoCache)) &&
-        SUCCEEDED(enc->CreateNewFrame(&frame, nullptr)) && SUCCEEDED(frame->Initialize(nullptr)) && SUCCEEDED(frame->SetSize(w, h)))
+    if (SDL_Surface* img = SDL_CreateSurfaceFrom((int)w, (int)h, SDL_PIXELFORMAT_RGBA32, (void*)rgba, (int)w * 4))
     {
-        WICPixelFormatGUID pf = GUID_WICPixelFormat32bppRGBA;
-        frame->SetPixelFormat(&pf);
-        frame->WritePixels(h, w * 4, w * h * 4, (BYTE*)rgba);
-        frame->Commit();
-        enc->Commit();
+        if (!SDL_SavePNG(img, (const char*)path.u8string().c_str())) LOG_WARN("texture dump: {}", SDL_GetError());
+        SDL_DestroySurface(img);
     }
-    if (frame) frame->Release();
-    if (enc) enc->Release();
-    if (stream) stream->Release();
 }
-
-#else
-// Texture packs and dumps need an image codec (WIC on Windows); not available here yet.
-#include "hires.h"
-#include "../log.h"
-bool g_dumpTextures = false;
-void HiRes_Init(const std::string& configuredDir)
-{
-    if (!configuredDir.empty()) LOG_WARN("HD texture packs are only supported on Windows for now");
-}
-bool HiRes_Enabled() { return false; }
-ID3D11ShaderResourceView* HiRes_Find(const uint8_t*, uint32_t, const uint8_t*, uint32_t, uint32_t, uint32_t, uint32_t, bool) { return nullptr; }
-void HiRes_Dump(const uint8_t*, uint32_t, const uint8_t*, uint32_t, uint32_t, uint32_t, uint32_t, bool, const uint32_t*) {}
-#endif

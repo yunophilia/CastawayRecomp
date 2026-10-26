@@ -24,7 +24,8 @@
       lavapipe): beach_move and actions play out like on Windows
 - [x] Input scripts step by video fields instead of presented frames, so a run reaches the
       same screens on a slow renderer (lavapipe presents ~35 fps while the game keeps 60 Hz)
-- [ ] HD texture packs and dumps on Linux (no WIC there)
+- [x] HD texture packs and texture dumps on Linux: PNG through SDL 3.4 (SDL_LoadPNG /
+      SDL_SavePNG) on both platforms instead of WIC; Dolphin's Linux user folders searched
 
 ## Porting notes (R42E69)
 

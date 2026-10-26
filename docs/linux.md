@@ -60,5 +60,7 @@ renderer as on a fast one, just more slowly.
   - D3DCompile bridge
   `runtime/kernel/host.h` holds the small OS services both share. `runtime/compat.h` (forced
   include) supplies the MSVC C runtime functions the code uses.
-- **HD texture packs and texture dumps** use WIC on Windows. On Linux they are not available
-  yet (`runtime/gx/hires.cpp`).
+- **HD texture packs and texture dumps** read and write PNG with SDL (`SDL_LoadPNG`,
+  `SDL_SavePNG`) on every platform. Besides `textures/` next to the game, Dolphin's user
+  folders are searched (`$XDG_DATA_HOME/dolphin-emu`, `~/.local/share/dolphin-emu`,
+  `~/.dolphin-emu`, each with `Load/Textures`).
