@@ -6,6 +6,8 @@ constexpr uint64_t TB_FREQ = 243000000ull / 4;   // 60.75 MHz
 
 void Cpu_Init();
 void Cpu_SetFunction(uint32_t guest, PPCFunc f);
+// Logs lr, the argument registers and the guest call chain (crash reports)
+void Cpu_LogGuestStack(const PPCContext& ctx, uint32_t lr);
 
 void Timebase_Init();
 uint64_t Timebase_Now();

@@ -450,7 +450,6 @@ extern "C" void Interp_Run(PPCContext& ctx, uint8_t* base, uint32_t entry)
         default:
         {
             // usually a call through a bad pointer: where it came from is the useful part
-            void Cpu_LogGuestStack(const PPCContext& ctx, uint32_t lr);
             LOG_ERROR("interp: illegal/unhandled instruction {:08x} at {:08x} (entered at {:08x})", w, pc, entry);
             Cpu_LogGuestStack(ctx, savedLr);
             FATAL("interp: illegal/unhandled instruction {:08x} at {:08x}", w, pc);
