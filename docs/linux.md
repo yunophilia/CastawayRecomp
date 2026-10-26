@@ -40,20 +40,20 @@ a glibc at least as new as the build machine's.
 ## Testing without a display
 
 With Xvfb and Mesa's lavapipe (CPU Vulkan; `sudo apt-get install xvfb mesa-vulkan-drivers`),
-the scripted tests run headless:
+the scripted tests run headless. `tools/run_test_linux.sh` runs the game from `out/linux`
+for at most the given number of seconds:
 
 ```
-cd out/linux
-SDL_VIDEO_DRIVER=x11 SDL_AUDIO_DRIVER=dummy \
-VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json \
-xvfb-run -a -s "-screen 0 1280x720x24" ./CastawayRecomp --nobox --skip-launcher --mute \
-    --scale 1 --data ../../game/R42E69 --nand /tmp/castaway_nand \
-    --script ../../tools/scripts/beach_move.txt
+sh tools/run_test_linux.sh 300 --nobox --skip-launcher --mute --scale 1 \
+    --data ../../game/R42E69 --nand /tmp/castaway_nand --script ../../tools/scripts/beach_move.txt
 ```
 
-lavapipe presents roughly 40 frames per second at scale 1. Scripted runs lock guest time to
-presented frames (`Timebase_SetFrameLock`), so a script reaches the same screens on a slow
-renderer as on a fast one, just more slowly.
+Wrap the game itself in `timeout`, not `xvfb-run`: killing `xvfb-run` leaves the game
+running, in the background, writing the same log.
+
+lavapipe presents roughly 35-40 frames per second at scale 1, while the game keeps its 60 Hz.
+Script frames are video fields (game time, `Input_OnField`), so a script reaches the same
+screens on a slow renderer as on a fast one.
 
 ## Porting notes
 

@@ -108,12 +108,15 @@ bool Host_Restart(const char* extraArg)
 #include <mutex>
 #include <pthread.h>
 #include <sched.h>
+#include <spawn.h>
 #include <sys/resource.h>
 #include <time.h>
 #include <unistd.h>
 #include <strings.h>
 #include <string>
 #include <vector>
+
+extern char** environ;
 
 struct HostEvent::Impl
 {
@@ -186,16 +189,12 @@ bool Host_Restart(const char* extraArg)
     std::vector<std::string> args = s_args;
     if (extraArg && std::find(args.begin(), args.end(), extraArg) == args.end()) args.push_back(extraArg);
     std::string exe = Host_ExePath().string();
-    pid_t pid = fork();
-    if (pid < 0) return false;
-    if (pid == 0)
-    {
-        std::vector<char*> av;
-        for (auto& a : args) av.push_back(a.data());
-        av.push_back(nullptr);
-        execv(exe.c_str(), av.data());
-        _exit(127);
-    }
-    return true;
+    std::vector<char*> av;
+    for (auto& a : args) av.push_back(a.data());
+    av.push_back(nullptr);
+    // posix_spawn rather than fork + exec: nothing runs in a forked copy of this
+    // multi-threaded process (no allocation between fork and exec)
+    pid_t pid;
+    return posix_spawn(&pid, exe.c_str(), nullptr, nullptr, av.data(), environ) == 0;
 }
 #endif

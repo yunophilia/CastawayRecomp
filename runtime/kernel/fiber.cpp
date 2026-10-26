@@ -30,6 +30,7 @@ void Fiber_Delete(HostFiber* f) { DeleteFiber(f); }
 #else
 #include <sys/mman.h>
 #include <ucontext.h>
+#include <unistd.h>
 #include <cerrno>
 #include <cstdint>
 #include <cstring>
@@ -66,6 +67,9 @@ HostFiber* Fiber_Create(size_t stackReserve, void (*fn)(void*), void* arg)
     HostFiber* f = new HostFiber();
     f->stack = mmap(nullptr, stackReserve, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE | MAP_STACK, -1, 0);
     if (f->stack == MAP_FAILED) FATAL("fiber stack allocation failed ({})", strerror(errno));
+    // guard page at the bottom: an overflow faults here (reported by the crash handler on its
+    // alternate stack) instead of running into whatever is mapped below
+    mprotect(f->stack, (size_t)sysconf(_SC_PAGESIZE), PROT_NONE);
     f->stackSize = stackReserve;
     f->fn = fn;
     f->arg = arg;
