@@ -49,6 +49,18 @@
 * Paletted textures are cached per palette: the game binds the same C8 data with different
   palettes on two texture maps in one draw.
 
+* Music in the rear channel (a bug in the game, fixed by default, `[Audio] music_front`):
+  ENgcAudio::InitAudio always mixes for Dolby Pro Logic II (AXSetMode(2), MIX mode 3 unless
+  the console is set to mono). ENGCAudioStreamer's constructor calls the Wii MIXInitChannel,
+  which has an extra auxC argument, with the GameCube argument order. Its pan lands in auxC,
+  127 in pan and 0 in span (fully rear), so the music is mixed only into surround and comes
+  out of a stereo output in antiphase (L = -R; measured correlation -1.0 on the title music,
+  near silence in mono). The SFX streamer passes the Wii order. runtime/audio/game_fixes.cpp
+  corrects the arguments for that one caller; measured correlation is then 1.0.
+* Audio check without listening: --dump-audio, then levels, clipping, DC, discontinuities,
+  spectrum and L/R correlation per section (see the music fix above for why correlation
+  matters).
+
 ## Controllers
 
 * `EControllerManager::_ctrlPads[4]`: slots 0-2 Wii Remotes (EWiiController), slot 3 a

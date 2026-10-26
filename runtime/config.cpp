@@ -45,6 +45,11 @@ std::string Config_Text(const Config& c)
     s += std::format("language = {}\n", kLanguages[std::clamp(c.language, 0, 6)]);
     s += "; freeze the game while its window is in the background\n";
     s += std::format("pause_on_focus_loss = {}\n\n", Bool(c.pauseOnFocusLoss));
+    s += "[Audio]\n";
+    s += "; fix: the Wii version passes its music to the mixer with GameCube-era arguments, which\n";
+    s += "; places it in the rear surround channel (hollow on stereo, near silent in mono). true\n";
+    s += "; plays it from the front like the sound effects; false keeps the original\n";
+    s += std::format("music_front = {}\n\n", Bool(c.musicFront));
     s += "[Input]\n";
     s += std::format("rumble = {}\n", Bool(c.rumble));
     s += "\n[Gamepad]\n";
@@ -157,6 +162,10 @@ void Config_Load(const std::string& path)
         {
             if (key == "language") c.language = ParseLanguage(val);
             else if (key == "pause_on_focus_loss") c.pauseOnFocusLoss = ParseBool(val);
+        }
+        else if (section == "audio")
+        {
+            if (key == "music_front") c.musicFront = ParseBool(val);
         }
         else if (section == "input")
         {

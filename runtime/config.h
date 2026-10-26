@@ -20,6 +20,8 @@ struct Config
     // [System]
     int language = 1;                // Wii IPL.LNG: 0 ja, 1 en, 2 de, 3 fr, 4 es, 5 it, 6 nl
     bool pauseOnFocusLoss = false;   // freeze the game while the window is in the background
+    // [Audio]
+    bool musicFront = true;          // fix: the music streamer's mixer arguments put it in the rear
     // [Input]
     bool rumble = true;
     // [Gamepad] / [Keyboard]: per game button (input/bindings.cpp kControls), a gamepad button

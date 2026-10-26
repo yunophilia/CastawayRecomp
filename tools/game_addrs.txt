@@ -75,3 +75,5 @@ CtrlPads                 data _ctrlPads__18EControllerManager                 EC
 CtrlMan                  data _pCtrlMan                                       EControllerManager*: +4 player controller index, +8 player mapped
 MapControllerCommands    func MapControllerCommands__18EControllerManagerFP14EBtnToCmdAssoci   installs a button -> command map (on _ctrlPads[0] only)
 NgcGetButtons            func GetButtons__14ENgcControllerFRC9PADStatus      u32 ENgcController::GetButtons(const PADStatus&): button and stick-direction bits
+MIXInitChannel           func MIXInitChannel                                 MIXInitChannel(AXVPB*, mode, input, auxA, auxB, auxC, pan, span, fader on the stack)
+MusicStreamerCtor        func __ct__17ENGCAudioStreamerFv                    ENGCAudioStreamer::ENGCAudioStreamer(): sets up the music voices with MIXInitChannel

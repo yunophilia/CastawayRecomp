@@ -59,3 +59,5 @@ GAME_ADDR(CtrlPads,                  DATA, 0x80513758)   // EController* EContro
 GAME_ADDR(CtrlMan,                   DATA, 0x805D82E4)   // EControllerManager*: +4 player controller index, +8 player mapped
 GAME_ADDR(MapControllerCommands,     FUNC, 0x802A6C20)   // installs a button -> command map (on _ctrlPads[0] only)
 GAME_ADDR(NgcGetButtons,             FUNC, 0x802B1B88)   // u32 ENgcController::GetButtons(const PADStatus&): button and stick-direction bits
+GAME_ADDR(MIXInitChannel,            FUNC, 0x803D4250)   // MIXInitChannel(AXVPB*, mode, input, auxA, auxB, auxC, pan, span, fader on the stack)
+GAME_ADDR(MusicStreamerCtor,         FUNC, 0x802CC02C)   // ENGCAudioStreamer::ENGCAudioStreamer(): sets up the music voices with MIXInitChannel

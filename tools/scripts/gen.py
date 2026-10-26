@@ -389,6 +389,43 @@ def counts_goals():
         f += 300
     s.save('counts_goals', f + 2)
 
+
+@script
+def crafting_explore():
+    s = Script('beach: harvest bamboo several times, then Plans & Ideas: click each plan')
+    f = to_beach(s)
+    s.at(f, 'stick -70 70')
+    s.at(f + 100, 'stick 0 0')
+    for i in range(4):                           # harvest repeatedly (Z on the bamboo)
+        s.tap(f + 140 + i * 500, 'Z')
+    f += 140 + 4 * 500 + 200
+    s.at(f, 'shot cr_00_harvested')
+    f = s.click(f + 10, 0.916, 0.12)             # pause menu
+    f = s.click(f + 60, 0.33, 0.36)              # Plans & Ideas
+    s.at(f + 60, 'shot cr_01_plans')
+    # plan grid inside Plans & Ideas, measured on its screenshot (two rows of five)
+    plans = [(0.34, 0.33), (0.42, 0.33), (0.50, 0.33), (0.58, 0.33), (0.66, 0.33),
+             (0.34, 0.47), (0.42, 0.47), (0.50, 0.47), (0.58, 0.47), (0.66, 0.47)]
+    f += 80
+    for i, (u, v) in enumerate(plans):
+        f = s.click(f, u, v)
+        s.at(f + 60, f'shot cr_p{i}')
+        f += 80
+    s.save('crafting_explore', f + 2)
+
+
+@script
+def beach_walk():
+    s = Script('beach: long walks in eight directions, screenshots every second (look for driftwood)')
+    f = to_beach(s)
+    dirs = [(0, 100), (70, 70), (100, 0), (70, -70), (0, -100), (-70, -70), (-100, 0), (-70, 70)]
+    for i, (x, y) in enumerate(dirs):
+        s.at(f, f'stick {x} {y}')
+        s.shots(f + 30, f + 600, 60, f'bw_{i}')
+        s.at(f + 600, 'stick 0 0')
+        f += 620
+    s.save('beach_walk', f + 2)
+
 if __name__ == '__main__':
     for name in sys.argv[1:]:
         SCRIPTS[name]()

@@ -309,6 +309,7 @@ static std::vector<uint8_t> BuildSysconf()
     e.push_back({ 5, "IPL.CB", { 0, 0, 0, 0 } });
     e.push_back({ 3, "IPL.AR", { (uint8_t)(g_config.widescreen ? 1 : 0) } });
     e.push_back({ 3, "IPL.SSV", { 1 } });
+    e.push_back({ 3, "IPL.SND", { 1 } });   // sound: stereo
     e.push_back({ 7, "IPL.CD", { 0 } });
     e.push_back({ 7, "IPL.CD2", { 0 } });
     e.push_back({ 7, "IPL.EULA", { 1 } });
