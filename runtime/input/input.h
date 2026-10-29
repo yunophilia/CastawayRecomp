@@ -53,8 +53,8 @@ void Input_SetRumble(bool on);
 void Input_ReloadBindings();
 void Input_StopRumble();
 
-// Scripted input for automated tests: --script <file>. While a script runs, real devices
-// are ignored and rumble is off.
+// Scripted input for automated tests: --script <file> (frame-timed events) or --tas <file>
+// (runtime/tas, docs/tas.md). While a script runs, real devices are ignored and rumble is off.
 void Input_LoadScript(const char* path);
 bool Input_ScriptActive();
 // Called once per presented frame with a function that saves the frame as a BMP.

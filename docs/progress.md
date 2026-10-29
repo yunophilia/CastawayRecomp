@@ -18,9 +18,11 @@
       D-pad picks one instead of tilting the Nunchuk, Z does it (gen.py actions, actions_choice)
 - [x] HUD and pause menu (gen.py hud_click, plans_explore): Paused menu, Inventory, Switch
       Sim, Plans & Ideas, Personal Info, Island Map, Game Options, Collectibles, Fashion
-      (mirror). Goals does not open this early: the click only reaches
+      (mirror). Goals did not open in these runs: the click only reached
       UISimulatorSupport::IsBookUnlocked / GoalUnlock::IsUnlocked (call-count diff,
-      gen.py counts_goals + tools/count_diff.py), so the book is still locked in the story
+      gen.py counts_goals + tools/count_diff.py). The cause was the tutorial: the scripts'
+      A presses answered Yes to "play the tutorial?", and the tutorial keeps the book locked
+      until its steps are done. Answering No, Goals opens (tools/tas/e2e.tas)
 - [x] Items: Inventory -> Use the sleeping mat -> Sleep on Ground; the night passes with
       fast-forward and the day/night lighting (gen.py sleep_mat)
 - [ ] Building / crafting from Plans (needs gathered resources)
@@ -36,6 +38,10 @@
       lavapipe): beach_move and actions play out like on Windows
 - [x] Input scripts step by video fields instead of presented frames, so a run reaches the
       same screens on a slow renderer (lavapipe presents ~35 fps while the game keeps 60 Hz)
+- [x] End-to-end test as a TAS script (docs/tas.md, tools/tas/e2e.tas), after
+      BlackKnightRecomp's: boot, new game, Create a Sim, story, Goals, sleeping, walking,
+      Save & Quit, Continue Game, with checks on the game's state machine states and memory
+      (Sim position, clock, sleep); passes on Windows and on Linux (Xvfb, lavapipe)
 - [x] HD texture packs and texture dumps on Linux: PNG through SDL 3.4 (SDL_LoadPNG /
       SDL_SavePNG) on both platforms instead of WIC; Dolphin's Linux user folders searched
 

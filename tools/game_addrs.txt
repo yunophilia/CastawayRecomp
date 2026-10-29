@@ -77,3 +77,6 @@ MapControllerCommands    func MapControllerCommands__18EControllerManagerFP14EBt
 NgcGetButtons            func GetButtons__14ENgcControllerFRC9PADStatus      u32 ENgcController::GetButtons(const PADStatus&): button and stick-direction bits
 MIXInitChannel           func MIXInitChannel                                 MIXInitChannel(AXVPB*, mode, input, auxA, auxB, auxC, pan, span, fader on the stack)
 MusicStreamerCtor        func __ct__17ENGCAudioStreamerFv                    ENGCAudioStreamer::ENGCAudioStreamer(): sets up the music voices with MIXInitChannel
+
+# ---------------------------------------------------------------- TAS scripts (runtime/tas)
+StateMachineStatusSetState func SetState__18StateMachineStatusFP17StateMachineState   StateMachineStatus::SetState(state): every state machine's state change

@@ -13,6 +13,7 @@
 #include "ios/ios.h"
 #include "region.h"
 #include "input/input.h"
+#include "tas/tas.h"
 
 #include <algorithm>
 #include <filesystem>
@@ -99,6 +100,8 @@ int main(int argc, char** argv)
         else if (a == "--skip-launcher") skipLauncher = true;
         else if (a == "--dump-textures") { extern bool g_dumpTextures; g_dumpTextures = true; }
         else if (a == "--script" && i + 1 < argc) Input_LoadScript(argv[++i]);
+        else if (a == "--tas" && i + 1 < argc) Tas_Load(argv[++i]);
+        else if (a == "--telemetry" && i + 1 < argc) Tas_SetTelemetry(argv[++i]);
         else if (a == "--nand" && i + 1 < argc) nandDir = argv[++i];
         else if (a == "--mute") { extern bool g_audioMute; g_audioMute = true; }
         else if (a == "--scale" && i + 1 < argc) scaleOverride = std::clamp(atoi(argv[++i]), 1, 8);

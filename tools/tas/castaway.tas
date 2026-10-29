@@ -1,0 +1,22 @@
+# Game values for TAS scripts (include castaway.tas). Offsets are hex; the names come from
+# the game's ELF symbols (docs/tas.md).
+#
+# The selected Sim (a cXPerson): EGlobal::GetSelectedPerson reads EGlobal+0x174 (pEORGlobals);
+# cXObject::GetLocation is the FTilePt at +0xC0: two fixed-point tile coordinates.
+alias sim [pEORGlobals__5Globs]+0x174
+alias simx [sim]+0xC0
+alias simy [sim]+0xC4
+# cXPerson::IsSleeping: the float at +0x1A8 is below -30 (-40 while asleep, 0 awake)
+alias simsleep [sim]+0x1A8
+# The simulator's globals (s16 each, cSimulator::GetGlobal(n) reads +0x32 + 2n): 0 the hour,
+# 1 the day, 5 the minute (MODTarget::GetTimeOfDayDisplayValue).
+alias hour [pSimulator__5Globs]+0x32
+alias day [pSimulator__5Globs]+0x34
+alias minute [pSimulator__5Globs]+0x3C
+
+watch x s32 simx
+watch y s32 simy
+watch day s16 day
+watch hour s16 hour
+watch minute s16 minute
+watch sleep f32 simsleep

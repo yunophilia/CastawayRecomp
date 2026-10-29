@@ -1,6 +1,7 @@
 #include "disc.h"
 #include "../kernel/host.h"
 #include "../log.h"
+#include "../tas/tas.h"
 
 #include <algorithm>
 #include <cstdio>
@@ -168,6 +169,8 @@ bool Disc_ReadPartition(uint64_t offset, uint32_t length, uint8_t* out)
         if (s >= e) continue;
         FILE* f = GetFile(it->path);
         if (!f) continue;
+        if (Tas_Active())
+            Tas_OnFileRead(it->path.compare(0, s_dataDir.size(), s_dataDir) == 0 ? it->path.substr(s_dataDir.size()) : it->path);
         Host_Seek64(f, (int64_t)(s - it->offset), SEEK_SET);
         fread(out + (s - offset), 1, (size_t)(e - s), f);
         any = true;

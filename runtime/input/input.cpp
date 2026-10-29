@@ -14,6 +14,7 @@
 #include "../config.h"
 #include "../gx/video.h"
 #include "../log.h"
+#include "../tas/tas.h"
 #include "../ui/overlay.h"
 
 #include <algorithm>
@@ -71,6 +72,7 @@ bool s_quitPending = false;
 uint32_t s_quitField = 0;
 PadState s_scriptPad{};
 PointerState s_scriptPointer{};
+bool Scripted() { return s_scripted || Tas_Active(); }
 std::string s_shotDir = ".";   // the working directory (out/ for tools/run_test.ps1)
 
 uint32_t ButtonBit(const std::string& n)
@@ -249,7 +251,7 @@ void Input_Poll()
     s_lastPoll = now;
     PadState pad{};
     PointerState ptr{};
-    if (s_scripted)
+    if (Scripted())
     {
         // scripts step in whole frames: the right stick moves the pointer by 1/60 s per poll
         // that sees a new frame
@@ -287,7 +289,7 @@ void Input_Poll()
         ptr.y = s_ptrY;
         ptr.valid = ptr.valid && s_ptrEver && now - s_ptrUsed < kPointerIdleMs;
     }
-    if (!s_scripted)
+    if (!Scripted())
     {
         // the settings overlay has the input while it is open; its HOME button holds HOME
         static uint64_t homeUntil = 0;
@@ -319,7 +321,7 @@ PointerState Input_Pointer()
 void Input_SetRumble(bool on)
 {
     // never during scripted runs, and only while the game window is in front
-    bool allowed = on && g_config.rumble && !s_scripted && Video_HasFocus();
+    bool allowed = on && g_config.rumble && !Scripted() && Video_HasFocus();
     Gamepad_Rumble(allowed);
 }
 
@@ -348,7 +350,7 @@ void Input_LoadScript(const char* path)
     LOG_INFO("input script {}: {} events", path, s_script.size());
 }
 
-bool Input_ScriptActive() { return s_scripted; }
+bool Input_ScriptActive() { return Scripted(); }
 
 void Input_ReloadBindings()
 {
@@ -369,6 +371,12 @@ static void Quit()
 void Input_OnField()
 {
     uint32_t frame = ++s_frame;
+    if (Tas_Active())
+    {
+        std::lock_guard lk(s_lock);
+        Tas_OnField(s_scriptPad, s_scriptPointer);
+        return;
+    }
     if (!s_scripted) return;
     std::lock_guard lk(s_lock);
     RunScript();
@@ -378,6 +386,7 @@ void Input_OnField()
 
 void Input_OnPresent(void (*save)(const char* path))
 {
+    Tas_OnPresent(save);
     if (!s_scripted) return;
     std::lock_guard lk(s_lock);
     for (auto& path : s_pendingShots)

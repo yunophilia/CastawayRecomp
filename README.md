@@ -88,6 +88,17 @@ the shader compiler, and the build is `cmake --preset linux-clang && ninja -C bu
 
 ## Testing
 
+The end-to-end test is a TAS script ([docs/tas.md](docs/tas.md)): from the first boot it
+starts a new game, creates a Sim, plays through the story, sleeps, walks, saves and quits,
+and loads the save again. It waits for the game's own state changes and checks values in
+game memory (where the Sim is, the clock, sleeping) at each step. It runs on Windows and
+headless on Linux, and passes only if every check does:
+
+```
+powershell -ExecutionPolicy Bypass -File tools/tas_run.ps1 -Script tools/tas/e2e.tas
+sh tools/tas_run_linux.sh tools/tas/e2e.tas
+```
+
 `tools/run_test.ps1` runs the game minimized for a fixed time. Input scripts (`--script`)
 drive it frame by frame and take screenshots; `tools/scripts/gen.py` builds them, for example
 `boot_to_menu`, `cas_accept` (new game, create a Sim), `beach_move` (walk on the island) and

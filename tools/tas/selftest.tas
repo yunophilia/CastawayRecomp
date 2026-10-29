@@ -1,0 +1,25 @@
+# Checks the TAS language itself on the first seconds of boot (docs/tas.md): every check
+# here should pass.
+#   powershell -ExecutionPolicy Bypass -File tools/tas_run.ps1 -Script tools/tas/selftest.tas -Seconds 120
+alias gameid 0x80000000
+alias gameid2 gameid+4
+
+# the disc header at 0x80000000: "R42E" "69"
+check u32 gameid == 0x52343245 msg game ID "R42E" in memory
+check u16 gameid2 == 0x3639 msg maker code "69", through an alias of an alias
+check u32 0x0 == 0 or u32 gameid == 0x52343245 msg an address outside guest RAM is false, "or" still passes
+check u32 gameid == 1 and u32 gameid == 0x52343245 or u8 gameid == 0x52 msg "a and b or c" is "(a and b) or c"
+check u32 VIGetRetraceCount != 0 msg a tools/game_addrs.txt name (its first instruction)
+check u32 pEORGlobals__5Globs >= 0 msg an ELF symbol
+
+# variables and loops
+let id u32 gameid
+check u32 gameid == $id msg let
+check u32 gameid > $id-1 and u32 gameid < $id+1 msg $NAME+N and $NAME-N
+repeat 1000
+wait 0.1
+breakif state TheSimsNGCHealthWarningState
+end
+check state TheSimsNGCHealthWarningState msg breakif leaves the loop on a state change
+mark
+until state TheSimsWiiNunchuckRequiredState mash A timeout 30 msg a later state after mark (A on the health warning)

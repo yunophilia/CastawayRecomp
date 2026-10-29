@@ -1,0 +1,196 @@
+# End-to-end test: boot, new game, Create a Sim, the story, the island (the clock, the HUD,
+# sleeping, walking), Save & Quit, then Continue Game. Each step waits for the game's own
+# state changes or values, so it fails (exit code 3, shots/FAIL.bmp) where the game stops
+# following the script, and a passing run means every step happened.
+#   powershell -ExecutionPolicy Bypass -File tools/tas_run.ps1 -Script tools/tas/e2e.tas
+#   sh tools/tas_run_linux.sh tools/tas/e2e.tas
+# Pointer positions are screen fractions (measured on screenshots).
+include castaway.tas
+
+log boot
+until state TheSimsMainMenuState mash A 0.8 timeout 90 msg main menu
+wait 3
+shot e2e_01_menu
+
+log new game
+click 0.599 0.833              # Start New Game
+wait 1
+point 0.5 0.714                # Yes (the dialog takes a varying time to accept input)
+until state PreGameCreateAFamilyState mash A 1 timeout 30 msg Create a Crew
+mark
+until state IrisTransitionOutState timeout 30
+wait 6
+shot e2e_02_crew
+
+log create a sim
+click 0.47 0.85                # Add a Sim
+wait 2
+click 0.306 0.86               # Customize
+wait 1.3
+click 0.219 0.253              # occupation: Ranger
+wait 1.1
+shot e2e_03_cas
+click 0.306 0.86               # Accept
+wait 4.5
+shot e2e_04_crew
+click 0.737 0.853              # Done
+repeat 3                       # "save before continuing?": Yes
+wait 1.3
+click 0.5 0.48 0.3
+end
+nopoint
+mark
+until state InLevelStoryState timeout 90 msg the island loads
+until state MUStatesLoadHouse timeout 60
+# the Sim is placed on the beach (its location is -1 tile before that)
+until u32 sim != 0 and s32 simx > 0 timeout 60 msg a Sim on the beach
+
+log story
+# The story dialogs: the shipwreck (the game clock stops while it is up), the Big Book of
+# Survival (no tutorial: it would keep the HUD locked), notices. A confirms the highlighted
+# button; the stick would move the dialog cursor off it, so it stays still until then.
+repeat 30                      # the clock stops: the first dialog is up
+let m s16 minute
+wait 2
+breakif s16 minute == $m
+end
+check s16 minute == $m msg the shipwreck dialog stops the clock
+repeat 20                      # A until the clock runs again
+tap A
+wait 1
+let m s16 minute
+wait 2.5
+breakif s16 minute != $m
+end
+check s16 minute != $m msg the clock runs after the shipwreck dialog
+wait 1
+click 0.495 0.74               # the Big Book of Survival: play the tutorial? No
+wait 1
+nopoint
+repeat 4                       # "Be Goal Oriented" and any other notices: OK
+tap A
+wait 3
+end
+let x s32 simx
+let y s32 simy
+repeat 10
+hold 1 LY=1
+wait 0.3
+breakif s32 simx > $x+8 or s32 simx < $x-8 or s32 simy > $y+8 or s32 simy < $y-8
+tap A
+wait 2
+end
+check s32 simx > $x+8 or s32 simx < $x-8 or s32 simy > $y+8 or s32 simy < $y-8 msg the Sim walks after the story
+wait 2
+shot e2e_05_beach
+
+log clock
+let m s16 minute
+wait 6
+check s16 minute != $m msg the clock runs
+
+log hud
+point 0.5 0.5                  # the interface comes back when the pointer is on the screen
+wait 2
+click 0.916 0.34               # Goals
+wait 1.5
+shot e2e_07_goals
+tap B
+wait 1
+click 0.916 0.12               # pause menu
+wait 1.5
+shot e2e_08_pause
+tap B
+wait 1
+
+log sleep
+let d s16 day
+let h s16 hour
+click 0.916 0.23               # Inventory
+wait 1
+shot e2e_09_inventory
+click 0.11 0.33                # the sleeping mat
+wait 0.7
+shot e2e_10_mat
+click 0.425 0.87               # Use
+wait 1
+nopoint
+wait 1.5
+shot e2e_11_use
+tap Z                          # the highlighted action: Sleep on Ground
+until f32 simsleep < -30 timeout 30 msg the Sim falls asleep
+wait 2
+shot e2e_12_sleep
+until f32 simsleep >= -30 timeout 120 msg the Sim wakes up
+check s16 hour >= $h+2 or s16 day != $d msg hours pass while sleeping
+wait 2
+shot e2e_13_slept
+
+log walk
+# once the Sim takes control again (it gets up after sleeping), each direction moves it
+# more than half a tile (8 units) in x or y. Each second move of a pair walks back over the
+# ground the first one crossed, so scenery cannot block it.
+let x s32 simx
+let y s32 simy
+repeat 15
+hold 0.5 LX=-1
+wait 0.5
+breakif s32 simx > $x+8 or s32 simx < $x-8 or s32 simy > $y+8 or s32 simy < $y-8
+end
+wait 1
+let x s32 simx
+let y s32 simy
+hold 2 LY=1
+wait 0.5
+check s32 simx > $x+8 or s32 simx < $x-8 or s32 simy > $y+8 or s32 simy < $y-8 msg walk up
+let x s32 simx
+let y s32 simy
+hold 2 LY=-1
+wait 0.5
+check s32 simx > $x+8 or s32 simx < $x-8 or s32 simy > $y+8 or s32 simy < $y-8 msg walk down (back)
+let x s32 simx
+let y s32 simy
+hold 2 LX=1
+wait 0.5
+check s32 simx > $x+8 or s32 simx < $x-8 or s32 simy > $y+8 or s32 simy < $y-8 msg walk right
+let x s32 simx
+let y s32 simy
+hold 2 LX=-1
+wait 0.5
+check s32 simx > $x+8 or s32 simx < $x-8 or s32 simy > $y+8 or s32 simy < $y-8 msg walk left (back)
+let x s32 simx
+let y s32 simy
+wait 2
+check s32 simx == $x and s32 simy == $y msg stands still without input
+shot e2e_06_walked
+
+log save and quit
+let x s32 simx
+let y s32 simy
+let d s16 day
+click 0.916 0.12               # pause menu
+wait 1.5
+click 0.63 0.51                # Save / Quit
+wait 1.5
+click 0.497 0.68               # Save & Quit
+wait 2.5
+shot e2e_14_overwrite
+mark
+click 0.5 0.56                 # overwrite the saved game: Yes
+until state TheSimsMainMenuState timeout 60 msg back at the main menu
+wait 3
+
+log continue game
+mark
+click 0.578 0.632              # Continue Game
+wait 3
+click 0.497 0.50               # load saved game data: Yes
+until state LiveModeInitState timeout 60 msg the saved game loads
+mark
+until state IrisTransitionOutState timeout 30
+wait 3
+shot e2e_15_loaded
+check s32 simx == $x and s32 simy == $y msg the Sim is where it was saved
+check s16 day == $d msg the saved day
+
+log end
